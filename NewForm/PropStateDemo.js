@@ -7,75 +7,63 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    FlatList,
 } from 'react-native';
 
-export default class Data extends React.Component {
+export default class Data extends Component {
 
     constructor(props){
-        super(props);
+        super(props)
         this.state = {
-            name : ''
+            name : '',
+            password : '',
         }
     }
 
-    handleOnClick = (text) => {
-        this.setState({name : text})
+    handleOnClick() {
+        console.warn(this.state.name);
+        console.warn(this.state.password);
     }
 
     render() {
-        const {name} = this.state
         return ( 
-            
             <View style = {styles.mainView} >
                 <View style = {styles.headerView} >
                     <Text style = {styles.headerText} > LOGIN </Text>  
                 </View > 
                 <View style = {styles.textViewOne} >
                     <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' onChangeText = {this.handleOnClick} value = {name} />
+                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' onChangeText = {(text) => this.setState({name : text})} />
                 </View> 
                 <View style = {styles.textViewOne} >
                     <Text style = {styles.nameText} > PASSWORD </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "********" placeholderTextColor='green' />
+                    <TextInput style = {styles.nameInput} placeholder = "********" placeholderTextColor='green' onChangeText = {(text) => this.setState({password : text})} />
                 </View > 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
-                <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' />
-                </View> 
                 <View style = {styles.textViewOne } >
-                    <TouchableOpacity style = {styles.loginBtn } >
-                        <Text style = {styles.loginText } > Login </Text> 
+                    <TouchableOpacity style = {styles.loginBtn } onPress = {() => this.handleOnClick()} >
+                    <Text style = {styles.loginText } > Show Data </Text> 
                     </TouchableOpacity > 
+                    {/* <Button style = {styles.loginBtn } onPress = {() => this.handleOnClick()} title = 'Show Data'/> */}
                 </View> 
+                <FlatList
+            data = {DATA}
+            renderItem = {({item}) => (
+            <Item 
+                img = {item.img} 
+                myname = {item.myname} 
+                mydesc = {item.mydesc} 
+                time = {item.time}
+            />
+        )}/>
             </View >
+            <View style={styles.mainView}>
+            <View style={styles.textView}>
+                <View style={styles.textViewTwo}>
+                    <Text style={styles.nameText}>{myname}</Text>
+                </View>
+            </View>
+        </View>
+
         );
     }
 }
@@ -125,5 +113,28 @@ const styles = StyleSheet.create({
     loginText: {
         fontWeight: 'bold',
         fontSize: 23,
+    },
+    mainView: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 50,
+        marginLeft: 30,
+        paddingBottom: 0,
+    },
+    textView: {
+        flex: 0.7,
+        flexDirection: 'row',
+    },
+    textViewTwo: {
+        flex: 1, 
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    nameText: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        paddingTop: 10,
+        paddingLeft: 10,
     },
 });
