@@ -32,6 +32,9 @@ export default class Data extends Component {
             {
             userData: userData,
             },
+            () => {
+                console.log(this.state.userData);
+              },
         );
     }
 
