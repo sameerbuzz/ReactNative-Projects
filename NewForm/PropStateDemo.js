@@ -7,9 +7,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    FlatList,
 } from 'react-native';
-
+import ListDemo from './ShowData';
 export default class Data extends Component {
 
     constructor(props){
@@ -17,12 +16,23 @@ export default class Data extends Component {
         this.state = {
             name : '',
             password : '',
+            userData: [],
         }
     }
 
     handleOnClick() {
-        console.warn(this.state.name);
-        console.warn(this.state.password);
+        let payLoad = {
+            name : this.state.name,
+            password : this.state.password,
+        };
+
+        let userData = this.state.userData;
+        userData.push(payLoad);
+        this.setState(
+            {
+            userData: userData,
+            },
+        );
     }
 
     render() {
@@ -45,31 +55,17 @@ export default class Data extends Component {
                     </TouchableOpacity > 
                     {/* <Button style = {styles.loginBtn } onPress = {() => this.handleOnClick()} title = 'Show Data'/> */}
                 </View> 
-                <FlatList
-            data = {DATA}
-            renderItem = {({item}) => (
-            <Item 
-                img = {item.img} 
-                myname = {item.myname} 
-                mydesc = {item.mydesc} 
-                time = {item.time}
-            />
-        )}/>
+                <ListDemo
+                    item = {this.state.userData}
+                    />
             </View >
-            <View style={styles.mainView}>
-            <View style={styles.textView}>
-                <View style={styles.textViewTwo}>
-                    <Text style={styles.nameText}>{myname}</Text>
-                </View>
-            </View>
-        </View>
-
         );
     }
 }
 
 const styles = StyleSheet.create({
     mainView: {
+        flex: 1,
         flexDirection: 'column',
     },
     headerView: {
@@ -114,24 +110,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 23,
     },
-    mainView: {
+    mainViewTwo: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 50,
+        marginTop: 500,
         marginLeft: 30,
-        paddingBottom: 0,
+        
     },
-    textView: {
+    textViewNext: {
         flex: 0.7,
         flexDirection: 'row',
     },
-    textViewTwo: {
+    textViewTwoNext: {
         flex: 1, 
         flexDirection: 'column',
         alignItems: 'center',
     },
-    nameText: {
+    nameTextNext: {
         fontWeight: 'bold',
         fontSize: 20,
         paddingTop: 10,
