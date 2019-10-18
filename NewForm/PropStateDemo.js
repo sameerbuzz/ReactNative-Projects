@@ -11,32 +11,97 @@ import {
 import ListDemo from './ShowData';
 export default class Data extends Component {
 
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
+            id : new Date().getTime(),
             name : '',
-            password : '',
+            email : '',
+            designation : '',
+            company : '',
             userData: [],
+            isHidden : true,
         }
     }
 
-    handleOnClick() {
-        let payLoad = {
-            name : this.state.name,
-            password : this.state.password,
-        };
+    handleEdit = (key) => {
+       currKey = this.state.userData.findIndex(keyy => keyy.id == key)
+        this.setState(
+            {
+                isHidden : false,
+                id : this.state.userData[currKey].id,
+                name : this.state.userData[currKey].name,
+                email : this.state.userData[currKey].email,
+                designation : this.state.userData[currKey].designation,
+                company : this.state.userData[currKey].company,
+                userData : this.state.userData,
+            }
+        );
+    }
+ 
 
-        let userData = this.state.userData;
+    deleteData = (key) => {
+        temp = this.state.userData;
+        // get data in temp where id != key
+        temp = temp.filter(temp => temp.id != key)
+        this.setState({
+            userData : temp,
+        })
+    }
+
+    handleOnClick = () => {
+        let st = this.state
+    if (st.name != '' && st.email != '' && st.designation != '' && st.company != '') {
+        let payLoad = {
+            id : new Date().getTime(),
+            name : st.name,
+            email : st.email,
+            designation : st.designation,
+            company : st.company,
+        };
+        let userData = st.userData;
         userData.push(payLoad);
         this.setState(
             {
             userData: userData,
-            },
-            () => {
-                console.log(this.state.userData);
-              },
+            }
         );
     }
+    
+    this.setState({
+        name : '',
+        email : '',
+        designation : '',
+        company : '',
+    })
+}
+
+    handleOnUpdate = () => {
+        let st = this.state
+    if (st.name != '' && st.email != '' && st.designation != '' && st.company != '') {
+        let payLoad = {
+            id : st.id,
+            name : st.name,
+            email : st.email,
+            designation : st.designation,
+            company : st.company,
+        };
+        let userData = st.userData;
+        userData[currKey] = payLoad;
+        this.setState(
+            {
+            userData: userData,
+            }
+        );
+    }
+    this.setState({
+        isHidden : true,
+        name : '',
+        email : '',
+        designation : '',
+        company : '',
+    })
+}
 
     render() {
         return ( 
@@ -45,23 +110,32 @@ export default class Data extends Component {
                     <Text style = {styles.headerText} > LOGIN </Text>  
                 </View > 
                 <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> NAME </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' onChangeText = {(text) => this.setState({name : text})} />
+                    <Text style = {styles.nameText}> Name </Text> 
+                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' onChangeText = {(text) => this.setState({name : text})} value = {this.state.name}/>
                 </View> 
                 <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText} > PASSWORD </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "********" placeholderTextColor='green' onChangeText = {(text) => this.setState({password : text})} />
+                    <Text style = {styles.nameText} > Email </Text> 
+                    <TextInput style = {styles.nameInput} placeholder = "Enter email here" placeholderTextColor='green' onChangeText = {(text) => this.setState({email : text})} value = {this.state.email}/>
+                </View > 
+                <View style = {styles.textViewOne} >
+                    <Text style = {styles.nameText} > Designation </Text> 
+                    <TextInput style = {styles.nameInput} placeholder = "Enter Designation here" placeholderTextColor='green' onChangeText = {(text) => this.setState({designation : text})} value = {this.state.designation}/>
+                </View > 
+                <View style = {styles.textViewOne} >
+                    <Text style = {styles.nameText} > Company </Text> 
+                    <TextInput style = {styles.nameInput} placeholder = "Enter Company here" placeholderTextColor='green' onChangeText = {(text) => this.setState({company : text})} value = {this.state.company} />
                 </View > 
                 <View style = {styles.textViewOne } >
-                    <TouchableOpacity style = {styles.loginBtn } onPress = {() => this.handleOnClick()} >
-                    <Text style = {styles.loginText } > Show Data </Text> 
+                    <TouchableOpacity style = {styles.loginBtn } onPress = {(this.state.isHidden == true) ? this.handleOnClick : this.handleOnUpdate} >
+                    <Text style = {styles.loginText } > {(this.state.isHidden == true) ? 'Show Data' : 'Update Data' } </Text> 
                     </TouchableOpacity > 
-                    {/* <Button style = {styles.loginBtn } onPress = {() => this.handleOnClick()} title = 'Show Data'/> */}
-                </View> 
+                </View>  
                 <ListDemo
                     item = {this.state.userData}
-                    />
-            </View >
+                    myfunc = {this.deleteData}
+                    myEdit = {this.handleEdit}
+                    />       
+            </View >    
         );
     }
 }
@@ -88,14 +162,14 @@ const styles = StyleSheet.create({
     nameText: {
         flex: 1,
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        
     },
     nameInput: {
         color: 'red',
-        flex: 1,
+        flex: 1.5,
         height: 50,
         paddingLeft: 20,
-        paddingRight:15,
         backgroundColor: '#c0c2c2',
         borderRadius: 25,
         marginTop: -10,
