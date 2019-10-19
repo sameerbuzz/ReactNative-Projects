@@ -18,15 +18,19 @@ export default class Listdemo extends Component {
             <ScrollView>
             <View style={styles.mainViewTwo}>
                 <View style={styles.textViewNext}>
-                    <Text style={styles.nameText}>Name : {data.item.name}</Text>
-                    <Text style={styles.nameText}>Email : {data.item.email} </Text>
-                    <Text style={styles.nameText}>Designation : {data.item.designation} </Text>
-                    <Text style={styles.nameText}>Company : {data.item.company} </Text>
+                    <Text style={styles.nameTextOne}>{data.item.name}</Text>
+                    <Text style={styles.lineText}>___________________________</Text>
+                    <Text style={styles.nameText}>{data.item.email} </Text>
+                    <Text style={styles.nameText}>{data.item.designation} </Text>
+                    <Text style={styles.nameText}>{data.item.company} </Text>
                     <View style={styles.btnView}>
-                    <TouchableOpacity style={styles.btnDel}  onPress={() => this.props.myfunc(data.item.id)}>
+                    <TouchableOpacity style={styles.btnDel}  
+                            onPress={() => this.props.myfunc(data.item.id)}>
                         <Text style={styles.btnStyle}>Delete</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnEdit} onPress={() => this.props.myEdit(data.item.id)}>
+                    <Text style={styles.btnStyleTwo}> </Text>
+                    <TouchableOpacity style={styles.btnEdit} 
+                            onPress={() => this.props.myEdit(data.item.id)}>
                         <Text style={styles.btnStyle}>Edit</Text>
                     </TouchableOpacity>
                     </View>
@@ -54,19 +58,40 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         margin: 30,
+        shadowColor : '#fabe75',
+        shadowOpacity : 30,
+        shadowRadius: 5,
+        shadowOffset:{  width: 15,  height: 15,  }
     },
     textViewNext: {
         flex: 1,
         flexDirection: 'column',
-        borderColor : '#16c6f2',
+        borderColor : '#e3891b',
         borderWidth : 5,
         borderRadius : 25,
-        backgroundColor: '#a1f0ee',
+        backgroundColor: 'white',
+        borderTopLeftRadius: 0,
     },
     nameText: {
-        fontSize: 20,
-        padding: 10,
+        fontSize: 18,
+        textAlign : 'center',
+        padding : 5,
+        color : '#e3891b',
+        fontWeight: 'bold',
     },
+    nameTextOne: {
+        fontSize: 30,
+        marginTop : 5,
+        textAlign : 'center',
+        color : '#e3891b',
+        fontWeight : 'bold',
+        },
+    lineText: {
+        fontSize: 22,
+        textAlign : 'center',
+        color : '#e3891b',
+        fontWeight : 'bold',
+        },
     flatStyle: {
         flex: 1,
         height: 250,
@@ -74,15 +99,17 @@ const styles = StyleSheet.create({
     btnStyle: {
         fontSize: 20,
         padding: 10,
+        color : 'white',
+        fontWeight : '700',
     },
     btnDel: {
-        backgroundColor: '#16c6f2',
+        backgroundColor: '#e3891b',
         flex: 1,
         borderBottomStartRadius: 20,
         alignItems: 'center',
     },
     btnEdit: {
-        backgroundColor: '#16c6f2',
+        backgroundColor: '#e3891b',
         flex: 1,
         borderBottomEndRadius: 20,
         alignItems: 'center',

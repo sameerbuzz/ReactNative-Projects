@@ -7,6 +7,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Keyboard,
 } from 'react-native';
 import ListDemo from './ShowData';
 export default class Data extends Component {
@@ -47,19 +48,27 @@ export default class Data extends Component {
         this.setState({
             userData : temp,
         })
+        this.setState({
+            isHidden :true,
+            name : '',
+            email : '',
+            designation : '',
+            company : '',
+        })
     }
 
     handleOnClick = () => {
-        let st = this.state
-    if (st.name != '' && st.email != '' && st.designation != '' && st.company != '') {
+        const {id, name, email, designation, company} = this.state;
+       // let st = this.state
+    if (name != '' && email != '' && designation != '' && company != '') {
         let payLoad = {
             id : new Date().getTime(),
-            name : st.name,
-            email : st.email,
-            designation : st.designation,
-            company : st.company,
+            name : name,
+            email : email,
+            designation : designation,
+            company : company,
         };
-        let userData = st.userData;
+        let userData = this.state.userData;
         userData.push(payLoad);
         this.setState(
             {
@@ -110,24 +119,55 @@ export default class Data extends Component {
                     <Text style = {styles.headerText} > LOGIN </Text>  
                 </View > 
                 <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText}> Name </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter name here" placeholderTextColor='green' onChangeText = {(text) => this.setState({name : text})} value = {this.state.name}/>
+                    <TextInput style = {styles.nameInput} 
+                    placeholder = "Enter name here" 
+                    placeholderTextColor='#a6c6ff' 
+                    onChangeText = {(text) => this.setState({name : text})} 
+                    value = {this.state.name} 
+                    returnKeyType = 'next' 
+                    onSubmitEditing={() => { this.secondInput.focus(); }}
+                    />
                 </View> 
                 <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText} > Email </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter email here" placeholderTextColor='green' onChangeText = {(text) => this.setState({email : text})} value = {this.state.email}/>
+                    <TextInput style = {styles.nameInput} 
+                    placeholder = "Enter email here" 
+                    placeholderTextColor='#a6c6ff' 
+                    onChangeText = {(text) => this.setState({email : text})} 
+                    value = {this.state.email}
+                    returnKeyType = 'next'
+                    ref={(ref) => { this.secondInput = ref; }}
+                    onSubmitEditing={() => { this.thirdInput.focus(); }}
+                    />
                 </View > 
                 <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText} > Designation </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter Designation here" placeholderTextColor='green' onChangeText = {(text) => this.setState({designation : text})} value = {this.state.designation}/>
+                    <TextInput style = {styles.nameInput} 
+                    placeholder = "Enter Designation here" 
+                    placeholderTextColor='#a6c6ff' 
+                    onChangeText = {(text) => this.setState({designation : text})} 
+                    value = {this.state.designation}
+                    returnKeyType = 'next'
+                    ref={(ref) => { this.thirdInput = ref; }}
+                    onSubmitEditing={() => { this.fourthInput.focus(); }}
+                    />
                 </View > 
                 <View style = {styles.textViewOne} >
-                    <Text style = {styles.nameText} > Company </Text> 
-                    <TextInput style = {styles.nameInput} placeholder = "Enter Company here" placeholderTextColor='green' onChangeText = {(text) => this.setState({company : text})} value = {this.state.company} />
+                    <TextInput style = {styles.nameInput} 
+                    placeholder = "Enter Company here" 
+                    placeholderTextColor='#a6c6ff' 
+                    onChangeText = {(text) => this.setState({company : text})} 
+                    value = {this.state.company} 
+                    returnKeyType = 'next'
+                    ref={(ref) => { this.fourthInput = ref; }}
+                    onSubmitEditing={(this.state.isHidden == true) ? this.handleOnClick : this.handleOnUpdate}
+                    />
                 </View > 
                 <View style = {styles.textViewOne } >
-                    <TouchableOpacity style = {styles.loginBtn } onPress = {(this.state.isHidden == true) ? this.handleOnClick : this.handleOnUpdate} >
-                    <Text style = {styles.loginText } > {(this.state.isHidden == true) ? 'Show Data' : 'Update Data' } </Text> 
+                    <TouchableOpacity style = {styles.loginBtn } 
+                    onPress = {(this.state.isHidden == true) ? this.handleOnClick : this.handleOnUpdate} 
+                    >
+                    <Text style = {styles.loginText } > {(this.state.isHidden == true) ? 'Show Data' : 'Update Data' } 
+        
+                    </Text> 
                     </TouchableOpacity > 
                 </View>  
                 <ListDemo
@@ -147,13 +187,14 @@ const styles = StyleSheet.create({
     },
     headerView: {
         alignItems: 'center',
-        backgroundColor: '#15e8e8',
+        backgroundColor: '#186cf2',
     },
     headerText: {
         fontWeight: 'bold',
         fontSize: 20,
         marginTop: 50,
         marginBottom: 20,
+        color : 'white',
     },
     textViewOne: {
         flexDirection: 'row',
@@ -163,29 +204,36 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 20,
         fontWeight: 'bold',
-        
     },
     nameInput: {
-        color: 'red',
+        color: '#186cf2',
         flex: 1.5,
         height: 50,
         paddingLeft: 20,
-        backgroundColor: '#c0c2c2',
-        borderRadius: 25,
+        paddingRight: 20,
+        backgroundColor: 'white',
+        borderRadius: 15,
         marginTop: -10,
         fontSize: 18,
+        borderColor : '#186cf2',
+        borderWidth : 2,
+        textAlign : 'center',
+        fontWeight: 'bold',
+        fontFamily : 'Verdana',
     },
     loginBtn: {
-        flex: 1,
-        backgroundColor: '#389111',
+        flex : 1,
+        backgroundColor: '#186cf2',
         borderRadius: 25,
         height: 50,
         alignItems: 'center',
         padding: 10,
+        width: 200,
     },
     loginText: {
         fontWeight: 'bold',
         fontSize: 23,
+        color : 'white',
     },
     mainViewTwo: {
         flex: 1,
