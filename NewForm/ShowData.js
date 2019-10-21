@@ -21,7 +21,7 @@ export default class Listdemo extends Component {
                     <Text style={styles.nameTextOne}>{data.item.name}</Text>
                     <Text style={styles.lineText}>___________________________</Text>
                     <Text style={styles.nameText}>{data.item.email} </Text>
-                    <Text style={styles.nameText}>{data.item.designation} </Text>
+                    <Text style={styles.nameText}>{data.item.phone} </Text>
                     <Text style={styles.nameText}>{data.item.company} </Text>
                     <View style={styles.btnView}>
                     <TouchableOpacity style={styles.btnDel}  

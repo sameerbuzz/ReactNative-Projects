@@ -7,7 +7,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Keyboard,
+    Alert,
 } from 'react-native';
 import ListDemo from './ShowData';
 export default class Data extends Component {
@@ -18,10 +18,11 @@ export default class Data extends Component {
             id : new Date().getTime(),
             name : '',
             email : '',
-            designation : '',
+            phone : '',
             company : '',
             userData: [],
             isHidden : true,
+            isValid : true,
         }
     }
 
@@ -33,7 +34,7 @@ export default class Data extends Component {
                 id : this.state.userData[currKey].id,
                 name : this.state.userData[currKey].name,
                 email : this.state.userData[currKey].email,
-                designation : this.state.userData[currKey].designation,
+                phone : this.state.userData[currKey].phone,
                 company : this.state.userData[currKey].company,
                 userData : this.state.userData,
             }
@@ -52,20 +53,23 @@ export default class Data extends Component {
             isHidden :true,
             name : '',
             email : '',
-            designation : '',
+            phone : '',
             company : '',
         })
     }
 
     handleOnClick = () => {
-        const {id, name, email, designation, company} = this.state;
+        this.allValidation;
+        console.warn(this.state.isValid)
+        if (this.state.isValid == true) {
+        const {id, name, email, phone, company} = this.state;
        // let st = this.state
-    if (name != '' && email != '' && designation != '' && company != '') {
+    if (name != '' && email != '' && phone != '' && company != '') {
         let payLoad = {
             id : new Date().getTime(),
             name : name,
             email : email,
-            designation : designation,
+            phone : phone,
             company : company,
         };
         let userData = this.state.userData;
@@ -80,19 +84,29 @@ export default class Data extends Component {
     this.setState({
         name : '',
         email : '',
-        designation : '',
+        phone : '',
         company : '',
     })
+}else{
+    Alert.alert(
+        'ERROR',
+        'Please Enter Valid Data',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      ); 
+}
 }
 
     handleOnUpdate = () => {
         let st = this.state
-    if (st.name != '' && st.email != '' && st.designation != '' && st.company != '') {
+    if (st.name != '' && st.email != '' && st.phone != '' && st.company != '') {
         let payLoad = {
             id : st.id,
             name : st.name,
             email : st.email,
-            designation : st.designation,
+            phone : st.phone,
             company : st.company,
         };
         let userData = st.userData;
@@ -107,9 +121,35 @@ export default class Data extends Component {
         isHidden : true,
         name : '',
         email : '',
-        designation : '',
+        phone : '',
         company : '',
     })
+}
+
+allValidation = () =>{
+
+   
+
+    // regexName = '[A-Z][a-zA-Z ]+[a-zA-Z]$'
+    // rName = regexName.test(String(this.state.name))
+    
+    regexEmail = '[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}'
+    
+
+    regexPhone = '[1-9]{1}[0-9]{9}'
+    
+console.warn(rEmail, rPhone)
+    // rCompany = regexName.test(String(this.state.company))
+   console.warn(regexEmail.test(this.state.email))
+    if (regexEmail.test(this.state.email) && regexPhone.test(this.state.phone)){
+        this.setState({
+            isValid : true,
+        })
+    }else{
+        this.setState({
+            isValid : false,
+        })
+    }
 }
 
     render() {
@@ -126,6 +166,8 @@ export default class Data extends Component {
                     value = {this.state.name} 
                     returnKeyType = 'next' 
                     onSubmitEditing={() => { this.secondInput.focus(); }}
+                    autoCapitalize='words'
+                    autoCorrect={false}
                     />
                 </View> 
                 <View style = {styles.textViewOne} >
@@ -137,17 +179,21 @@ export default class Data extends Component {
                     returnKeyType = 'next'
                     ref={(ref) => { this.secondInput = ref; }}
                     onSubmitEditing={() => { this.thirdInput.focus(); }}
+                    autoCapitalize='none'
+                    autoCorrect={false}
                     />
                 </View > 
                 <View style = {styles.textViewOne} >
                     <TextInput style = {styles.nameInput} 
-                    placeholder = "Enter Designation here" 
+                    placeholder = "Enter phone no. here" 
                     placeholderTextColor='#a6c6ff' 
-                    onChangeText = {(text) => this.setState({designation : text})} 
-                    value = {this.state.designation}
+                    onChangeText = {(text) => this.setState({phone : text})} 
+                    value = {this.state.phone}
                     returnKeyType = 'next'
                     ref={(ref) => { this.thirdInput = ref; }}
                     onSubmitEditing={() => { this.fourthInput.focus(); }}
+                    autoCapitalize='words'
+                    autoCorrect={false}
                     />
                 </View > 
                 <View style = {styles.textViewOne} >
@@ -159,6 +205,8 @@ export default class Data extends Component {
                     returnKeyType = 'next'
                     ref={(ref) => { this.fourthInput = ref; }}
                     onSubmitEditing={(this.state.isHidden == true) ? this.handleOnClick : this.handleOnUpdate}
+                    autoCapitalize='words'
+                    autoCorrect={false}
                     />
                 </View > 
                 <View style = {styles.textViewOne } >
@@ -166,7 +214,6 @@ export default class Data extends Component {
                     onPress = {(this.state.isHidden == true) ? this.handleOnClick : this.handleOnUpdate} 
                     >
                     <Text style = {styles.loginText } > {(this.state.isHidden == true) ? 'Show Data' : 'Update Data' } 
-        
                     </Text> 
                     </TouchableOpacity > 
                 </View>  
