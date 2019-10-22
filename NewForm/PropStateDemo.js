@@ -8,8 +8,11 @@ import {
     TextInput,
     TouchableOpacity,
     Alert,
+    ScrollView,
 } from 'react-native';
 import ListDemo from './ShowData';
+import KeyboardShift from './KeyboardShift';
+
 export default class Data extends Component {
 
     constructor(){
@@ -154,6 +157,9 @@ console.warn(rEmail, rPhone)
 
     render() {
         return ( 
+            <KeyboardShift>
+        {() => (
+<ScrollView>
             <View style = {styles.mainView} >
                 <View style = {styles.headerView} >
                     <Text style = {styles.headerText} > LOGIN </Text>  
@@ -222,7 +228,10 @@ console.warn(rEmail, rPhone)
                     myfunc = {this.deleteData}
                     myEdit = {this.handleEdit}
                     />       
-            </View >    
+            </View >   
+            </ScrollView>
+            )}
+            </KeyboardShift> 
         );
     }
 }
