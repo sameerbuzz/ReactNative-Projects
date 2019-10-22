@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "emu": "emulator -avd Android Accelerated Oreo"
+    
   },
   "dependencies": {
     "react": "16.9.0",
