@@ -5,7 +5,6 @@ import {
     StyleSheet,
     Text,
 } from 'react-native';
-import { bold } from 'ansi-colors';
 
 export default function Static() {
     return(
