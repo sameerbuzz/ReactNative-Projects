@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import TestDemo1 from './AllTest/TestDemo1';
+import { SafeAreaView } from 'react-native';
+import FetchData from './AllTest/FetchData';
 
 export default class App extends Component {
 
   render() {
     return (
-      <View>
-        <TestDemo1 />
-      </View>
+      <SafeAreaView>
+        <FetchData />
+      </SafeAreaView>
     );
   }
 }
