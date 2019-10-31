@@ -13,6 +13,7 @@ export default class FetchData extends Component {
     
   constructor(props) {
     super(props);
+    const num = 0
     this.state = {
         userData: [],
         isLoader: true,
@@ -42,6 +43,28 @@ handleUrl(){
     }).catch(err=> {
         console.warn('err', err)
     })
+}
+
+onLoaderLoad() {
+    console.warn('onLoadStart');
+    <View style={{backgroundColor: 'red', height: 30, width: 30, position: 'absolute'}}>
+    <ActivityIndicator 
+    size='large' 
+    animating='true' 
+    color= 'red'
+    style={{
+        position: 'absolute', 
+        left: 0, 
+        right: 0, 
+        top: 20, 
+        bottom: 0, 
+        alignItems: 'center',
+        justifyContent: 'center'}}/>
+        </View>
+}
+
+countLoad() {
+    console.warn('onLoad')
 }
 
   render() {
@@ -87,7 +110,14 @@ handleUrl(){
                     </View>
                         <View style={styles.imgView}>
                             <Image style={styles.img}
-                            source={{ uri: (item.urlToImage == null) ? 'https://cdn.stocksnap.io/img-thumbs/960w/IDVPUQVYIJ.jpg' : item.urlToImage }} />
+                            source={{ uri: (item.urlToImage == null) ? 'https://cdn.stocksnap.io/img-thumbs/960w/IDVPUQVYIJ.jpg' : item.urlToImage }} 
+                            //source={{uri:  item.urlToImage}}
+                            // defaultSource={require('./add.png')}
+                            onLoadStart={this.onLoaderLoad}
+                            onLoad={this.countLoad}
+                            onLoadEnd={console.warn('onLoadEnd')}
+                             
+                            />
                         </View>   
                     </View>
                 )      

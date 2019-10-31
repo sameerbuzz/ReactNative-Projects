@@ -9,22 +9,24 @@ import ApiHit from './ApiHit';
 import Main from './UIDemo2/Main';
 import FlatPagination from './FlatPagination';
 import ImageCropPicker from './ImageCropPicker';
+import SlowImageLoad from './SlowImageLoad';
 import {View, ScrollView} from 'react-native';
 
 export default class App extends React.Component {
   render() {
     return (
     
-        /* <Form />
-        <Card />
-        <Listdemo />  
-        <Data />
-        <Gallery />
-        <NewUi />
-        <ApiHit />
-        <Main /> */
+        //  <Form />
+        // <Card />
+        // <Listdemo />  
+        // <Data />
+        // <Gallery />
+        // <NewUi />
+        // <ApiHit />
+        // <Main /> 
         // <FlatPagination />
     <ImageCropPicker />
+    // <SlowImageLoad />
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PermissionsAndroid } from 'react';
 import { 
     View, 
     Text ,
@@ -6,8 +6,8 @@ import {
     Image,
     StyleSheet
 } from 'react-native';
-import ImagePickerCam from 'react-native-image-crop-picker';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+//import ImagePicker from 'react-native-image-picker';
 
 export default class ImageCropPicker extends Component {
   constructor(props) {
@@ -18,8 +18,7 @@ export default class ImageCropPicker extends Component {
   }
 
 uploadImageFromGallery = () => {
-    ImagePickerCam.openPicker({
-            
+    ImagePicker.openPicker({     
         cropping: true
       }).then(image => {
         console.log(image);
@@ -28,46 +27,34 @@ uploadImageFromGallery = () => {
         })
       });
 }
+uploadVideoFromGallery = () => {
+  ImagePicker.openPicker({ 
+    mediaType: 'video'    
+    }).then(video => {
+      console.log(video);
+      this.setState({
+          source: video.path
+      })
+    });
+}
 
 openCamera = () => {
-    let options = {
-        title: 'Select Image',
-        customButtons: [
-          { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-        ],
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
-        },
-      };
-    ImagePicker.launchCamera(options, (response) => {
-        console.log('Response = ', response);
-
-  if (response.didCancel) {
-    console.log('User cancelled image picker');
-  } else if (response.error) {
-    console.log('ImagePicker Error: ', response.error);
-  } else if (response.customButton) {
-    console.log('User tapped custom button: ', response.customButton);
-  } else {
-    
-
-    // You can also display the image using data:
-    // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
+  ImagePicker.openCamera({     
+    cropping: true
+  }).then(image => {
+    console.log(image);
     this.setState({
-        source: response.uri,
-    });
-  }
-      });
+        source: image.path
+    })
+  });
 }
 
   render() {
     return (
       <View>
         <TouchableOpacity 
-        style={styles.image,{top: 300, left: 100,}}
-        onPress={this.uploadImageFromGallery}>
+        style={styles.image,{top: 200, left: 80,}}
+        onPress={this.openCamera}>
             <Image 
                 style={styles.image}
                 source={{uri: this.state.source}} />

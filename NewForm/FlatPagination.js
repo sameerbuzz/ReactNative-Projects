@@ -25,14 +25,13 @@ export default class FlatPagination extends Component {
   loadUsers = () => {
     this.setState({ isLoading: true });
 
-    axios.get('https://reqres.in/api/users?delay='+this.state.pageNum+1)
+    axios.get('https://reqres.in/api/users?delay=3')
     .then(response => {
         const userData1 = response.data.data;
         this.setState({
           userData:this.state.userData.concat(userData1),
           isLoading: false,
           isRefreshing: false,
-          pageNum: this.state.pageNum+1
         });  
       }).catch(err => {
           console.warn("err", err)
@@ -61,14 +60,13 @@ hitAPI = () => {
 
   this.setState({ isLoading: true });
 
-  axios.get('https://reqres.in/api/users?delay=1')
+  axios.get('https://reqres.in/api/users?delay=2')
   .then(response => {
       const userData1 = response.data.data;
       this.setState({
         userData:userData1,
         isLoading: false,
         isRefreshing: false,
-        pageNum: 1
       });  
     }).catch(err => {
         console.warn("err", err)
@@ -81,19 +79,25 @@ hitAPI = () => {
       <SafeAreaView>
         <View style={{ height: "100%"}}>
         <FlatList 
-            ListHeaderComponent={
+            ListFooterComponent={
               <ActivityIndicator size='large' 
               hidesWhenStopped='true' 
               color='red' 
               animating={this.state.isLoading}
               />
             }
-            ListHeaderComponentStyle={styles.loading}
             data = {this.state.userData}
             renderItem = {({item})=>(
                 <View style={styles.card}>
-                    <Image source={{uri: item.avatar}} style={{height: 60, width: 60, borderRadius: 10}} />
-                    <Text style={{paddingTop: 15}}>{item.first_name} {item.last_name}</Text>
+                    <Image 
+                      onLoad={(e) => this.setState({isLoading: false})}
+                      onError={(e) => this.setState({isLoading: false})}
+                      onLoadStart={(e) => this.setState({isLoading: true})}
+                      source={{uri: item.avatar}} 
+                      style={{height: 60, width: 60, borderRadius: 10}} 
+                      defaultSource={require('./download3.jpeg')}
+                      />
+                    <Text style={{paddingTop: 15,}}>{item.first_name} {item.last_name}</Text>
                 </View>
             )} 
             keyExtractor = {(item, index) => index.toString()}
