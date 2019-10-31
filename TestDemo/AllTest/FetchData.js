@@ -9,15 +9,15 @@ import {
     TouchableOpacity,
     TextInput
 } from 'react-native';
-
 export default class FetchData extends Component {
+    
   constructor(props) {
     super(props);
     this.state = {
         userData: [],
         isLoader: true,
         show: -1,
-        search: 'noida'
+        search: 'Noida'
     };
   }
 
@@ -32,7 +32,7 @@ toggle=(key)=>{
 }
 
 handleUrl(){
-    return fetch('https://newsapi.org/v2/everything?q='+this.state.search+'&apiKey=6e44b6acc6564f6eb35e3ac41763447f')
+    return fetch('https://newsapi.org/v2/everything?q='+this.state.search+'&apiKey=5dbea5cfd8654ff4b958fe799cdd49b9')
     .then(response => response.json())
     .then((responseJson) =>{
         this.setState({
@@ -47,21 +47,29 @@ handleUrl(){
   render() {
     return (  
       <View>
-        <View>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 20, paddingRight: 20,}}>
+            <Image source={require('./sort.png')} style={{height: 30, width: 30, }} />
+            <Text style={{alignItems: 'center', fontWeight: 'bold', fontSize: 30,  color: '#00A2B0',fontFamily: 'Snell Roundhand'}}>Sameer</Text>
+            <Image source={require('./tune.png')} style={{height: 30, width: 30, }} />
+        </View>
+        <View style={{paddingLeft: 20}}>
+            <Text style={{fontWeight: 'bold', fontSize: 30}}>Home</Text>
             <TextInput placeholder='Enter City' style={styles.search} value={this.state.search} onChangeText={(text) => this.setState({search : text})} onSubmitEditing={this.handleUrl.bind(this)}/> 
             <Image source={require('./search1.png')} style={styles.searchImg}/>
         </View>
         <View style={{backgroundColor: '#dcdfe3',}}>
           <ActivityIndicator size='large' animating={this.state.isLoader} style={styles.loading}/>
-        <FlatList 
+          <View>
+         <FlatList 
+            contentContainerStyle={{flexGrow:1}}
             data={this.state.userData}
-            keyExtractor = {({id},index) => id}
+            keyExtractor = {(item,index)=>index.toString()}
             renderItem={({item,index})=> {
                 return(
                     <View syle={{flexDirection: 'row',}}>
                     <View style={styles.flat}> 
                         <View style={styles.card}>
-                            <View style={{ paddingLeft: 145}}>
+                            <View style={{ marginLeft: 140}}>
                                 <Text style={styles.mytext} numberOfLines={this.state.show === index ? null : 2}>{item.title}</Text> 
                                <View style={{flexDirection: 'row', paddingTop: 5}}>
                                     <Image source={require('./person.png')} style={{height: 15, width: 15}} />
@@ -71,7 +79,7 @@ handleUrl(){
                               <Text style={styles.mytextOne} numberOfLines={this.state.show === index ? null : 2}>{item.content == null ? item.description : item.content}</Text>
                                <View style={{alignItems: 'flex-end'}}>
                                     <TouchableOpacity  onPress={() => this.toggle(index)} style={styles.btnRead}>
-                                        <Text style={{color: '#48BDB8'}}>{this.state.show === index ? 'Hide' : 'Read'}</Text>
+                                        <Text style={{color: '#00A2B0'}}>{this.state.show === index ? 'Hide' : 'Read'}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View> 
@@ -80,12 +88,13 @@ handleUrl(){
                         <View style={styles.imgView}>
                             <Image style={styles.img}
                             source={{ uri: (item.urlToImage == null) ? 'https://cdn.stocksnap.io/img-thumbs/960w/IDVPUQVYIJ.jpg' : item.urlToImage }} />
-                            <ActivityIndicator size='large' animating={this.state.isLoader} style={styles.loading}/>
                         </View>   
                     </View>
                 )      
             }}
         />
+       
+    </View>
         </View>
       </View>
     );
@@ -95,13 +104,12 @@ handleUrl(){
 styles=StyleSheet.create({
     flat: {
         margin: 20,
-        marginTop: 0,
         flexDirection: 'row',
+        
     },
     card: {
         borderRadius: 10,
         padding: 5,
-        paddingTop: 10,
         marginTop: 30,
         backgroundColor: 'white',
     },
@@ -114,8 +122,8 @@ styles=StyleSheet.create({
         width: 120,
         borderRadius: 10,
         position: 'absolute',
-        marginLeft: 40,
-        paddingTop: 10
+        marginLeft: 35,
+        marginTop: 35,
     },
     img: {
         height:'100%',
@@ -130,13 +138,14 @@ styles=StyleSheet.create({
         paddingRight: 20,
         fontSize: 25,
         margin: 20,
+        marginLeft: 0,
         backgroundColor: '#dcdfe3',
     },
     searchImg: {
         position: 'absolute',
         height: 30,
         width: 30,
-        marginTop: 30,
+        marginTop: 65,
         marginLeft: 30,
     },
     loading: {
@@ -149,14 +158,14 @@ styles=StyleSheet.create({
         justifyContent: 'center'
     },
     btnRead: {
-        borderColor: '#48BDB8', 
+        borderColor: '#00A2B0', 
         alignItems: 'center', 
         width: 60, 
         height: 30, 
         paddingTop: 5, 
         borderWidth: 1, 
         borderRadius: 5, 
-        marginTop: 10
+        marginTop: 5
     },
     author: {
         color: 'grey',
