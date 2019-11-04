@@ -9,42 +9,30 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
-//import ImagePicker from 'react-native-image-picker';
-
 export default class ImageCropPicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
         source: 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg',
-        permission: null,
         imageArray: [],
     };
   }
 
-
-
 multipleUploadImage = () => {
+  let temp = [];
   ImagePicker.openPicker({     
       cropping: true,
       multiple: true,
     }).then(image => {
-      let temp = []
-      console.log(image);
-      this.setState({
-          source: image
-      })
       image.forEach((item)=> {
-        let myImage= {
-          uri: item.path
-        }
-        temp.push(myImage)
+        temp.push(item.path);
+      },
       
-      this.setState({
-          imageArray: temp
-        })
-        //console.warn(this.state.imageArray)
-      })
-    });
+    )
+    this.setState({
+      imageArray: temp
+    }) 
+  });
 }
 
 static navigationOptions = {
@@ -60,26 +48,24 @@ static navigationOptions = {
       <View>
         <View>
         <TouchableOpacity 
-        style={styles.image,{top: 50, left: 80,}}
+        style={styles.image,{top: 50, alignContent: 'center', alignItems: 'center'}}
         onPress={this.multipleUploadImage}>
             <Image 
                 style={styles.image}
-                source={{uri: 'https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg'}} />
+                source={{uri: this.state.source}} />
             </TouchableOpacity>
             </View>
-            <View style={{ height: 500, width: "100%", top: 80}}>
+            <View style={{ height: 500, width: "100%", top: 80, alignContent: 'center', alignItems: 'center'}}>
             <FlatList 
-            numColumns={3}
+              numColumns={3}
               data={this.state.imageArray}
               keyExtractor = {(item,id) => id.toString()}
-              renderItem={(item) => {
-                <View>
-                  <Image 
-                      style={{height: 50, width: 50, backgroundColor: 'blue'}}
-                      source={{uri: item.myImage}}
-                      debugger
-                  />
-                  </View>
+              renderItem = {({item}) => {
+                return(
+                <Image 
+                    style={{height: 100, width: 100,}}
+                    source={{uri : item}}
+                debugger/> )
               }}
             />
             </View>
