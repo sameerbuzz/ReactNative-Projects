@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
-
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  StyleSheet, 
+  TouchableOpacity, 
+  Image,
+  ActivityIndicator 
+} from 'react-native';
+import myPicker from '../components/ImagePickerFn';
 
 export default class Next extends Component {
   
@@ -21,6 +28,7 @@ export default class Next extends Component {
            first: this.props.navigation.state.params.first,
            last: this.props.navigation.state.params.last,
            source: this.props.navigation.state.params.source,
+           isLoading : false,
         };
       };
 
@@ -30,20 +38,28 @@ export default class Next extends Component {
       }
 
       uploadImageFromGallery = () => {
-        ImagePicker.openPicker({     
-            cropping: true
-          }).then(image => {
-            console.log(image);
-            this.setState({
-                source: image.path
-            })
-        });
+        myPicker.getSinglePic(mydata => 
+          {
+            this.setState({source: mydata}
+              ,() => {myPicker.uploadmyPic( this.state.source, (res => {
+                
+                this.setState({
+                  isLoading: true,
+                })
+                this.setState({
+                  source: res.postResponse.location
+                }, () => {this.setState({isLoading: false})})
+                console.warn(this.state.source)
+              })
+            )})
+        })  
     }
 
   render() {
     const { params } = this.props.navigation.state;
     return (
       <View style={styles.mainView}>
+        <ActivityIndicator size='large' hidesWhenStopped='true' color='red' animating={this.state.isLoading} style={styles.loading}/>
         <TouchableOpacity onPress={this.uploadImageFromGallery}>
       <Image source={{uri: this.state.source}} style={styles.img} />
       </TouchableOpacity>
@@ -96,5 +112,14 @@ const styles = StyleSheet.create({
         width: 200,
         margin: 20,
         borderRadius: 100
-      }
+      },
+      loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 100,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 })

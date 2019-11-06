@@ -7,9 +7,7 @@ import {
     StyleSheet,
     FlatList
 } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
-
-//import ImagePicker from 'react-native-image-picker';
+import myPicker from '../../components/ImagePickerFn.js';
 
 export default class ImageCropPicker extends Component {
   constructor(props) {
@@ -22,14 +20,11 @@ export default class ImageCropPicker extends Component {
   }
 
 openCamera = () => {
-  ImagePicker.openCamera({     
-    cropping: true
-  }).then(image => {
-    console.log(image);
+  myPicker.getCamera(response => {
     this.setState({
-        source: image.path
-    })
-  });
+      source: response
+  })
+  })
 }
 
 static navigationOptions = {

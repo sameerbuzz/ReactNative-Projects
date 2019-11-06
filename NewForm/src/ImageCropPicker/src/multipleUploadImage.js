@@ -1,4 +1,4 @@
-import React, { Component, PermissionsAndroid } from 'react';
+import React, { Component } from 'react';
 import { 
     View, 
     Text ,
@@ -7,7 +7,7 @@ import {
     StyleSheet,
     FlatList
 } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
+import myPicker from '../../components/ImagePickerFn.js';
 
 export default class ImageCropPicker extends Component {
   constructor(props) {
@@ -19,20 +19,11 @@ export default class ImageCropPicker extends Component {
   }
 
 multipleUploadImage = () => {
-  let temp = [];
-  ImagePicker.openPicker({     
-      cropping: true,
-      multiple: true,
-    }).then(image => {
-      image.forEach((item)=> {
-        temp.push(item.path);
-      },
-      
-    )
+  myPicker.getMultiplePic(response => {
     this.setState({
-      imageArray: temp
-    }) 
-  });
+      imageArray: response
+    })
+  })   
 }
 
 static navigationOptions = {
