@@ -20,6 +20,11 @@ import FetchData from '../../AllTest/src/test1/FetchData';
 import Next from '../../LoginDemo2/Next';
 import TestList from '../../AllTest/src/TestList';
 import Home2 from '../../LoginDemo2/Home';
+import Splash from './Splash/Splash';
+import SignIn from './Splash/SignIn';
+import SignUp from './Splash/SignUp';
+import LoginForm from './Splash/Form';
+import Dashboard from './Splash/Dashboard';
 import {
   View, 
   Text, 
@@ -50,6 +55,7 @@ const myData=[
   {title: 'Navigation',name: 'Project12'},
   {title: 'All Test List',name: 'Project13'},
   {title: 'Login Demo 2',name: 'Project14'},
+  {title: 'Splash',name: 'Project15'},
 ];
 class App extends React.Component {
   static navigationOptions = {
@@ -98,7 +104,11 @@ const AppNavigator = createStackNavigator({
       Test1: FetchData,
   Project14: Home2,
       Next1: Next,
-
+  Project15: Splash,
+    Screen1: SignUp,
+    Screen2: SignIn,
+    Screen3: LoginForm,
+    Screen4: Dashboard,
 },
 {
   initialRouteName: 'Home',
@@ -134,7 +144,7 @@ card: {
   width: 150,
   borderRadius: 20,
   marginTop: 20,
-  backgroundColor: '#1cad9a',
+  backgroundColor: '#00DBC2',
   borderWidth: 2,
   borderColor: 'white',
   shadowColor: 'white',

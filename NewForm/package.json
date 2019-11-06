@@ -11,6 +11,7 @@
     "emu": "emulator -avd Android Accelerated Oreo"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.2",
     "axios": "^0.19.0",
     "i18n-js": "^3.3.0",
     "react": "16.9.0",
