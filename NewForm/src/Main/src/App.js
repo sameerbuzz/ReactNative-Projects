@@ -25,6 +25,7 @@ import SignIn from './Splash/SignIn';
 import SignUp from './Splash/SignUp';
 import LoginForm from './Splash/Form';
 import Dashboard from './Splash/Dashboard';
+import GoogleSignIn from './GoogleSignIn';
 import {
   View, 
   Text, 
@@ -56,6 +57,7 @@ const myData=[
   {title: 'All Test List',name: 'Project13'},
   {title: 'Login Demo 2',name: 'Project14'},
   {title: 'Splash',name: 'Project15'},
+  {title: 'Google Sign In',name: 'Project16'},
 ];
 class App extends React.Component {
   static navigationOptions = {
@@ -68,7 +70,7 @@ class App extends React.Component {
   };
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', marginTop: 1, marginBottom: 30, backgroundColor: '#00DBC2',}}>
+      <View style={{ flex: 1, alignItems: 'center', marginTop: 1, marginBottom: 40, backgroundColor: '#00DBC2',}}>
 <FlatList 
   showsVerticalScrollIndicator={false}
   numColumns={2}
@@ -76,9 +78,9 @@ class App extends React.Component {
   keyExtractor={(item,id) => id.toString()}
   renderItem={({item})=> {
     return(
-      <View style={{margin: 25, marginBottom: 4}}>
+      <View style={{margin: 20}}>
       <TouchableOpacity onPress={()=> {this.props.navigation.push(item.name)}} style={styles.card}>
-        <Text style={{fontWeight: 'bold', fontSize: 20, color: 'white'}}>{item.title}</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 20, color: '#1cad9a'}}>{item.title}</Text>
         </TouchableOpacity>
         </View>
     )
@@ -104,11 +106,22 @@ const AppNavigator = createStackNavigator({
       Test1: FetchData,
   Project14: Home2,
       Next1: Next,
-  Project15: Splash,
-    Screen1: SignUp,
+  Project15: {
+    screen: Splash,
+    navigationOptions: {
+      header: null
+    }
+  },
+    Screen1:{ 
+      screen: SignUp,
+      navigationOptions: {
+        headerLeft: null
+      },
+    },
     Screen2: SignIn,
     Screen3: LoginForm,
     Screen4: Dashboard,
+  Project16: GoogleSignIn,
 },
 {
   initialRouteName: 'Home',
@@ -144,7 +157,7 @@ card: {
   width: 150,
   borderRadius: 20,
   marginTop: 20,
-  backgroundColor: '#00DBC2',
+  backgroundColor: 'white',
   borderWidth: 2,
   borderColor: 'white',
   shadowColor: 'white',

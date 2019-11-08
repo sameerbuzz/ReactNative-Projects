@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "367694714799",
+    "firebase_url": "https://appinventiv-54850.firebaseio.com",
+    "project_id": "appinventiv-54850",
+    "storage_bucket": "appinventiv-54850.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367694714799:android:0ea33fb76be1bc7a6d015a",
+        "android_client_info": {
+          "package_name": "com.newform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367694714799-r373nckmnddm98u80r8kclndaqtdqcnh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_JrzwjE4K9xYP2Gn6YdVXNsvORjbMvAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367694714799-r373nckmnddm98u80r8kclndaqtdqcnh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "367694714799-poek6kednpdvklqo9kgpeau214bqcfj3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.NewForm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
