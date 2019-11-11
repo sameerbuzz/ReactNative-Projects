@@ -5,7 +5,7 @@ import {
     FlatList, 
     TouchableOpacity, 
     Image,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 import {
     GoogleSignin,
