@@ -1,11 +1,16 @@
-import { StyleSheet } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import colorPick from '../../constants/styles/color';
 
+//custom imports
+import colorPick from '../../constants/styles/color';
 import HomeScreen from './Home';
 import UIDemo1 from '../UIDemo1';
 import MobXDemo from '../MobXDemo';
+import MobXPagination from '../Pagination/MobXPagination';
+import TodoSplash from '../TodoAsync/splash';
+import TodoListContainer from '../TodoAsync/TodoListContainer';
+import FlatlistComponent from '../TodoAsync/FlatlistComponent';
+import InstaLogin from '../Instagram/Login';
 
 const AppNavigator = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -16,6 +21,16 @@ const AppNavigator = createStackNavigator({
     }
   },
   MobXDemo: MobXDemo,
+  MobXPagination: MobXPagination,
+  TodoSplash: TodoSplash,
+  TodoListContainer: TodoListContainer,
+  FlatlistComponent: FlatlistComponent,
+  InstaLogin: {
+    screen: InstaLogin,
+    navigationOptions: {
+      header: null,
+    }
+  },
 },
 {
   initialRouteName: 'HomeScreen',
@@ -23,11 +38,14 @@ const AppNavigator = createStackNavigator({
     headerStyle: {
       backgroundColor: colorPick.darkGreen 
   },
-    headerTintColor: 'white',
+    headerTintColor: '#fff',
+    headerBackTitleStyle: {
+      color: '#fff'
+    },
     headerBackTitle: null,
     headerTitleStyle: {
       fontWeight: 'bold',
-      fontSize: 30
+      fontSize: 30,
   },
   }
 },

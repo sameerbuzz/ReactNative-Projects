@@ -6,7 +6,10 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+  Keyboard
 } from 'react-native';
 import { observer } from "mobx-react"
 import Demo from '../stores/DemoMobx'
@@ -22,18 +25,31 @@ const screenHeight = Dimensions.get('window').height;
 class MobXDemo extends Component {
   static navigationOptions = {
     title: "TODO LIST",
-    headerTintColor: colorPick.darkGreen,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 25,
-      color: 'white'
-    },
   };
+
+deleteAlert = (key) => {
+  Alert.alert(
+    'Do you want to Delete this TODO Item ?',
+    '',
+    [
+      {
+        text: 'Delete', 
+        onPress: () => Demo.deleteCard(key),
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+    ],
+    { cancelable: false }
+  );
+}
 
   render() {
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 5 }}>
           <FlatList
           ref={(ref) => { this.myFlatlist = ref }}
           numColumns={2}
@@ -43,25 +59,40 @@ class MobXDemo extends Component {
           scrollToEnd = {Demo.dataArray}
             data={Demo.dataArray.slice()}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) =>(
+            renderItem={({ item, index }) =>(
                 <View style={styles.cardView}>
-                  <Text style={{fontSize: totalSize(2), color: 'white'}}>{item}</Text>
+                  <TouchableOpacity onLongPress={() => {
+                    Keyboard.dismiss();
+                    this.deleteAlert(index)}}
+                    >
+                      <View>
+                  <ScrollView>
+                  <Text style={styles.cardText}>{item}</Text>
+                  </ScrollView>
+                  </View>
+                  </TouchableOpacity>
                 </View>
               )}
           />
         <View style={styles.textView}>
           <TextInput 
+          returnKeyType = 'done'
           multiline = {true}
           numberOfLines = {1}
           placeholder='Add data here' 
           onChangeText={(text) => Demo.name = text} 
           style={styles.textSize}
+          ref={input => { this.textInput = input }}
+          onSubmitEditing = {() => {
+            Keyboard.dismiss()} }
           />
           <Icons 
           name="add-circle" 
           size={totalSize(5)} 
           color={colorPick.darkGreen} 
-          onPress={() => Demo.todo()} 
+          onPress={() => {
+            this.textInput.clear() 
+            Demo.todo()} }
           />
         </View>
       </View>
@@ -96,5 +127,10 @@ const styles = StyleSheet.create({
     height: screenWidth/2.35, 
     alignItems: 'center', 
     justifyContent: 'space-evenly',
-  }
+  },
+  cardText: {
+    fontSize: totalSize(2), 
+    color: 'white', 
+    padding: 10,
+  },
 })

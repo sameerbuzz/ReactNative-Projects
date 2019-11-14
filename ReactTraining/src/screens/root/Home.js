@@ -4,13 +4,22 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Dimensions
 } from 'react-native';
+
+//custom imports
 import colorPick from '../../constants/styles/color';
+import { width, height, totalSize } from 'react-native-dimension';
+const screenWidth = Dimensions.get('window').width;  
+const screenHeight = Dimensions.get('window').height; 
 
 const myData= [
   {title: 'First UI', name: 'UIDemo1'},
   {title: 'MobX Demo', name: 'MobXDemo'},
+  {title: 'Pagination', name: 'MobXPagination'},
+  {title: 'Todo List', name: 'TodoSplash'},
+  {title: 'Instagram', name: 'InstaLogin'},
 ]
 
 export default class Home extends Component {
@@ -25,48 +34,51 @@ export default class Home extends Component {
       },
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        <View style={{justifyContent: 'space-between', marginTop: 1}}>
+        <View style={styles.mainView}>
         <FlatList 
           numColumns={2}
           data= {myData}
           keyExtractor={(item,id) => id.toString()}
           renderItem={({item})=> {
             return(
-              <View style={styles.homeCard}>
+              <View>
               <TouchableOpacity onPress={()=> {this.props.navigation.push(item.name)}}>
+                <View style={styles.homeCard}>
                 <Text style={styles.textCard}>{item.title}</Text>
+                </View>
                 </TouchableOpacity>
                 </View>
             )
           }}
         />
         </View>
-      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  mainView: {
+    justifyContent: 'space-between', 
+    marginTop: height(0.2),
+    marginBottom: height(0.2),
+    alignItems: 'center'
+  },
   homeCard: {
-    margin: 20,
+    margin: height(3),
     backgroundColor: colorPick.darkGreen,
-    padding: 20,
+    padding: height(2),
     borderRadius: 20,
-    width: "39%",
+    width: screenWidth/2.7,
+    height: screenWidth/2.7,
     alignItems: 'center',
+    justifyContent: 'space-evenly'
 },
   textCard: {
     color: 'white', 
     fontWeight: 'bold', 
-    fontSize: 20,
+    fontSize: totalSize(2),
 },
 })
