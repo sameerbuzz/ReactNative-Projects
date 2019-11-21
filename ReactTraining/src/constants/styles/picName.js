@@ -8,5 +8,6 @@ const picName = {
     pic2 : require('../../assets/images/pic1.jpeg'),
     pic3 : require('../../assets/images/pics.jpeg'),
     instaPic: require('../../assets/images/instaPic2.png'),
+    whatsPic: require('../../assets/images/whatsIcon.png'),
 }
 export default picName;

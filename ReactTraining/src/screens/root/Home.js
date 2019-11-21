@@ -20,6 +20,8 @@ const myData= [
   {title: 'Pagination', name: 'MobXPagination'},
   {title: 'Todo List', name: 'TodoSplash'},
   {title: 'Instagram', name: 'InstaLogin'},
+  {title: 'WhatsApp', name: 'WhatsappSplash'},
+  {title: 'Redux', name: 'Redux'},
 ]
 
 export default class Home extends Component {
@@ -29,7 +31,7 @@ export default class Home extends Component {
     headerTintColor: colorPick.darkGreen,
     headerTitleStyle: {
       fontWeight: 'bold',
-      fontSize: 25,
+      fontSize: 20,
       color: 'white'
       },
   };

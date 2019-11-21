@@ -66,31 +66,36 @@ export default class Login extends Component {
                     />
                     <TouchableOpacity style={styles.login}>
                         <Text style={styles.loginText}>Log In</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                    <View style={styles.forgot}>                   
-                    <Text style={{...styles.help, fontWeight: "300"}}>
-                        Forgot your login details? 
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View style={styles.forgot}>
+                            <Text style={{ ...styles.help, fontWeight: "300" }}>
+                                Forgot your login details?
                     </Text>
-                        <Text style={{...styles.help, fontWeight: "600"}}> Get help signing in.</Text>                       
-                    </View>
+                            <Text style={{ ...styles.help, fontWeight: "600" }}> Get help signing in.</Text>
+                        </View>
                     </TouchableOpacity>
                     <View style={styles.orView}>
                         <View style={styles.orLine}></View>
                         <Text style={styles.orText}>  OR  </Text>
                         <View style={styles.orLine}></View>
-                        </View>
-                        <TouchableOpacity>
+                    </View>
+                    <TouchableOpacity>
                         <View style={styles.fb}>
-                            <Icons 
-                            name='facebook-official'
-                            color='white'
-                            size={totalSize(3)}
+                            <Icons
+                                name='facebook-official'
+                                color='white'
+                                size={totalSize(3)}
                             />
                             <Text style={styles.fbText}>Log in with Facebook</Text>
-                            </View>
-                            </TouchableOpacity>
-                            
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.footer}>
+                    <TouchableOpacity style={{flexDirection: 'row'}}>
+                        <Text style={{ ...styles.help, fontWeight: "300" }}>Don't have an account? </Text>
+                        <Text style={{ ...styles.help, fontWeight: "600" }}>Sign up.</Text>
+                        </TouchableOpacity>
                 </View>
             </Animated.View>
 
@@ -101,31 +106,32 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     mainView: {
         marginTop: screenHeight / 5,
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 0.9
     },
     container: {
         flex: 1,
-
     },
     insta: {
-        height: totalSize(10),
-        width: screenWidth / 1.5
+        height: totalSize(7.5),
+        width: screenWidth / 2
     },
     input: {
-        backgroundColor: '#FFFFFF50',
+        backgroundColor: 'rgba(255,255,255,0.15)',
         height: totalSize(6),
         marginTop: screenHeight / 40,
         width: screenWidth / 1.2,
-        padding: height(2),
+        paddingLeft: height(2),
+        paddingRight: height(2),
         fontSize: height(2.5),
-        color: 'white',
-        opacity: 0.6,
-        borderRadius: height(0.3)
+        color: '#fff',
+        borderRadius: height(0.3),
+        
     },
     login: {
         height: totalSize(6),
         marginTop: screenHeight / 40,
-        width: screenWidth / 1.2, 
+        width: screenWidth / 1.2,
         color: 'white',
         opacity: 0.6,
         borderRadius: height(0.3),
@@ -135,31 +141,31 @@ const styles = StyleSheet.create({
     },
     loginText: {
         padding: height(1.5),
-        fontSize: height(2.3),
+        fontSize: height(2.5),
         color: '#FFFFFF50',
-        fontWeight: "600"
+        fontWeight: "800"
     },
     forgot: {
         flexDirection: 'row',
         marginTop: screenHeight / 40,
     },
-    help:{
+    help: {
         color: 'white',
-        fontSize: height(1.5),
+        fontSize: width(4),
     },
     orView: {
         marginTop: screenHeight / 40,
         flexDirection: 'row',
+        alignItems: 'center'
     },
     orLine: {
         backgroundColor: '#FFFFFF50',
         height: height(0.1),
-        width: screenWidth/2.8,
-        marginTop: height(1)
+        width: screenWidth / 2.8,
     },
     orText: {
         color: 'white',
-        fontSize: height(1.8)
+        fontSize: height(2.4)
     },
     fb: {
         marginTop: screenHeight / 40,
@@ -169,7 +175,15 @@ const styles = StyleSheet.create({
     fbText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: height(2),
+        fontSize: height(2.4),
         marginLeft: width(2)
+    },
+    footer: {
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        flex: 0.1,
+        borderTopWidth: height(0.1),
+        borderColor: 'rgba(255,255,255,0.4)',
+        alignItems: 'center',
+        justifyContent: 'space-evenly'
     }
 });

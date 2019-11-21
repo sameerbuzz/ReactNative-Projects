@@ -1,5 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 
 //custom imports
 import colorPick from '../../constants/styles/color';
@@ -11,6 +13,10 @@ import TodoSplash from '../TodoAsync/splash';
 import TodoListContainer from '../TodoAsync/TodoListContainer';
 import FlatlistComponent from '../TodoAsync/FlatlistComponent';
 import InstaLogin from '../Instagram/Login';
+import WhatsappSplash from '../Whatsapp/whatsappSplash';
+import WhatsapptabNavigation from '../Whatsapp/tabNavigation';
+import WhatsappHome from '../Whatsapp/home';
+import Redux from '../redux/index';
 
 const AppNavigator = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -24,28 +30,38 @@ const AppNavigator = createStackNavigator({
   MobXPagination: MobXPagination,
   TodoSplash: TodoSplash,
   TodoListContainer: TodoListContainer,
-  FlatlistComponent: FlatlistComponent,
   InstaLogin: {
     screen: InstaLogin,
     navigationOptions: {
       header: null,
     }
   },
+  WhatsappSplash: {
+    screen: WhatsappSplash,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  WhatsapptabNavigation: {
+    screen: WhatsapptabNavigation,
+  },
+  WhatsappHome: WhatsappHome,
+  Redux: Redux,
 },
+
 {
   initialRouteName: 'HomeScreen',
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: colorPick.darkGreen 
   },
-    headerTintColor: '#fff',
+    headerTintColor: 'white',
     headerBackTitleStyle: {
-      color: '#fff'
+      color: 'white',
     },
-    headerBackTitle: null,
     headerTitleStyle: {
       fontWeight: 'bold',
-      fontSize: 30,
+      fontSize: 20,
   },
   }
 },

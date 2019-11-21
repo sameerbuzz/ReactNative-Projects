@@ -10,14 +10,13 @@ import {
     ActivityIndicator,
     KeyboardAvoidingView
 } from 'react-native';
-
+import FlatlistComponent from './FlatlistComponent';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { width, totalSize } from 'react-native-dimension';
 
 //custom imports
 import colorPick from '../../constants/styles/color';
-import FlatlistComponent from './FlatlistComponent';
 
 Icons.loadFont()
 const screenHeight = Dimensions.get('window').height;
@@ -232,14 +231,16 @@ export default class TodoListContainer extends Component {
     renderItem = (rowData) => {
         let { item } = rowData
         return (
-            <FlatlistComponent
+            <FlatlistComponent 
             task={item.task}
             id={item.id}
             isCompleted= {item.isCompleted}
             callDelete={() => this.deleteAlert(item.id)}
             callCheckState = {() => this.toggleState(item.id)}
             callEdit = {() => this.editData(item.id)}
+ 
             />
+                       
         );
     }
 
@@ -273,7 +274,7 @@ export default class TodoListContainer extends Component {
                         onSubmitEditing={() => {
                             Keyboard.dismiss()
                             this.textInput.clear()
-                            this.handleOnClick()
+                            this.state.editing ? this.handleUpdate() :this.handleOnClick()
                         }}
                     />
                     <Icons

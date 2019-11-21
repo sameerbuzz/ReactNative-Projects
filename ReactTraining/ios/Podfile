@@ -36,6 +36,7 @@ target 'ReactTraining' do
 
   pod 'RNGestureHandler', :path => "../node_modules/react-native-gesture-handler"
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
   target 'ReactTrainingTests' do
     inherit! :search_paths
     # Pods for testing
