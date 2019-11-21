@@ -1,12 +1,12 @@
 import { Provider } from 'react-redux';
-import Home from './screen/home';
+import ReduxForm from './screen/ReduxForm';
 import store from '../../stores/index';
 import React from 'react';
 
 function App () {
     return(
         <Provider store = {store}>
-            <Home />
+            <ReduxForm />
             </Provider>
     );
 }

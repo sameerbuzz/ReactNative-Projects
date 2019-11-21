@@ -22,6 +22,7 @@ const myData= [
   {title: 'Instagram', name: 'InstaLogin'},
   {title: 'WhatsApp', name: 'WhatsappSplash'},
   {title: 'Redux', name: 'Redux'},
+  {title: 'ReduxForm', name: 'ReduxForm'},
 ]
 
 export default class Home extends Component {
@@ -65,13 +66,11 @@ const styles = StyleSheet.create({
   mainView: {
     justifyContent: 'space-between', 
     marginTop: height(0.2),
-    marginBottom: height(0.2),
-    alignItems: 'center'
+    alignItems: 'center',
   },
   homeCard: {
-    margin: height(3),
     backgroundColor: colorPick.darkGreen,
-    padding: height(2),
+    margin: height(2),
     borderRadius: 20,
     width: screenWidth/2.7,
     height: screenWidth/2.7,

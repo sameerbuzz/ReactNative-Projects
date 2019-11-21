@@ -12,19 +12,15 @@ export const checkState = () => {
   }
 }
 
-export const checkingState = (index) => {
-  return (dispatch, getState) => {
-    const {dataArray} = getState().countereducer;
-    dispatch({type: 'checkingbox', payload: {isChecking: dataArray.map(myData => {
-      return myData.index === index ? !myData.isChecking : myData
-    })}})
+export const checkingState = (status) => {
+  return (dispatch) => {
+    dispatch({type: 'checkingbox', payload: {isChecking: status}})
   }
 }
 
 export const mydataArray = () => {
   return (dispatch, getState) => {
     const {dataArray} = getState().countereducer;
-    dispatch({type: 'myarray', payload: {dataArray: dataArray.concat('')}})
+    dispatch({type: 'myarray', payload: {dataArray: dataArray.concat({id : Math.random(), isCompleted: false})}})
   }
 }
-

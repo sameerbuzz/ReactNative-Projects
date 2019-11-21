@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
 import { connect } from "react-redux";
-import { incrementCounter, checkState, checkingState, mydataArray } from './action';
+import { incrementCounter, checkState, checkingState, mydataArray } from '../action/action';
 import CheckBox from 'react-native-check-box';
 
 import { width, totalSize } from 'react-native-dimension';
@@ -14,14 +14,21 @@ class home extends Component {
     super(props);
   }
 
+  toggleState (id ) {
+    let temp = this.props.dataArray
+    let index = temp.findIndex(a => a.id === id)
+        if (index !== -1){
+          temp[index].isCompleted = !temp[index].isCompleted
+            this.props.checkingState(temp[index].isCompleted)
+        }       
+}
+
 renderItem = (rowData) => {
-  const {item , index} = rowData
-  console.log('state ', this.props.isChecking)
+  const {item} = rowData
   return(
     <FlatListComponent 
-    onClick = {() => this.props.checkingState(index)}
-    onChecked = {this.props.isChecking,
-    console.log('new state ', this.props.isChecking)}
+    onClick = {() => this.toggleState(item.id)}
+    onChecked = {item.isCompleted}
     />
   );
 }
@@ -58,7 +65,7 @@ const mapStateToProps = state => {
     isChecked,
     isChecking,
     dataArray,
-    length
+    length,
   };
 };
 

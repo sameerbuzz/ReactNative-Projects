@@ -11,12 +11,12 @@ import MobXDemo from '../MobXDemo';
 import MobXPagination from '../Pagination/MobXPagination';
 import TodoSplash from '../TodoAsync/splash';
 import TodoListContainer from '../TodoAsync/TodoListContainer';
-import FlatlistComponent from '../TodoAsync/FlatlistComponent';
 import InstaLogin from '../Instagram/Login';
 import WhatsappSplash from '../Whatsapp/whatsappSplash';
 import WhatsapptabNavigation from '../Whatsapp/tabNavigation';
 import WhatsappHome from '../Whatsapp/home';
 import Redux from '../redux/index';
+import ReduxForm from '../redux/indexForm';
 
 const AppNavigator = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -47,6 +47,7 @@ const AppNavigator = createStackNavigator({
   },
   WhatsappHome: WhatsappHome,
   Redux: Redux,
+  ReduxForm: ReduxForm,
 },
 
 {

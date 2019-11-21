@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 import CheckBox from 'react-native-check-box';
 import { width, height, totalSize } from 'react-native-dimension';
-import colorPick from '../../constants/styles/color';
+import colorPick from '../../../constants/styles/color';
 
 export default class FlatListComponent extends Component {
   constructor(props) {
