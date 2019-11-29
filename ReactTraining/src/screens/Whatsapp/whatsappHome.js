@@ -7,16 +7,20 @@ import {
   Image,
   FlatList,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Animated
 } from 'react-native';
 import { width } from 'react-native-dimension';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+
+import PickImage from '../../components/ImagePickerFn';
 import MyIcons from '../../constants/icons';
 import picName from '../../constants/styles/picName';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
-DATA = [{
+DATA1 = [{
   pic: picName.pic2,
   name: 'Sameer Bhardwaj',
   title: 'okk',
@@ -69,7 +73,7 @@ DATA = [{
   name: 'Sameer Bhardwaj',
   title: 'okk',
   date: '18/11/2019'
-}
+},
 ]
 
 export default class whatsappHome extends Component {
@@ -84,16 +88,39 @@ export default class whatsappHome extends Component {
         <Image source={item.pic} style={styles.mypic} />
         <View style={{ margin: screenWidth / 40, flex: 1 }}>
           <TouchableOpacity>
-          <View style={styles.nameView}>
-            <Text style={styles.myName}>{item.name}</Text>
-            <Text style={styles.title1}>{item.date}</Text>
-          </View>
-          <Text style={styles.title2}>{item.title}</Text>
+            <View style={styles.nameView}>
+              <Text style={styles.myName}>{item.name}</Text>
+              <Text style={styles.title1}>{item.date}</Text>
+            </View>
+            <Text style={styles.title2}>{item.title}</Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
+
+  camera = () => {
+    PickImage.getCamera(res => {
+        this.props.click(res)
+      })
+}
+
+renderLeftActions = (progress, dragX) => {
+  const trans = dragX.interpolate({
+    inputRange: [0, 100],
+    outputRange: [0, 1],
+  })
+  return (
+      <Animated.View
+        style={[
+          {
+            transform: [{translateX: trans }],
+          },
+        ]}>
+          {this.camera}
+      </Animated.View>
+  );
+};
 
   FlatListItemSeparator = () => {
     return (
@@ -107,33 +134,35 @@ export default class whatsappHome extends Component {
       <View style={styles.mainView}>
         <ScrollView>
           <View>
+          {/* <Swipeable onSwipeableLeftOpen={this.renderLeftActions}> */}
             <FlatList
-              data={DATA}
+              data={DATA1}
               keyExtractor={(item, id) => id.toString()}
               renderItem={this.renderItem}
               ItemSeparatorComponent={this.FlatListItemSeparator}
             />
+            {/* </Swipeable> */}
           </View>
           <View style={styles.lastView}>
             <Text style={styles.lastText}>Tap and hold on a chat for more options</Text>
           </View>
         </ScrollView>
         <TouchableOpacity>
-        <View style={styles.msgIcon}>
-          <MyIcons.MaterialCommunityIcons
-            name="android-messages"
-            size={screenWidth / 15}
-            color='white'
-            style={styles.msg}
-          />
-        </View>
+          <View style={styles.msgIcon}>
+            <MyIcons.MaterialCommunityIcons
+              name="android-messages"
+              size={screenWidth / 13}
+              color='white'
+              style={styles.msg}
+            />
+          </View>
         </TouchableOpacity>
       </View>
     );
   }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: 'white'
@@ -146,12 +175,14 @@ styles = StyleSheet.create({
   lastText: {
     fontWeight: '600',
     color: 'grey',
-    fontSize: screenWidth / 30
+    fontSize: screenWidth / 30,
+    fontFamily: 'Roboto-Medium',
   },
   headerText: {
     color: 'white',
     fontSize: width(5),
-    fontWeight: '600'
+    fontWeight: '600',
+    fontFamily: 'Roboto-Medium',
   },
   search: {
     flexDirection: 'row',
@@ -179,39 +210,43 @@ styles = StyleSheet.create({
   },
   myName: {
     fontSize: screenWidth / 20,
-    fontWeight: 'bold'
+    fontWeight: '600',
+    fontFamily: 'Roboto-Medium',
   },
   title1: {
     color: 'grey',
-    fontSize: screenWidth / 28
+    fontSize: screenWidth / 28,
+    fontFamily: 'Roboto-Medium',
   },
   title2: {
     color: 'grey',
-    fontSize: screenWidth / 25
+    fontSize: screenWidth / 25,
+    fontFamily: 'Roboto-Medium',
   },
   separator: {
     flex: 1,
     justifyContent: 'center',
-    height: 1,
+    height: 0.5,
     width: "75%",
-    backgroundColor: "grey",
+    backgroundColor: "black",
     marginLeft: screenWidth / 5,
     opacity: 0.2
   },
   msgIcon: {
     backgroundColor: '#3fd611',
     position: 'absolute',
-    height: screenWidth / 7,
-    width: screenWidth / 7,
-    borderRadius: screenWidth / 14,
+    height: screenWidth / 6,
+    width: screenWidth / 6,
+    borderRadius: screenWidth / 12,
     bottom: screenHeight / 30,
     right: screenWidth / 15,
     shadowColor: 'black',
     shadowOffset: { height: 5, width: 5 },
     shadowOpacity: 0.2,
-    elevation: 0.2
+    elevation: 0.2,
+    alignItems: 'center'
   },
   msg: {
-    padding: screenWidth/30
+    paddingTop: screenWidth / 25
   }
 })

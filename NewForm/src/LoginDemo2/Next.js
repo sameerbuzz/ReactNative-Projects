@@ -79,6 +79,7 @@ export default class Next extends Component {
         value={this.state.last}
         ref={(ref) => { this.secondInput = ref; }}
         onSubmitEditing={this.result} 
+        returnKeyType = 'done'
         />
         <TouchableOpacity style={styles.Btn} onPress={this.result}>
             <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>Save</Text>

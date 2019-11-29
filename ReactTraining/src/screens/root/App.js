@@ -1,7 +1,5 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
 
 //custom imports
 import colorPick from '../../constants/styles/color';
@@ -14,9 +12,12 @@ import TodoListContainer from '../TodoAsync/TodoListContainer';
 import InstaLogin from '../Instagram/Login';
 import WhatsappSplash from '../Whatsapp/whatsappSplash';
 import WhatsapptabNavigation from '../Whatsapp/tabNavigation';
-import WhatsappHome from '../Whatsapp/home';
+import WhatsappHome from '../Whatsapp/Home';
 import Redux from '../redux/index';
 import ReduxForm from '../redux/indexForm';
+import ApiIndex from '../redux/ApiIndex';
+import WhatsAppIndex from '../Whatsapp/index';
+import ChatApp from '../ChatApp/App';
 
 const AppNavigator = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -36,8 +37,8 @@ const AppNavigator = createStackNavigator({
       header: null,
     }
   },
-  WhatsappSplash: {
-    screen: WhatsappSplash,
+  WhatsAppIndex: {
+    screen: WhatsAppIndex,
     navigationOptions: {
       header: null,
     }
@@ -48,8 +49,10 @@ const AppNavigator = createStackNavigator({
   WhatsappHome: WhatsappHome,
   Redux: Redux,
   ReduxForm: ReduxForm,
+  ApiIndex: ApiIndex,
+  WhatsappSplash: WhatsappSplash,
+  ChatApp: ChatApp,
 },
-
 {
   initialRouteName: 'HomeScreen',
   defaultNavigationOptions: {

@@ -11,10 +11,18 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+@import Firebase;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+      for (NSString *familyName in [UIFont familyNames]){
+        NSLog(@"Family name: deepr %@", familyName);
+        for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
+          NSLog(@"--Font name deepak: %@", fontName);
+        }
+      }
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"ReactTraining"
@@ -27,6 +35,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [FIRApp configure];
   return YES;
 }
 

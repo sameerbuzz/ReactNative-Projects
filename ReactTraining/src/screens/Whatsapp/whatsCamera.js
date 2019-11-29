@@ -8,31 +8,29 @@ const screenHeight = Dimensions.get('window').height;
 Icons.loadFont()
 
 export default class whatsCamera extends Component {
-  static navigationOptions= {
-    // tabBarLabel:null,
-    tabBarIcon:   <Icons style={{marginTop:screenHeight/60, marginBottom:-10,}} name="camera" size={screenWidth/17} color="rgba(255,255,255,0.5)" />,
-    tabBarLabel:() => {return null},
-    // tabBarStyle: {   width: 20 }
+  static navigationOptions = {
+   
+    tabBarLabel: () => { return null },
   }
   constructor(props) {
     super(props);
     this.state = {
-      img : ''
+      img: ''
     };
   }
 
-  async componentDidMount(){
-      await PickImage.getCamera(res => {
-        this.setState({
-          img: res
-        })
+  async componentDidMount() {
+    await PickImage.getCamera(res => {
+      this.setState({
+        img: res
       })
+    })
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        <Image source={{uri: this.state.img}} />
+      <View style={{ flex: 1 }}>
+        <Image source={{ uri: this.state.img }} />
       </View>
     );
   }

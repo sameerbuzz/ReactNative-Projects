@@ -15,7 +15,7 @@ export default class whatsappSplash extends Component {
 componentDidMount(){
   setTimeout(() => {
     this.props.navigation.navigate('WhatsappHome')
- }, 1000)
+ }, 500)
 }
 
   render() {

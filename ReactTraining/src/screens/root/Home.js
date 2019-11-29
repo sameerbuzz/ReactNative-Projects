@@ -20,9 +20,11 @@ const myData= [
   {title: 'Pagination', name: 'MobXPagination'},
   {title: 'Todo List', name: 'TodoSplash'},
   {title: 'Instagram', name: 'InstaLogin'},
-  {title: 'WhatsApp', name: 'WhatsappSplash'},
+  {title: 'WhatsApp', name: 'WhatsAppIndex'},
   {title: 'Redux', name: 'Redux'},
   {title: 'ReduxForm', name: 'ReduxForm'},
+  {title: 'Redux API', name: 'ApiIndex'},
+  {title: 'ChatApp', name: 'ChatApp'},
 ]
 
 export default class Home extends Component {
