@@ -26,6 +26,8 @@ import SignUp from './Splash/SignUp';
 import LoginForm from './Splash/Form';
 import Dashboard from './Splash/Dashboard';
 import GoogleSignIn from './GoogleSignIn';
+import ExtraData from './ExtraData';
+import TextToSpeech from '../../TextToSpeech/TextToSpeech';
 import {
   View, 
   Text, 
@@ -41,7 +43,10 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import i18n from './locales/i18n';
 
+// console.disableYellowBox = true
+
 const myData=[
+  {title: 'Text-to-Speech',name: 'Project17'},
   {title: 'Form', name: 'Project1',},
   {title: 'Card', name: 'Project2',},
   {title: 'Flat List',name: 'Project3'},
@@ -58,6 +63,7 @@ const myData=[
   {title: 'Login Demo 2',name: 'Project14'},
   {title: 'Splash',name: 'Project15'},
   {title: 'Google Sign In',name: 'Project16'},
+  
 ];
 class App extends React.Component {
   static navigationOptions = {
@@ -122,6 +128,7 @@ const AppNavigator = createStackNavigator({
     Screen3: LoginForm,
     Screen4: Dashboard,
   Project16: GoogleSignIn,
+  Project17: TextToSpeech,
 },
 {
   initialRouteName: 'Home',

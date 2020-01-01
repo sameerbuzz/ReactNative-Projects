@@ -320,7 +320,13 @@ PODS:
     - React
   - RNScreens (1.0.0-alpha.23):
     - React
+  - RNTextDetector (0.0.6):
+    - React
+    - TesseractOCRiOS (~> 4.0.0)
   - RSKImageCropper (2.2.3)
+  - TesseractOCRiOS (4.0.0)
+  - TextToSpeech (2.0.0):
+    - React
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -361,6 +367,9 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNTextDetector (from `../node_modules/react-native-text-detector/ios`)
+  - TesseractOCRiOS (from `git://github.com/parallaxe/Tesseract-OCR-iOS.git`, branch `macos-support`)
+  - TextToSpeech (from `../node_modules/react-native-tts`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -449,8 +458,20 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNTextDetector:
+    :path: "../node_modules/react-native-text-detector/ios"
+  TesseractOCRiOS:
+    :branch: macos-support
+    :git: git://github.com/parallaxe/Tesseract-OCR-iOS.git
+  TextToSpeech:
+    :path: "../node_modules/react-native-tts"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
+
+CHECKOUT OPTIONS:
+  TesseractOCRiOS:
+    :commit: d16bb14e136d875bd5a519febe9e3c103d212647
+    :git: git://github.com/parallaxe/Tesseract-OCR-iOS.git
 
 SPEC CHECKSUMS:
   AppAuth: bce82c76043657c99d91e7882e8a9e1a93650cd4
@@ -502,9 +523,12 @@ SPEC CHECKSUMS:
   RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
+  RNTextDetector: bcbfed60c7d2a8f455314955a519fae6d5ab921a
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
+  TesseractOCRiOS: f51bbcd27d84b9ac59950790413a7e4219e84483
+  TextToSpeech: 4e2fc50c7495416c6da5a1662ad3f750c58d3c85
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: 0ace0f351b2c199536cced2ccd1514ab4aa819ef
+PODFILE CHECKSUM: e19a2923e500a5ae86aa96ac3451de8e01fb67bb
 
 COCOAPODS: 1.8.0

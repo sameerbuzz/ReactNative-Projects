@@ -84,20 +84,53 @@ export default class MobXPagination extends Component {
 
     deleteData = (index) => {
         var stop = Demo.userData.length - 1;
-    while (index < stop) {
-        Demo.userData[index] = Demo.userData[++index];
-    }
-    Demo.userData.pop();
+        while (index < stop) {
+            Demo.userData[index] = Demo.userData[++index];
+        }
+        Demo.userData.pop();
     }
 
     checkState = (index) => {
-       myData = Demo.checkList
-       let myIndex = myData.findIndex(a => a.index === index)
-       if (myIndex >-1){
+        myData = Demo.checkList
+        let myIndex = myData.findIndex(a => a.index === index)
+        if (myIndex > -1) {
             myData[myIndex] = !Demo.isChecked
-       }
-       Demo.checkList = myData.splice(0)
-       
+        }
+        Demo.checkList = myData.splice(0)
+
+    }
+
+    renderItems = (rawData) => {
+        const { item, index } = rawData
+        return (
+            <View style={styles.card}>
+                <Image
+                    onLoad={() => Demo.isLoading = false}
+                    onError={() => Demo.isLoading = false}
+                    onLoadStart={() => Demo.isLoading = true}
+                    source={{ uri: item.avatar }}
+                    style={styles.img}
+                    defaultSource={picName.pic1}
+                />
+                <View>
+                    <Text style={styles.name}>{item.first_name} {item.last_name}</Text>
+                    <Text style={styles.name2}>{item.email}</Text>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                    <CheckBox
+                        checkBoxColor='white'
+                        onClick={() => this.checkState(index)}
+                        isChecked={Demo.isChecked}
+                    />
+                    <Icons
+                        name="delete"
+                        size={height(4.5)}
+                        color='white'
+                        onPress={() => this.deleteData(index)}
+                    />
+                </View>
+            </View>
+        );
     }
 
     render() {
@@ -112,48 +145,20 @@ export default class MobXPagination extends Component {
                         />
                     }
                     data={Demo.userData.slice()}
-                    renderItem={({ item, index }) => (
-                        <View style={styles.card}>
-                            <Image
-                                onLoad={() => Demo.isLoading = false}
-                                onError={() => Demo.isLoading = false}
-                                onLoadStart={() => Demo.isLoading = true}
-                                source={{ uri: item.avatar }}
-                                style={styles.img}
-                                defaultSource={picName.pic1}
-                            />
-                            <View>
-                            <Text style={styles.name}>{item.first_name} {item.last_name}</Text>
-                            <Text style={styles.name2}>{item.email}</Text>
-                            </View>
-                            <View style={{alignItems: 'center'}}>
-                            <CheckBox 
-                                checkBoxColor = 'white'
-                                onClick={()=> this.checkState(index)}
-                                isChecked = {Demo.isChecked}
-                            />
-                            <Icons
-                                name="delete"
-                                size={height(4.5)}
-                                color= 'white'
-                                onPress = {() => this.deleteData(index)}
-                            />
-                            </View>
-                        </View>
-                    )}
+                    renderItem={this.renderItems}
                     keyExtractor={(item, index) => index.toString()}
                     refreshing={Demo.isRefreshing}
                     onRefresh={this.handleRefresh}
                     onEndReached={this.handleLoadMore}
-                    onEndReachedThreshold={0.01}
+                    onEndReachedThreshold={0}
                 />
             </SafeAreaView>
         );
     }
 }
 const styles = StyleSheet.create({
-    mainView : {
-        marginBottom: totalSize(2), 
+    mainView: {
+        marginBottom: totalSize(2),
         marginTop: totalSize(0.5)
     },
     loading: {

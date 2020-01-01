@@ -5343,6 +5343,16 @@ react-native-safe-area-view@^0.14.1:
   dependencies:
     debounce "^1.2.0"
 
+react-native-text-detector@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-text-detector/-/react-native-text-detector-0.0.6.tgz#c33cdcfd574b15cb94ffe4db320e7a22ead12c86"
+  integrity sha512-Etwflm4EU1rOvMiQ8iStaGZkl6qbYyIcApJRWvvpHvkc+NTJ2btM3FAayF829E6FLFWOwjZCBzaRns1LTrQcFw==
+
+react-native-tts@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-tts/-/react-native-tts-3.1.0.tgz#da595a2ce4bcc03bc505b12ec67f85a8336778f9"
+  integrity sha512-a13rcnS/DGW4AE98XWfVs1BJpluJ3nzxKHltp5SlIkJd8DmagUepwLeEzpKHDPBjimdJOQ7X4eKsfuAUOq3uog==
+
 react-native@0.61.2:
   version "0.61.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.2.tgz#987b91b063557f8ebec803fdfea2044a24bdbe4d"

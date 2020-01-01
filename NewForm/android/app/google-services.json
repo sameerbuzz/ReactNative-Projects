@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:367694714799:android:0ea33fb76be1bc7a6d015a",
+        "mobilesdk_app_id": "1:367694714799:android:be418fafc2658a796d015a",
         "android_client_info": {
-          "package_name": "com.newform"
+          "package_name": "com.groupsetgo"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "367694714799-cgpvmm10f4clel7aqdinqlrg92316lri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groupsetgo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
         {
           "client_id": "367694714799-r373nckmnddm98u80r8kclndaqtdqcnh.apps.googleusercontent.com",
           "client_type": 3
@@ -28,14 +36,58 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "367694714799-r373nckmnddm98u80r8kclndaqtdqcnh.apps.googleusercontent.com",
+              "client_id": "367694714799-asbnk9a1hvk88oio5r13spqpketc7l3c.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "367694714799-poek6kednpdvklqo9kgpeau214bqcfj3.apps.googleusercontent.com",
+              "client_id": "367694714799-cc2egu2ncoc87jjij311jqtc7kg7ahlu.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.NewForm"
+                "bundle_id": "org.reactjs.example.GroupSetGo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367694714799:android:0ea33fb76be1bc7a6d015a",
+        "android_client_info": {
+          "package_name": "com.newform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367694714799-0do9mhahejtvufk5umd7v5l7hmmif2lj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newform",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "367694714799-r373nckmnddm98u80r8kclndaqtdqcnh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_JrzwjE4K9xYP2Gn6YdVXNsvORjbMvAs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367694714799-asbnk9a1hvk88oio5r13spqpketc7l3c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "367694714799-cc2egu2ncoc87jjij311jqtc7kg7ahlu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.example.GroupSetGo"
               }
             }
           ]

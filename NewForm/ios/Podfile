@@ -35,9 +35,10 @@ target 'NewForm' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'   
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
-  
+  pod 'RNTextDetector', path: '../node_modules/react-native-text-detector/ios'
   pod 'GoogleSignIn', '~> 5.0.0'
   pod 'Firebase/Analytics'
+  pod 'TesseractOCRiOS', :git => 'git://github.com/parallaxe/Tesseract-OCR-iOS.git', :branch => 'macos-support'
 
   target 'NewFormTests' do
     inherit! :search_paths

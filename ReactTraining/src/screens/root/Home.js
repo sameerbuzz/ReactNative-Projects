@@ -25,6 +25,7 @@ const myData= [
   {title: 'ReduxForm', name: 'ReduxForm'},
   {title: 'Redux API', name: 'ApiIndex'},
   {title: 'ChatApp', name: 'ChatApp'},
+  {title: 'Group Set Splash', name: 'OnboardingSplash'},
 ]
 
 export default class Home extends Component {
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     marginTop: height(0.2),
     alignItems: 'center',
+    backgroundColor: 'red'
   },
   homeCard: {
     backgroundColor: colorPick.darkGreen,

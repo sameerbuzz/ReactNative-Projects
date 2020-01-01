@@ -17,7 +17,9 @@ import Redux from '../redux/index';
 import ReduxForm from '../redux/indexForm';
 import ApiIndex from '../redux/ApiIndex';
 import WhatsAppIndex from '../Whatsapp/index';
-import ChatApp from '../ChatApp/App';
+// import ChatApp from '../ChatApp/App';
+import OnboardingSplash from '../GroupSetGo/OnboardingSplash';
+import CreateEventStep2 from '../GroupSetGo/CreateEventStep2';
 
 const AppNavigator = createStackNavigator({
   HomeScreen: HomeScreen,
@@ -51,7 +53,13 @@ const AppNavigator = createStackNavigator({
   ReduxForm: ReduxForm,
   ApiIndex: ApiIndex,
   WhatsappSplash: WhatsappSplash,
-  ChatApp: ChatApp,
+  // ChatApp: ChatApp,
+  OnboardingSplash: {
+    screen: OnboardingSplash,
+    navigationOptions: {
+      header: null,
+    }
+  },
 },
 {
   initialRouteName: 'HomeScreen',
