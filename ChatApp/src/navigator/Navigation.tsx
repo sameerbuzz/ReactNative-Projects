@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 // custom imports
 import Main from '../containers/DataBase/Main';
-import ChatMain from '../containers/Chat/Main';
+import ChatMain from '../containers/Chat/Main/Main';
 import SignIn from '../containers/Chat/SignIn';
 import Animate from '../containers/Animation/Animate';
 
@@ -15,7 +15,7 @@ const MainStack = createStackNavigator(
         Animate: Animate,
     },
     {
-        initialRouteName: 'Animate',
+        initialRouteName: 'ChatMain',
     },
 );
 
@@ -34,7 +34,7 @@ export default createAppContainer(createSwitchNavigator(
         MainStack: MainStack,
     },
     {
-        initialRouteName: 'MainStack',
+        initialRouteName: 'AuthStack',
         defaultNavigationOptions: ({ navigation }) => ({
             headerBackTitle: null,
             headerShown: false,

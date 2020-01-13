@@ -37,7 +37,7 @@ class FirebaseService {
       console.warn('data ', data)
     }).catch((error) => {
       console.warn('error ', error)
-    })
+    }) 
   }
 
   // Get data from DB ---------------------
@@ -62,10 +62,45 @@ class FirebaseService {
       });
   };
 
-  loadMsgs = () => {
+  sendMsgs = () => {
+    
+  }
+
+  loadMsgs = (callback: Function) => {
     firebase.database().ref('Users/').once('value', function (snapshot: any) {
       console.warn(snapshot.val())
+      callback(snapshot.val())
     })
+  }
+
+  parse = (snapshot : any) => {
+    const { timestamp: numberStamp, text, user } = snapshot.val();
+    const { key: id } = snapshot;
+    const { key: _id } = snapshot;
+    const timestamp = new Date(numberStamp);
+    const message = {id, _id, timestamp, text, user};
+    console.warn('msgs -> ',message)
+    return message;
+  };
+
+  refOn = (callback : Function) => {
+    // console.warn('inside refon')
+    firebase.database().ref('Users/').child('Chats')
+      .limitToLast(20)
+      .on('child_added', (snapshot: any) => {callback(this.parse(snapshot)), console.warn('snapshot --> ',snapshot)});
+      // console.warn('leaving refon')
+  }
+
+  send = (messages: any) => {
+    for (let i = 0; i < messages.length; i++) {
+      const { text, user } = messages[i];
+      const message = {text, user, createdAt: new Date().getTime() };
+      console.log('msg sended ', message)
+      firebase.database().ref('Users/').push(message)
+    }
+  };
+  refOff() {
+    firebase.database().ref('Users/').off();
   }
 
 }
