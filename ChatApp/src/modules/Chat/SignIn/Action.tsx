@@ -1,14 +1,12 @@
-import {LOGIN,UPDATE_EMAIL,UPDATE_PASSWORD} from './Type'
+import { UPDATE_UID, UPDATE_EMAIL } from './Type'
 
 export const updateEmail = (value: string) => {
-    console.warn(value);
     return (dispatch: any) => {
-        dispatch({ type: UPDATE_EMAIL, payload: { email: value } });
+        dispatch({ type: UPDATE_EMAIL, payload: { data: value } });
     }
 }
-export const login = (value: string) => {
+export const updateUid = (value: string) => {
     return (dispatch: any) => {
-        dispatch({ type: LOGIN, payload: { data: value } });
+        dispatch({ type: UPDATE_UID, payload: { data: value } });
     }
 }
-

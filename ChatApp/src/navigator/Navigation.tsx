@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 // custom imports
 import Main from '../containers/DataBase/Main';
-import ChatMain from '../containers/Chat/Main/Main';
+import ChatMain from '../containers/Chat/Main';
 import SignIn from '../containers/Chat/SignIn';
 import Animate from '../containers/Animation/Animate';
 

@@ -8,7 +8,8 @@ import Styles from './Styles';
 export interface Props {
   navigation ?: any,
   updateEmail: Function,
-  email: string
+  updateUid: Function,
+  email: string,
 }
 
 export interface AppState {
@@ -29,24 +30,22 @@ export default class AppComponent extends React.Component<Props, AppState> {
   }
 
   loginSuccess = (data: any) => {
-    // console.warn('success')
-    // console.warn('data on success ', data.user.uid)
+    console.log('success')
+    console.log('data on success ', data.user.uid, this.props.email)
+    this.props.updateUid(data.user.uid)
     this.props.navigation.navigate('ChatMain', {userId: data.user.uid})
   }
 
-  loginFail = () => {
-    console.warn('failed')
-  }
-
   login = (email: string, password: string) => {
+    this.props.updateEmail(email)
     let user = { email: email, password: password }
-    FirebaseServices.login(user, this.loginSuccess, this.loginFail)
+    FirebaseServices.login(user, this.loginSuccess)
   }
 
   public render() {
     return (
       <View style={Styles.mainView}>
-        <TextInput placeholder='Enter Email' style={Styles.input} onChangeText={(text: string) => this.props.updateEmail(text)} />
+        <TextInput placeholder='Enter Email' style={Styles.input} onChangeText={(text: string) => this.setState({ email: text })} />
         <TextInput placeholder='Enter Password' style={Styles.input} onChangeText={(text: string) => this.setState({ password: text })} />
         <TouchableOpacity style={Styles.btn} onPress={() => this.login(this.state.email, this.state.password)}>
           <Text>SignIn</Text>

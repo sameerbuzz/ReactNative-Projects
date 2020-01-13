@@ -1,16 +1,15 @@
-import {UPDATE_EMAIL, LOGIN} from './Type';
+import { UPDATE_EMAIL, UPDATE_UID } from './Type';
 const initialState = {
     uid: '',
     email: ''
 }
 
 const Reducer = (state = initialState, action: any) => {
-    console.warn(action)
     switch (action.type) {
-        case 'uid':
+        case UPDATE_UID:
             return { ...state, uid: action.payload.data }
         case UPDATE_EMAIL:
-            return { ...state, UPDATE_EMAIL: action.payload }
+            return { ...state, email: action.payload.data }
         default:
             return state
     }

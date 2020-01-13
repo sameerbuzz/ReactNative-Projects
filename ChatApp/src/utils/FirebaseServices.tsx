@@ -53,7 +53,7 @@ class FirebaseService {
   }
 
   // Sign In for Firebase Auth ------------
-  login =  (user: any, success_callback: any, failed_callback: any) => {
+  login =  (user: any, success_callback: any) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(user.email, user.password)
@@ -62,10 +62,6 @@ class FirebaseService {
       });
   };
 
-  sendMsgs = () => {
-    
-  }
-
   loadMsgs = (callback: Function) => {
     firebase.database().ref('Users/').once('value', function (snapshot: any) {
       console.warn(snapshot.val())
@@ -73,24 +69,7 @@ class FirebaseService {
     })
   }
 
-  parse = (snapshot : any) => {
-    const { timestamp: numberStamp, text, user } = snapshot.val();
-    const { key: id } = snapshot;
-    const { key: _id } = snapshot;
-    const timestamp = new Date(numberStamp);
-    const message = {id, _id, timestamp, text, user};
-    console.warn('msgs -> ',message)
-    return message;
-  };
-
-  refOn = (callback : Function) => {
-    // console.warn('inside refon')
-    firebase.database().ref('Users/').child('Chats')
-      .limitToLast(20)
-      .on('child_added', (snapshot: any) => {callback(this.parse(snapshot)), console.warn('snapshot --> ',snapshot)});
-      // console.warn('leaving refon')
-  }
-
+// Storing msgs on Firebase Database
   send = (messages: any) => {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
@@ -99,6 +78,25 @@ class FirebaseService {
       firebase.database().ref('Users/').push(message)
     }
   };
+
+  parse = (snapshot : any) => {
+    const { timestamp: numberStamp, text, user } = snapshot.val();
+    const { key: id } = snapshot;
+    const { key: _id } = snapshot;
+    const timestamp = new Date(numberStamp);
+    const message = {id, _id, timestamp, text, user};
+    return message;
+  };
+
+  // Load msgs from Database to Chat
+  refOn = (callback : Function) => {
+    // console.warn('inside refon')
+    firebase.database().ref('Users/')
+      .limitToLast(20)
+      .on('child_added', (snapshot: any) => {callback(this.parse(snapshot))});
+      // console.warn('leaving refon')
+  }
+
   refOff() {
     firebase.database().ref('Users/').off();
   }

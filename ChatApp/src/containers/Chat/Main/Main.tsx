@@ -4,31 +4,33 @@ import { GiftedChat } from 'react-native-gifted-chat';
 
 import FirebaseServices from '../../../utils/FirebaseServices';
 import { firebase } from '@react-native-firebase/auth';
-import index from './index';
 
 export interface AppProps {
   navigation?: any,
-  uid: any
+  uid: string,
+  email: string
 }
 
 export interface AppState {
   uid: string,
-  messages: any
+  email: string,
+  messages: any,
 }
 
 export default class AppComponent extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      uid: this.props.navigation.getParam('userId'),
-      messages: []
+      uid: this.props.uid,
+      email: this.props.email,
+      messages: [],
     };
   }
 
   componentDidMount() {
-    console.log('userId -> ', this.props.navigation.getParam('userId'))
+    console.log('uid, email ',this.state.uid, this.state.email)
+
     FirebaseServices.refOn((message: any) => {
-      console.warn('messages are -> ', message)
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
       })
