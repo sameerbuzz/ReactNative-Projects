@@ -29,16 +29,5 @@ const Styles = StyleSheet.create({
         left: 0,
         right: 0
     },
-    addBtn: {
-        position: 'absolute',
-        bottom: vh(40),
-        right: vw(40),
-        borderWidth: vh(2),
-        height: vw(60),
-        width: vw(60),
-        borderRadius: vw(30),
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
 })
 export default Styles;

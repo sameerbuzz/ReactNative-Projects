@@ -8,7 +8,7 @@ import { firebase } from '@react-native-firebase/auth';
 export interface AppProps {
   navigation?: any,
   uid: string,
-  email: string
+  email: string,
 }
 
 export interface AppState {
@@ -28,27 +28,17 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    console.log('uid, email ',this.state.uid, this.state.email)
-
-    FirebaseServices.refOn((message: any) => {
+    console.log('roomID ')
+    // Loading msgs
+    FirebaseServices.refOn(this.props.navigation.getParam('roomID'),(message: any) => {
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
       })
       )
-    }
-  );
-
-    // FirebaseServices.loadMsgs((message: Array<any>) => {
-    //   this.setState(previousState => ({
-    //     messages: GiftedChat.append(previousState.messages, message),
-    //   })
-    //   )
-    // }
-    // )
-
+    });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     FirebaseServices.refOff()
   }
 

@@ -3,6 +3,13 @@ import { } from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import { Platform } from 'react-native';
 
+let userRef = firebase.database().ref('AllUsers/')
+let chatRef = firebase.database().ref('Msgs/')
+let roomchat = firebase.database()
+let inbox = firebase.database()
+
+var roomUid = ''
+
 class FirebaseService {
 
   constructor() {
@@ -29,76 +36,96 @@ class FirebaseService {
 
   // Add data in DB ----------------------
   writeUserData(email: string, fname: string, lname: string) {
-    firebase.database().ref('Users/').set({
+    chatRef.set({
       email,
       fname,
       lname
     }).then((data) => {
-      console.warn('data ', data)
+      console.log('data ', data)
     }).catch((error) => {
       console.warn('error ', error)
-    }) 
+    })
   }
 
   // Get data from DB ---------------------
   readUserData(callback: Function) {
-    firebase.database().ref('Users/').once('value', function (snapshot: any) {
+    chatRef.once('value', function (snapshot: any) {
       callback(snapshot.val())
     })
   }
 
   // Delete data from DB ------------------
   deleteUserData() {
-    firebase.database().ref('Users/').remove();
+    chatRef.remove();
   }
 
   // Sign In for Firebase Auth ------------
-  login =  (user: any, success_callback: any) => {
+  login = (user: any, success_callback: any, failure_callback: any) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(user.email, user.password)
-      .then(success_callback, (error)=>{
-        console.warn(error)
-      });
+      .then(success_callback, failure_callback)
   };
 
+  signUp = (user: any, success_callback: any, failure_callback: any) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(user.email, user.password)
+      .then(success_callback, failure_callback)
+  }
+
+  addingUser = (uid: string, email: string) => {
+    const users = { key: uid, email: email }
+    userRef.push(users)
+  }
+
+  fetchList = (callback: Function) => {
+    userRef.on('child_added', (snapshot: any) => {callback(snapshot.val())})
+  }
+
   loadMsgs = (callback: Function) => {
-    firebase.database().ref('Users/').once('value', function (snapshot: any) {
-      console.warn(snapshot.val())
+    chatRef.once('value', function (snapshot: any) {
+      console.log(snapshot.val())
       callback(snapshot.val())
     })
   }
 
-// Storing msgs on Firebase Database
-  send = (messages: any) => {
+  // Storing msgs on Firebase Database---------------
+  send = (messages: Array<any>) => {
+    inbox
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
-      const message = {text, user, createdAt: new Date().getTime() };
+      const message = { text, user, createdAt: new Date().getTime() };
       console.log('msg sended ', message)
-      firebase.database().ref('Users/').push(message)
+      roomchat.ref('chatRoom/'+roomUid).push(message)
     }
   };
 
-  parse = (snapshot : any) => {
+  // Load msgs from Database to Chat-------------------
+  refOn = (id: string,callback: Function) => {
+    console.log('id ',id)
+    roomUid = id
+    roomchat.ref('chatRoom/'+id)
+    //   // .limitToLast(20)
+      .on('child_added', (snapshot: any) => { callback(this.parse(snapshot)) });
+  }
+
+  parse = (snapshot: any) => {
     const { timestamp: numberStamp, text, user } = snapshot.val();
     const { key: id } = snapshot;
     const { key: _id } = snapshot;
     const timestamp = new Date(numberStamp);
-    const message = {id, _id, timestamp, text, user};
+    const message = { id, _id, timestamp, text, user };
     return message;
   };
 
-  // Load msgs from Database to Chat
-  refOn = (callback : Function) => {
-    // console.warn('inside refon')
-    firebase.database().ref('Users/')
-      .limitToLast(20)
-      .on('child_added', (snapshot: any) => {callback(this.parse(snapshot))});
-      // console.warn('leaving refon')
+  refOff() {
+    chatRef.off();
   }
 
-  refOff() {
-    firebase.database().ref('Users/').off();
+  addRoom = (roomId: string, uid: string) => {
+    const lastMsg = {roomId: roomId, msg: 'Last msg'}
+    inbox.ref('Inbox/'+uid).push(lastMsg)
   }
 
 }

@@ -6,22 +6,36 @@ import { createStackNavigator } from 'react-navigation-stack';
 import Main from '../containers/DataBase/Main';
 import ChatMain from '../containers/Chat/Main';
 import SignIn from '../containers/Chat/SignIn';
+import SignUp from '../containers/Chat/SignUp';
 import Animate from '../containers/Animation/Animate';
+import ChatList from '../containers/Chat/ChatList';
 
 const MainStack = createStackNavigator(
     {
         Main: Main,
         ChatMain: ChatMain,
         Animate: Animate,
+        ChatList: {
+            screen: ChatList,
+            navigationOptions: {
+                // headerShown: false,
+            }
+        },
     },
     {
-        initialRouteName: 'ChatMain',
+        initialRouteName: 'ChatList',
     },
 );
 
 const AuthStack = createStackNavigator(
     {
         SignIn: SignIn,
+        SignUp: {
+            screen: SignUp,
+            navigationOptions: {
+                headerBackTitle: ' '
+            }
+        },
     },
     {
         initialRouteName: 'SignIn',
