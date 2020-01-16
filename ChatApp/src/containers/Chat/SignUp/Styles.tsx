@@ -1,10 +1,10 @@
-import {StyleSheet} from 'react-native';
-import {vh, vw} from '../../../constants';
+import { StyleSheet } from 'react-native';
+import { vh, vw } from '../../../constants';
 
 const Styles = StyleSheet.create({
     mainView: {
-        flex: 1, 
-        alignItems: 'center', 
+        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
     },
     input: {
@@ -28,6 +28,19 @@ const Styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0
+    },
+    imgStyle: {
+        backgroundColor: 'grey',
+        height: vh(140),
+        width: vh(140),
+        alignItems: 'center',
+        marginBottom: vh(20),
+        borderRadius: vh(70)
+    },
+    imageStyle: {
+        height: vh(140),
+        width: vh(140),
+        borderRadius: vh(70)
     },
 })
 export default Styles;

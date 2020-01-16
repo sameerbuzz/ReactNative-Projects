@@ -29,7 +29,12 @@ const MainStack = createStackNavigator(
 
 const AuthStack = createStackNavigator(
     {
-        SignIn: SignIn,
+        SignIn: {
+            screen: SignIn,
+            navigationOptions: {
+                headerShown: false
+            }
+        },
         SignUp: {
             screen: SignUp,
             navigationOptions: {

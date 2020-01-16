@@ -1,5 +1,6 @@
 import { } from '@react-native-firebase/database';
 import { } from '@react-native-firebase/auth';
+import { } from '@react-native-firebase/storage';
 import firebase from '@react-native-firebase/app';
 import { Platform } from 'react-native';
 
@@ -9,6 +10,7 @@ let roomchat = firebase.database()
 let inbox = firebase.database()
 
 var roomUid = ''
+var receiverUID=''
 
 class FirebaseService {
 
@@ -67,6 +69,7 @@ class FirebaseService {
       .then(success_callback, failure_callback)
   };
 
+  //  creating new user ---------------------
   signUp = (user: any, success_callback: any, failure_callback: any) => {
     firebase
       .auth()
@@ -74,8 +77,8 @@ class FirebaseService {
       .then(success_callback, failure_callback)
   }
 
-  addingUser = (uid: string, email: string) => {
-    const users = { key: uid, email: email }
+  addingUser = (user: any) => {
+    const users = { key: user.uid, displayName: user.name, email: user.email, photoURL: user.avatar }
     userRef.push(users)
   }
 
@@ -97,16 +100,33 @@ class FirebaseService {
       const { text, user } = messages[i];
       const message = { text, user, createdAt: new Date().getTime() };
       console.log('msg sended ', message)
+
+      // adding last msg on send msg to sender inbox------
+      inbox.ref('Inbox/'+user._id).child(roomUid).set({
+        lastMsg: message.text,
+        createdAt: message.createdAt,
+        user: message.user,
+      })
+
+      // adding last msg on send msg to receiver inbox-----
+      inbox.ref('Inbox/'+receiverUID).child(roomUid).set({
+        lastMsg: message.text,
+        createdAt: message.createdAt,
+        user: message.user,
+      })
+
+      // sending actual msg -------------------------
       roomchat.ref('chatRoom/'+roomUid).push(message)
     }
   };
 
   // Load msgs from Database to Chat-------------------
-  refOn = (id: string,callback: Function) => {
+  refOn = (id: string, receiverId:string ,callback: Function) => {
     console.log('id ',id)
     roomUid = id
+    receiverUID = receiverId
     roomchat.ref('chatRoom/'+id)
-    //   // .limitToLast(20)
+      // .limitToLast(20)
       .on('child_added', (snapshot: any) => { callback(this.parse(snapshot)) });
   }
 
@@ -123,9 +143,31 @@ class FirebaseService {
     chatRef.off();
   }
 
-  addRoom = (roomId: string, uid: string) => {
-    const lastMsg = {roomId: roomId, msg: 'Last msg'}
-    inbox.ref('Inbox/'+uid).push(lastMsg)
+  // fetching last message----------------------------------
+  inboxList = (uid: string,callback: Function) => {
+    debugger
+    inbox.ref('Inbox/'+uid).once('value', function (snapshot: any) {
+      console.log(snapshot.val())
+      callback(snapshot.val())
+    })
+  }
+
+  // uploading profile pic to firebase storage--------------
+  uploadPic = (path: any, callback: Function) => {
+    const mime = 'application/octet-stream';
+      const imageRef = firebase.storage().ref('profilePic').child(Math.random().toString());
+  
+      return imageRef.putFile(path, { contentType: mime })
+        .then(() => {
+          return imageRef.getDownloadURL();
+        })
+        .then(url => {
+          console.log(url);
+          callback(url)
+        })
+        .catch(error => {
+          console.warn('Error uploading image: ', error);
+        });
   }
 
 }

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Styles from './Styles';
 
 export interface AppProps {
-    id: any,
-    email: string,
-    openChat: Function
+  item: any,
+  openChat: Function,
 }
 
 export interface AppState {
@@ -19,10 +19,10 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
 
   public render() {
     return (
-      <View style={{flex: 1, borderWidth: 2, margin: 10}}>
-          <TouchableOpacity style={{padding: 10}} onPress={() => this.props.openChat(this.props.id)}>
-         <Text>{this.props.email}</Text>
-         </TouchableOpacity>
+      <View style={Styles.mainView}>
+        <TouchableOpacity style={Styles.txt} onPress={() => this.props.openChat(this.props.item.key, this.props.item.displayName)}>
+          <Text style={{ color: 'white' }}>{this.props.item.displayName}</Text>
+        </TouchableOpacity>
       </View>
     );
   }

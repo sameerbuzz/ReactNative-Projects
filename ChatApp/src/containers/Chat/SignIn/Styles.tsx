@@ -1,26 +1,32 @@
-import {StyleSheet} from 'react-native';
-import {vh, vw} from '../../../constants';
+import { StyleSheet } from 'react-native';
+import { vh, vw, Color } from '../../../constants';
 
 const Styles = StyleSheet.create({
     mainView: {
-        flex: 1, 
-        alignItems: 'center', 
+        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
     },
     input: {
-        borderWidth: vh(1),
-        padding: vw(20),
+        borderBottomWidth: vh(2),
+        padding: vw(15),
         width: '80%',
-        borderRadius: vw(5),
         marginBottom: vh(20),
         fontSize: vh(20),
-        textAlign: 'center'
+        textAlign: 'center',
+        borderColor: 'white',
+        color: 'white',
     },
     btn: {
-        borderWidth: vh(1),
+        borderBottomWidth: vh(2),
+        borderRightWidth: vh(2),
         padding: vw(10),
-        borderRadius: vw(5),
-        marginBottom: vh(20)
+        marginBottom: vh(20),
+        borderColor: 'white',
+    },
+    btnText: {
+        color: 'white',
+        fontSize: vh(15)
     },
     indicator: {
         position: 'absolute',
@@ -30,15 +36,27 @@ const Styles = StyleSheet.create({
         right: 0
     },
     addBtn: {
+        zIndex: 1,
+        flexDirection: 'row',
         position: 'absolute',
         bottom: vh(40),
         right: vw(40),
-        borderWidth: vh(2),
+        backgroundColor: Color.darkGreen,
         height: vw(60),
         width: vw(60),
         borderRadius: vw(30),
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    flatStyle: {
+        zIndex: 1,
+        flex: 1,
+        backgroundColor: Color.darkGreen,
+        position: 'absolute',
+        top: vh(100),
+        right: vw(20),
+        left: vw(20),
+        borderRadius: vw(10),
+    },
 })
 export default Styles;

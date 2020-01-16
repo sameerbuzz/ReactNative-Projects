@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
 import Main from './Main';
-import {} from '../../../modules/Chat/SignIn/Action';
+import { } from '../../../modules/Chat/SignIn/Action';
 
 const mapDispatchToProps = (dispatch: Function) => ({
-  
+
 })
-  
+
 const mapStateToProps = (state: any) => {
-    const { uid, email } = state.SignIn;
-    return {
-      uid, email
-    }
+  const { user } = state.ChatList;
+  return {
+    user
   }
-  
-  export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Main);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);

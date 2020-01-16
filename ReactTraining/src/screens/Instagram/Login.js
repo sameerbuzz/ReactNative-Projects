@@ -19,10 +19,8 @@ const screenWidth = Dimensions.get('window').width;
 Icons.loadFont()
 
 export default class Login extends Component {
-
     constructor() {
         super();
-
         this.Animation = new Animated.Value(0);
     }
 

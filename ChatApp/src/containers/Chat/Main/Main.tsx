@@ -3,54 +3,59 @@ import { View, StyleSheet, Text } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 
 import FirebaseServices from '../../../utils/FirebaseServices';
-import { firebase } from '@react-native-firebase/auth';
 
 export interface AppProps {
   navigation?: any,
-  uid: string,
-  email: string,
+  user: any,
 }
 
 export interface AppState {
-  uid: string,
-  email: string,
   messages: any,
+  lastMsg: string,
 }
 
 export default class AppComponent extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      uid: this.props.uid,
-      email: this.props.email,
       messages: [],
+      lastMsg: ''
     };
   }
 
   componentDidMount() {
-    console.log('roomID ')
-    // Loading msgs
-    FirebaseServices.refOn(this.props.navigation.getParam('roomID'),(message: any) => {
+    console.log(this.props.user.key, this.props.navigation.getParam('reciverId'), this.props.navigation.getParam('receiverName'))
+    // Loading msgs-------------
+    FirebaseServices.refOn(this.props.navigation.getParam('roomID'), this.props.navigation.getParam('reciverId'), (message: any) => {
+      console.log('msg ', message)
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
+        lastMsg: message,
       })
       )
-    });
+    })
   }
 
   componentWillUnmount() {
     FirebaseServices.refOff()
   }
 
+  get user() {
+    return {
+      _name: this.props.user.displayName,
+      name: this.props.navigation.getParam('receiverName'),
+      email: this.props.user.email,
+      avatar: this.props.user.photoURL,
+      _id: this.props.user.key,
+      id: this.props.navigation.getParam('reciverId'),
+    };
+  }
+
   public render() {
     return <GiftedChat
       messages={this.state.messages}
       onSend={FirebaseServices.send}
-      user={{
-        _id: this.state.uid,
-        name: 'Sameer',
-        avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg'
-      }}
+      user={this.user}
     />;
   }
 }
