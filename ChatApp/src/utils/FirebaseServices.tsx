@@ -95,7 +95,6 @@ class FirebaseService {
 
   // Storing msgs on Firebase Database---------------
   send = (messages: Array<any>) => {
-    inbox
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
       const message = { text, user, createdAt: new Date().getTime() };
@@ -146,7 +145,7 @@ class FirebaseService {
   // fetching last message----------------------------------
   inboxList = (uid: string,callback: Function) => {
     debugger
-    inbox.ref('Inbox/'+uid).once('value', function (snapshot: any) {
+    inbox.ref('Inbox/'+uid).on('value', function (snapshot: any) {
       console.log(snapshot.val())
       callback(snapshot.val())
     })

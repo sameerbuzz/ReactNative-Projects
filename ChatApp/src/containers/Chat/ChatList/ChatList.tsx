@@ -46,6 +46,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   fetchInbox = () => {
     FirebaseServices.inboxList(this.state.uid, (data: any) => {
       console.log('inbox ', data)
+      if (data !== null) {
       var objData = Object.keys(data).map(function (key) {
         return data[key]
       })
@@ -54,7 +55,9 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
       this.setState({
         lastMsgData: objData
       }, () => this.fetch())
+    }
     })
+    
   }
 
   fetch = () => {
@@ -112,7 +115,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   public render() {
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity style={Styles.addBtn} onPress={() => { shown = !shown, this.fetch(), this.fetchInbox() }}>
+        <TouchableOpacity style={Styles.addBtn} onPress={() => { shown = !shown, this.fetch()}}>
           <Text style={{ fontSize: vw(35), color: 'white', fontWeight: '500' }}>{shown ? '-' : '+'}</Text>
         </TouchableOpacity>
         <FlatList
