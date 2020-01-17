@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, Alert, TouchableWithoutFeedback, Keyboard, Platform, Image } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient'
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
 import Styles from './Styles';
-import { vh, Strings } from '../../../constants';
+import { Strings, Color, Images } from '../../../constants';
+
+const colors = [Color.weirdGreen, Color.tealBlue]
 
 export interface Props {
   navigation?: any,
@@ -18,36 +21,26 @@ export interface AppState {
   email: string,
   password: string,
   animate: boolean,
+  showPassword: boolean,
+  bgBorder: number,
 }
 
 export default class AppComponent extends React.Component<Props, AppState> {
   Animation: any;
+  firstInput: any;
   constructor(props: Props) {
     super(props);
-    this.Animation = new Animated.Value(0);
     this.state = {
-      email: '', password: '', animate: false
+      email: '', password: '', animate: false, showPassword: true, bgBorder: 0
     };
   }
 
   componentDidMount() {
-    this.StartBackgroundColorAnimation();
     FirebaseServices.initializeFireBase()
   }
 
   componentWillUnmount() {
     FirebaseServices.refOff()
-  }
-
-  StartBackgroundColorAnimation = () => {
-    this.Animation.setValue(0);
-
-    Animated.timing(
-      this.Animation,
-      {
-        toValue: 1,
-        duration: 5000
-      }).start(() => { this.StartBackgroundColorAnimation() });
   }
 
   login = (email: string, password: string) => {
@@ -69,35 +62,72 @@ export default class AppComponent extends React.Component<Props, AppState> {
     this.props.navigation.navigate('MainStack')
   }
 
-  loginFail = (data: any) => {
-    console.warn(data)
+  loginFail = (error: any) => {
+    console.log('ok ', error)
     this.setState({
       animate: false
     })
+    Alert.alert(
+      'Alert!',
+      `${error}`,
+      [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ],
+      { cancelable: false },
+    )
   }
 
   public render() {
 
-    const BackgroundColorConfig = this.Animation.interpolate(
-      {
-        inputRange: [0, 0.5, 1],
-        outputRange: ['#08ff4d', '#288f45', '#08ff4d']
-
-      });
-
     return (
-      <Animated.View style={[Styles.mainView, { backgroundColor: BackgroundColorConfig }]}>
-        <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color='black' />
-        <TextInput placeholder={Strings.email} style={Styles.input} onChangeText={(text: string) => this.setState({ email: text })} />
-        <TextInput placeholder={Strings.password} style={Styles.input} onChangeText={(text: string) => this.setState({ password: text })} />
-        <TouchableOpacity style={Styles.btn} onPress={() => this.login(this.state.email, this.state.password)}>
-          <Text style={Styles.btnText}>{Strings.signIn}</Text>
-        </TouchableOpacity>
-        <Text style={{ marginBottom: vh(20), color: 'white' }}>{Strings.or}</Text>
-        <TouchableOpacity style={Styles.btn} onPress={() => this.props.navigation.navigate('SignUp')}>
-          <Text style={Styles.btnText}>{Strings.signUp}</Text>
-        </TouchableOpacity>
-      </Animated.View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={Styles.mainView}>
+          <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color={Color.tealBlue} />
+          <TouchableOpacity style={Styles.signupView} onPress={() => this.props.navigation.navigate('SignUp')} activeOpacity={1}>
+            <Text style={Styles.signupText}>{Strings.signUpSpace}</Text>
+          </TouchableOpacity>
+          <Text style={Styles.signinText}>{Strings.signInSpace}</Text>
+          <Text style={Styles.welcome}>{Strings.welcome}</Text>
+          <TextInput
+            placeholder={Strings.email}
+            style={[Styles.input, { borderWidth: 1, borderColor: this.state.bgBorder === 1 ? Color.tealBlue : Color.greyish }]}
+            onChangeText={(text: string) => this.setState({ email: text })}
+            returnKeyType='next'
+            onSubmitEditing={() => { this.firstInput.focus(); }}
+            autoCorrect={false}
+            keyboardType='email-address'
+            onFocus={() => this.setState({ bgBorder: 1 })}
+            onBlur={() => this.setState({ bgBorder: 0 })}
+          />
+          <View style={[Styles.passwordView, { borderWidth: 1, borderColor: this.state.bgBorder === 2 ? Color.tealBlue : Color.greyish }]}>
+            <TextInput
+              placeholder={Strings.password}
+              style={[Styles.input, Styles.passwordText]}
+              onChangeText={(text: string) => this.setState({ password: text })}
+              ref={(ref) => { this.firstInput = ref; }}
+              returnKeyType='done'
+              onSubmitEditing={() => this.login(this.state.email, this.state.password)}
+              autoCorrect={false}
+              keyboardType={Platform.OS === 'android' ? 'visible-password' : 'default'}
+              secureTextEntry={this.state.showPassword}
+              onFocus={() => this.setState({ bgBorder: 2 })}
+              onBlur={() => this.setState({ bgBorder: 0 })}
+            />
+            <TouchableOpacity
+              style={Styles.eyeView}
+              activeOpacity={1}
+              onPress={() => this.setState({ showPassword: !this.state.showPassword })}
+            >
+              <Image source={Images.eye} />
+            </TouchableOpacity>
+          </View>
+          <LinearGradient start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} colors={colors} style={Styles.gradient}>
+            <TouchableOpacity style={Styles.btn} onPress={() => this.login(this.state.email, this.state.password)}>
+              <Text style={Styles.btnText}>{Strings.submit}</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

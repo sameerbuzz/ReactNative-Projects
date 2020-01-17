@@ -10,7 +10,7 @@ let roomchat = firebase.database()
 let inbox = firebase.database()
 
 var roomUid = ''
-var receiverUID=''
+var receiverUID = ''
 
 class FirebaseService {
 
@@ -66,7 +66,7 @@ class FirebaseService {
     firebase
       .auth()
       .signInWithEmailAndPassword(user.email, user.password)
-      .then(success_callback, failure_callback)
+      .then(success_callback).catch(failure_callback)
   };
 
   //  creating new user ---------------------
@@ -83,7 +83,7 @@ class FirebaseService {
   }
 
   fetchList = (callback: Function) => {
-    userRef.on('child_added', (snapshot: any) => {callback(snapshot.val())})
+    userRef.on('child_added', (snapshot: any) => { callback(snapshot.val()) })
   }
 
   loadMsgs = (callback: Function) => {
@@ -101,30 +101,30 @@ class FirebaseService {
       console.log('msg sended ', message)
 
       // adding last msg on send msg to sender inbox------
-      inbox.ref('Inbox/'+user._id).child(roomUid).set({
+      inbox.ref('Inbox/' + user._id).child(roomUid).set({
         lastMsg: message.text,
         createdAt: message.createdAt,
         user: message.user,
       })
 
       // adding last msg on send msg to receiver inbox-----
-      inbox.ref('Inbox/'+receiverUID).child(roomUid).set({
+      inbox.ref('Inbox/' + receiverUID).child(roomUid).set({
         lastMsg: message.text,
         createdAt: message.createdAt,
         user: message.user,
       })
 
       // sending actual msg -------------------------
-      roomchat.ref('chatRoom/'+roomUid).push(message)
+      roomchat.ref('chatRoom/' + roomUid).push(message)
     }
   };
 
   // Load msgs from Database to Chat-------------------
-  refOn = (id: string, receiverId:string ,callback: Function) => {
-    console.log('id ',id)
+  refOn = (id: string, receiverId: string, callback: Function) => {
+    console.log('id ', id)
     roomUid = id
     receiverUID = receiverId
-    roomchat.ref('chatRoom/'+id)
+    roomchat.ref('chatRoom/' + id)
       // .limitToLast(20)
       .on('child_added', (snapshot: any) => { callback(this.parse(snapshot)) });
   }
@@ -143,9 +143,9 @@ class FirebaseService {
   }
 
   // fetching last message----------------------------------
-  inboxList = (uid: string,callback: Function) => {
+  inboxList = (uid: string, callback: Function) => {
     debugger
-    inbox.ref('Inbox/'+uid).on('value', function (snapshot: any) {
+    inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {
       console.log(snapshot.val())
       callback(snapshot.val())
     })
@@ -154,19 +154,19 @@ class FirebaseService {
   // uploading profile pic to firebase storage--------------
   uploadPic = (path: any, callback: Function) => {
     const mime = 'application/octet-stream';
-      const imageRef = firebase.storage().ref('profilePic').child(Math.random().toString());
-  
-      return imageRef.putFile(path, { contentType: mime })
-        .then(() => {
-          return imageRef.getDownloadURL();
-        })
-        .then(url => {
-          console.log(url);
-          callback(url)
-        })
-        .catch(error => {
-          console.warn('Error uploading image: ', error);
-        });
+    const imageRef = firebase.storage().ref('profilePic').child(Math.random().toString());
+
+    return imageRef.putFile(path, { contentType: mime })
+      .then(() => {
+        return imageRef.getDownloadURL();
+      })
+      .then(url => {
+        console.log(url);
+        callback(url)
+      })
+      .catch(error => {
+        console.warn('Error uploading image: ', error);
+      });
   }
 
 }

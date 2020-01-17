@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
 import FlatlistData from './FlatlistData';
 import InboxFlatList from './InboxFlatList';
-import Styles from '../SignIn/Styles';
-import { Color, vw } from '../../../constants';
+import Styles from './Styles';
+import { vw, Images, Strings } from '../../../constants';
 
 var shown = false
 
@@ -25,6 +25,7 @@ export interface AppState {
   lastMsgData: Array<any>,
   currentUser: any,
   roomID: string,
+  chatEmpty: boolean,
 }
 
 export default class AppComponent extends React.Component<AppProps, AppState> {
@@ -33,7 +34,8 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
     this.state = {
       list: [], reRender: false,
       uid: this.props.uid,
-      lastMsgData: [], currentUser: '', roomID: ''
+      lastMsgData: [], currentUser: '', roomID: '',
+      chatEmpty: false,
     };
   }
   componentDidMount() {
@@ -53,8 +55,13 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
       console.log('obj ', objData)
 
       this.setState({
+        chatEmpty: false,
         lastMsgData: objData
       }, () => this.fetch())
+    }else{
+      this.setState({
+        chatEmpty: true
+      })
     }
     })
     
@@ -87,7 +94,6 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
     }
     console.log('roomId ', chatRoomId)
     this.setState({ roomID: chatRoomId })
-    // shown = !shown
     this.props.navigation.navigate('ChatMain', { roomID: chatRoomId, reciverId: id, receiverName: name })
   }
 
@@ -114,15 +120,24 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
 
   public render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={Styles.outerMainView}>
+        <View style={Styles.header}>
         <TouchableOpacity style={Styles.addBtn} onPress={() => { shown = !shown, this.fetch()}}>
-          <Text style={{ fontSize: vw(35), color: 'white', fontWeight: '500' }}>{shown ? '-' : '+'}</Text>
+          <Image source={Images.plus} style={Styles.addImg}/>
         </TouchableOpacity>
+        </View>
+        <Text style={Styles.chatTxt}>{Strings.chats}</Text>
+        {this.state.chatEmpty ? 
+        <View style={Styles.noChatView}>
+          <Image source={Images.noChat} />
+          <Text style={Styles.noChatTxt}>{Strings.noChat}</Text>
+        </View> 
+        :
         <FlatList
           data={this.state.lastMsgData}
           keyExtractor={(item, key) => key.toString()}
           renderItem={this.renderInbox}
-        />
+        />}
         {shown && <FlatList
           style={Styles.flatStyle}
           data={this.state.list}

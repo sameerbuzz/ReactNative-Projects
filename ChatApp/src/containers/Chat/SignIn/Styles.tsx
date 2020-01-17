@@ -4,36 +4,68 @@ import { vh, vw, Color } from '../../../constants';
 const Styles = StyleSheet.create({
     mainView: {
         flex: 1,
+        backgroundColor: 'white',
+        paddingHorizontal: vw(30),
+        paddingTop: vh(63.5)
+    },
+    signupView: {
+        paddingHorizontal: vw(14.5),
+        paddingVertical: vh(20),
         alignItems: 'center',
-        justifyContent: 'center',
+        width: vw(100),
+        marginLeft: vw(285.5)
+    },
+    signupText: {
+        fontSize: vw(17),
+        color: Color.tealBlue,
+        fontFamily: 'SFUIDisplay-Semibold'
+    },
+    signinText: {
+        fontSize: vw(25),
+        fontFamily: 'SFUIDisplay-Heavy',
+        marginBottom: vh(25)
+    },
+    welcome: {
+        fontFamily: 'SFUIDisplay-Semibold',
+        fontSize: vw(15),
+        marginBottom: vh(25)
     },
     input: {
-        borderBottomWidth: vh(2),
-        padding: vw(15),
-        width: '80%',
+        padding: vw(15.5),
         marginBottom: vh(20),
-        fontSize: vh(20),
-        textAlign: 'center',
-        borderColor: 'white',
-        color: 'white',
+        fontSize: vw(17),
+        backgroundColor: Color.greyish,
+        borderRadius: vh(5),
+        fontFamily: 'SFUIDisplay-Regular',
     },
     btn: {
-        borderBottomWidth: vh(2),
-        borderRightWidth: vh(2),
-        padding: vw(10),
-        marginBottom: vh(20),
-        borderColor: 'white',
+        paddingVertical: vh(16.5),
     },
     btnText: {
         color: 'white',
-        fontSize: vh(15)
+        fontSize: vw(17),
+        textAlign: 'center',
+        fontFamily: 'SFUIDisplay-Bold'
+    },
+    passwordView: {
+        flexDirection: 'row',
+        backgroundColor: Color.greyish,
+        marginBottom: vh(20),
+        borderRadius: vh(5),
+    },
+    passwordText: {
+        flex: 1,
+        marginBottom: 0
+    },
+    eyeView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: vw(15)
     },
     indicator: {
         position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
+        top: vh(400),
+        left: vw(180)
     },
     addBtn: {
         zIndex: 1,
@@ -57,6 +89,9 @@ const Styles = StyleSheet.create({
         right: vw(20),
         left: vw(20),
         borderRadius: vw(10),
+    },
+    gradient: {
+        borderRadius: vh(5)
     },
 })
 export default Styles;

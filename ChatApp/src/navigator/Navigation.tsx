@@ -18,7 +18,7 @@ const MainStack = createStackNavigator(
         ChatList: {
             screen: ChatList,
             navigationOptions: {
-                // headerShown: false,
+                headerShown: false,
             }
         },
     },
@@ -38,7 +38,7 @@ const AuthStack = createStackNavigator(
         SignUp: {
             screen: SignUp,
             navigationOptions: {
-                headerBackTitle: ' '
+                headerShown: false
             }
         },
     },
