@@ -8,8 +8,6 @@ import InboxFlatList from './InboxFlatList';
 import Styles from './Styles';
 import { Images, Strings, Color } from '../../../constants';
 
-var shown = false
-
 export interface AppProps {
   navigation?: any,
   uid: string,
