@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Styles from './Styles';
 
 export interface AppProps {
@@ -10,7 +10,7 @@ export interface AppProps {
 export interface AppState {
 }
 
-export default class AppComponent extends React.Component<AppProps, AppState> {
+export default class AppComponent extends React.PureComponent<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
@@ -18,10 +18,16 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   }
 
   public render() {
+    const { item } = this.props
     return (
       <View style={Styles.mainView}>
-        <TouchableOpacity style={Styles.txt} onPress={() => this.props.openChat(this.props.item.key, this.props.item.displayName)}>
-          <Text style={{ color: 'white' }}>{this.props.item.displayName}</Text>
+        <View>
+        <Image source={{ uri: item.photoURL }} style={Styles.imgProfile} />
+        </View>
+        <TouchableOpacity activeOpacity={1} style={Styles.txt} onPress={() => this.props.openChat(item)}>
+          <View style={Styles.msgView}>
+            <Text style={Styles.nameStyle}>{item.displayName}</Text>
+          </View>
         </TouchableOpacity>
       </View>
     );

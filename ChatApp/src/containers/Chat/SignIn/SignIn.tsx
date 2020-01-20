@@ -25,7 +25,7 @@ export interface AppState {
   bgBorder: number,
 }
 
-export default class AppComponent extends React.Component<Props, AppState> {
+export default class AppComponent extends React.PureComponent<Props, AppState> {
   Animation: any;
   firstInput: any;
   constructor(props: Props) {
@@ -52,10 +52,8 @@ export default class AppComponent extends React.Component<Props, AppState> {
   }
 
   loginSuccess = (data: any) => {
-    console.log('data on success ', data.user.uid)
     this.props.updateEmail(this.state.email)
     this.props.updateUid(data.user.uid)
-    console.log('set ', this.props.email, this.props.uid)
     this.setState({
       animate: false
     })
@@ -63,7 +61,6 @@ export default class AppComponent extends React.Component<Props, AppState> {
   }
 
   loginFail = (error: any) => {
-    console.log('ok ', error)
     this.setState({
       animate: false
     })

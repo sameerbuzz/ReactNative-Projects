@@ -9,9 +9,6 @@ let chatRef = firebase.database().ref('Msgs/')
 let roomchat = firebase.database()
 let inbox = firebase.database()
 
-var roomUid = ''
-var receiverUID = ''
-
 class FirebaseService {
 
   constructor() {
@@ -101,29 +98,26 @@ class FirebaseService {
       console.log('msg sended ', message)
 
       // adding last msg on send msg to sender inbox------
-      inbox.ref('Inbox/' + user._id).child(roomUid).set({
+      inbox.ref('Inbox/' + user._id).child(user.roomID).set({
         lastMsg: message.text,
         createdAt: message.createdAt,
         user: message.user,
       })
 
       // adding last msg on send msg to receiver inbox-----
-      inbox.ref('Inbox/' + receiverUID).child(roomUid).set({
+      inbox.ref('Inbox/' + user.id).child(user.roomID).set({
         lastMsg: message.text,
         createdAt: message.createdAt,
         user: message.user,
       })
 
       // sending actual msg -------------------------
-      roomchat.ref('chatRoom/' + roomUid).push(message)
+      roomchat.ref('chatRoom/' + user.roomID).push(message)
     }
   };
 
   // Load msgs from Database to Chat-------------------
-  refOn = (id: string, receiverId: string, callback: Function) => {
-    console.log('id ', id)
-    roomUid = id
-    receiverUID = receiverId
+  refOn = (id: string, callback: Function) => {
     roomchat.ref('chatRoom/' + id)
       // .limitToLast(20)
       .on('child_added', (snapshot: any) => { callback(this.parse(snapshot)) });
@@ -140,6 +134,7 @@ class FirebaseService {
 
   refOff() {
     chatRef.off();
+    userRef.off();
   }
 
   // fetching last message----------------------------------
@@ -152,11 +147,10 @@ class FirebaseService {
   }
 
   // uploading profile pic to firebase storage--------------
-  uploadPic = (path: any, callback: Function) => {
-    const mime = 'application/octet-stream';
-    const imageRef = firebase.storage().ref('profilePic').child(Math.random().toString());
+  uploadPic = (uid: string, path: any, callback: Function) => {
+    const imageRef = firebase.storage().ref('profilePic').child(uid);
 
-    return imageRef.putFile(path, { contentType: mime })
+    return imageRef.putFile(path, { contentType: 'jpg' })
       .then(() => {
         return imageRef.getDownloadURL();
       })

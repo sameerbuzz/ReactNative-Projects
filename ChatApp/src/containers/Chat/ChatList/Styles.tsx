@@ -48,10 +48,12 @@ const Styles = StyleSheet.create({
     },
     mainView: {
         flex: 1,
+        flexDirection: 'row',
         borderWidth: vh(2),
         alignItems: 'center',
-        justifyContent: 'space-around',
-        borderColor: 'white',
+        justifyContent: 'flex-start',
+        borderColor: Color.greyish,
+        padding: vh(15),
     },
     txt: {
         flexDirection: 'row',
@@ -81,14 +83,19 @@ const Styles = StyleSheet.create({
         fontSize: vw(12)
     },
     flatStyle: {
-        zIndex: 1,
         flex: 1,
-        backgroundColor: Color.darkGreen,
+        backgroundColor: 'white',
         position: 'absolute',
-        top: vh(100),
-        right: vw(20),
-        left: vw(20),
+        top: vh(80),
+        right: 0,
+        left: 0,
+        bottom: 0,
         borderRadius: vw(10),
+    },
+    indicator: {
+        position: 'absolute',
+        top: vh(400),
+        left: vw(180)
     },
 })
 export default Styles;

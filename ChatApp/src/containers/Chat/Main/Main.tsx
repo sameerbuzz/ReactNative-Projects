@@ -14,7 +14,7 @@ export interface AppState {
   lastMsg: string,
 }
 
-export default class AppComponent extends React.Component<AppProps, AppState> {
+export default class AppComponent extends React.PureComponent<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
@@ -24,10 +24,8 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    console.log(this.props.user.key, this.props.navigation.getParam('reciverId'), this.props.navigation.getParam('receiverName'))
     // Loading msgs-------------
-    FirebaseServices.refOn(this.props.navigation.getParam('roomID'), this.props.navigation.getParam('reciverId'), (message: any) => {
-      console.log('msg ', message)
+    FirebaseServices.refOn(this.props.navigation.getParam('roomID'), (message: any) => {
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
         lastMsg: message,
@@ -42,12 +40,14 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
 
   get user() {
     return {
-      _name: this.props.user.displayName,
-      name: this.props.navigation.getParam('receiverName'),
-      email: this.props.user.email,
-      avatar: this.props.user.photoURL,
       _id: this.props.user.key,
+      _name: this.props.user.displayName,
+      avatar: this.props.user.photoURL,
       id: this.props.navigation.getParam('reciverId'),
+      name: this.props.navigation.getParam('receiverName'),
+      ravatar: this.props.navigation.getParam('reciverAvatar'),
+      email: this.props.user.email,
+      roomID: this.props.navigation.getParam('roomID'),
     };
   }
 

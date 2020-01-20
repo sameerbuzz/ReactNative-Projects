@@ -11,7 +11,7 @@ export interface AppProps {
 export interface AppState {
 }
 
-export default class AppComponent extends React.Component<AppProps, AppState> {
+export default class AppComponent extends React.PureComponent<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
         this.state = {
@@ -32,17 +32,17 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
     public render() {
         const { item } = this.props
         const { user } = this.props.item
-        console.log(item)
+        const compare = this.props.uid === user.id
         return (
             <View style={Styles.mainFlatView}>
                 <View>
-                    <Image source={{ uri: item.avatar }} style={Styles.imgProfile} />
+                    <Image source={{ uri: compare ? user.avatar : user.ravatar }} style={Styles.imgProfile} />
                 </View>
                 <TouchableOpacity style={Styles.txt}
                     activeOpacity={1}
-                    onPress={() => this.props.openChat(this.props.uid === user.id ? user._id : user.id, user._name)}>
+                    onPress={() => this.props.openChat(compare ? user._id : user.id, compare ? user._name : user.name, compare ? user.avatar : user.ravatar, user.roomID)}>
                     <View style={Styles.msgView}>
-                        <Text style={Styles.nameStyle}>{this.props.uid === user.id ? user._name : user.name}</Text>
+                        <Text style={Styles.nameStyle}>{compare ? user._name : user.name}</Text>
                         <Text style={Styles.lastMsg}>{item.lastMsg}</Text>
                     </View>
                     <View style={Styles.timeView}>

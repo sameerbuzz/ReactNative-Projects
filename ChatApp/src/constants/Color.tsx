@@ -5,6 +5,7 @@ const Color = {
     tealBlue: 'rgb(1, 167, 163)',
     placeholderGrey: 'rgb(140, 140, 140)',
     weirdGreen: 'rgb(102, 235, 143)',
+    transparentBG: 'rgba(0,0,0,0.001)',
     
 }
 export default Color;

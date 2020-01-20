@@ -28,7 +28,7 @@ export interface AppState {
   showPassword: boolean,
 }
 
-export default class AppComponent extends React.Component<AppProps, AppState> {
+export default class AppComponent extends React.PureComponent<AppProps, AppState> {
   firstInput: any;
   secondInput: any;
   constructor(props: AppProps) {
@@ -41,7 +41,6 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
 
   imagePicker = () => {
     ImagePickerFn.getSinglePic((response: string) => {
-      console.log(response)
       this.setState({
         source: response
       })
@@ -57,24 +56,20 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   }
 
   loginSuccess = (data: any) => {
-    console.log('success')
-    console.log('data on success ', data.user.uid)
-    let user = { uid: data.user.uid, avatar: this.state.source, name: this.state.name, email: this.state.email, password: this.state.password }
-    FirebaseServices.addingUser(user)
-    FirebaseServices.uploadPic(this.state.source, (url: string) => {
-      this.setState({
-        source: url,
-        animate: false
-      }, () => {
-        this.props.updateUid(data.user.uid)
-        this.props.updateEmail(this.state.email)
-        this.props.navigation.navigate('MainStack')
-      })
+    FirebaseServices.uploadPic(data.user.uid, this.state.source, (url: string) => {
+      let user = { uid: data.user.uid, avatar: url, name: this.state.name, email: this.state.email, password: this.state.password }
+      FirebaseServices.addingUser(user)
     })
-
+    this.setState({
+      animate: false
+    }, () => {
+      this.props.updateUid(data.user.uid)
+      this.props.updateEmail(this.state.email)
+      this.props.navigation.navigate('MainStack')
+    })
   }
+
   loginFail = (data: any) => {
-    console.log(data)
     Alert.alert(
       'Alert!',
       `${data}`,
