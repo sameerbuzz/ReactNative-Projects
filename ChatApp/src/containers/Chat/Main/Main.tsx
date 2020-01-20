@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { View, Text } from 'react-native';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
+// custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
+import {Color, vh, vw} from '../../../constants';
+import Styles from './Styles';
 
 export interface AppProps {
   navigation?: any,
@@ -51,11 +54,49 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     };
   }
 
+  customView = (data: any) => {
+    console.warn('data -> ',data)
+    return(
+      <View style={{backgroundColor: 'red'}}>
+        
+        </View>
+    )
+  }
+
+  customBubble = (props : any) => {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          left: {
+            backgroundColor: 'white',
+            
+          },
+          right: {
+            backgroundColor: Color.chatGreen,
+            
+          }
+        }}
+      />
+    );
+  }
+
   public render() {
-    return <GiftedChat
+    return (
+    <>
+    <View style={Styles.chatHeader}>
+      </View>
+    <GiftedChat
       messages={this.state.messages}
       onSend={FirebaseServices.send}
       user={this.user}
-    />;
+      showAvatarForEveryMessage={false}
+      // renderCustomView={this.customView}
+      renderAvatarOnTop={true}
+      showUserAvatar={true}
+      renderBubble={this.customBubble}
+    />
+   </>
+    )
   }
 }

@@ -6,6 +6,7 @@ const Color = {
     placeholderGrey: 'rgb(140, 140, 140)',
     weirdGreen: 'rgb(102, 235, 143)',
     transparentBG: 'rgba(0,0,0,0.001)',
+    chatGreen: 'rgb(4, 131, 123)',
     
 }
 export default Color;

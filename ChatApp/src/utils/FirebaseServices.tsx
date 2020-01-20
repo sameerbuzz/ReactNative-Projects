@@ -124,11 +124,12 @@ class FirebaseService {
   }
 
   parse = (snapshot: any) => {
-    const { timestamp: numberStamp, text, user } = snapshot.val();
+    const { createdAt: numberStamp, text, user } = snapshot.val();
     const { key: id } = snapshot;
     const { key: _id } = snapshot;
-    const timestamp = new Date(numberStamp);
-    const message = { id, _id, timestamp, text, user };
+    const createdAt = new Date(numberStamp);
+    const message = { id, _id, createdAt, text, user };
+    console.log('msgs - ',message)
     return message;
   };
 

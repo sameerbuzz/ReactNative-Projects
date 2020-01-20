@@ -21,6 +21,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     pad = (num: number) => {
         return ("0" + num).slice(-2);
     }
+    
     getTimeFromDate = (timestamp: number) => {
         var date = new Date(timestamp * 1000);
         var hours = date.getHours();

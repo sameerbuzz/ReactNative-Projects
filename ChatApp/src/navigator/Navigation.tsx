@@ -13,7 +13,12 @@ import ChatList from '../containers/Chat/ChatList';
 const MainStack = createStackNavigator(
     {
         Main: Main,
-        ChatMain: ChatMain,
+        ChatMain: {
+            screen: ChatMain,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
         Animate: Animate,
         ChatList: {
             screen: ChatList,
