@@ -67,6 +67,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     return (
       <Bubble
         {...props}
+        //@ts-ignore
         wrapperStyle={{
           left: {
             backgroundColor: 'white',

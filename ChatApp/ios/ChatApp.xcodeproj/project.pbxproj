@@ -14,22 +14,22 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		210E54CFC679455DB4589176 /* SFUIDisplay-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 503F28815E9B40608FFA8404 /* SFUIDisplay-Semibold.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* ChatAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ChatAppTests.m */; };
+		4211B22CB5334B0B89E0C12C /* SFUIDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65A9D9F9F2774488A38A85F5 /* SFUIDisplay-Bold.ttf */; };
+		814C77D8B30944DDB0CC100A /* SFUIDisplay-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE84BB8B994E9C92B211F1 /* SFUIDisplay-Light.ttf */; };
+		82851AFB254941C1B045B6F7 /* SFUIDisplay-Ultralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F387D7FE40947BABC43376A /* SFUIDisplay-Ultralight.ttf */; };
+		82D69088C7834E21AC93E683 /* SFUIDisplay-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C687484C6424453AC030960 /* SFUIDisplay-Heavy.ttf */; };
+		8EFFBEBCB51541ABBE542B03 /* SFUIDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE179559110F4EDB832B6E26 /* SFUIDisplay-Medium.ttf */; };
+		90B6004C290D4A54A3F00E86 /* SFUIDisplay-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9235E4911D164C5EB611C7F3 /* SFUIDisplay-Thin.ttf */; };
 		B699F050BB289CB8FA6447DC /* libPods-ChatApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 568013E5311EEC199F7E9741 /* libPods-ChatApp-tvOS.a */; };
+		CE684298294342218B275DC9 /* SFUIDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4CCCE9483A7414088FAF0AC /* SFUIDisplay-Regular.ttf */; };
 		CEE4EDAC189E309BB162764C /* libPods-ChatApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B89C5B513FD365CF1E44E0 /* libPods-ChatApp.a */; };
 		D33351E40187BD2A5A5B5256 /* libPods-ChatAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A101EBA711A0CF4A91622E7F /* libPods-ChatAppTests.a */; };
-		210E54CFC679455DB4589176 /* SFUIDisplay-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 503F28815E9B40608FFA8404 /* SFUIDisplay-Semibold.ttf */; };
 		F210A200B2C8442785272C5F /* SFUIDisplay-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2720BAD1D0AD4E7392B26E71 /* SFUIDisplay-Black.ttf */; };
-		4211B22CB5334B0B89E0C12C /* SFUIDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65A9D9F9F2774488A38A85F5 /* SFUIDisplay-Bold.ttf */; };
-		82D69088C7834E21AC93E683 /* SFUIDisplay-Heavy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C687484C6424453AC030960 /* SFUIDisplay-Heavy.ttf */; };
-		814C77D8B30944DDB0CC100A /* SFUIDisplay-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DBE84BB8B994E9C92B211F1 /* SFUIDisplay-Light.ttf */; };
-		8EFFBEBCB51541ABBE542B03 /* SFUIDisplay-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE179559110F4EDB832B6E26 /* SFUIDisplay-Medium.ttf */; };
-		CE684298294342218B275DC9 /* SFUIDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4CCCE9483A7414088FAF0AC /* SFUIDisplay-Regular.ttf */; };
-		90B6004C290D4A54A3F00E86 /* SFUIDisplay-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9235E4911D164C5EB611C7F3 /* SFUIDisplay-Thin.ttf */; };
-		82851AFB254941C1B045B6F7 /* SFUIDisplay-Ultralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F387D7FE40947BABC43376A /* SFUIDisplay-Ultralight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +63,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ChatApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ChatApp/main.m; sourceTree = "<group>"; };
 		147738633B8E313FA2B46A23 /* Pods-ChatApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-tvOS/Pods-ChatApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		2720BAD1D0AD4E7392B26E71 /* SFUIDisplay-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Black.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Black.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* ChatApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChatApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* ChatApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ChatApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B30641AF7438403047F63C /* Pods-ChatApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ChatApp-tvOSTests/Pods-ChatApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -70,23 +71,22 @@
 		3FB1BE5AE789F022182DA6B2 /* Pods-ChatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		43A8AD565AFB9489EC829E36 /* Pods-ChatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAppTests.release.xcconfig"; path = "Target Support Files/Pods-ChatAppTests/Pods-ChatAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		47B1F36A7035D0F4F134B026 /* Pods-ChatApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp-tvOSTests/Pods-ChatApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		503F28815E9B40608FFA8404 /* SFUIDisplay-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Semibold.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Semibold.ttf"; sourceTree = "<group>"; };
 		568013E5311EEC199F7E9741 /* libPods-ChatApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D9AE97E28EAA0214A4C2326 /* libPods-ChatApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DBE84BB8B994E9C92B211F1 /* SFUIDisplay-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Light.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Light.ttf"; sourceTree = "<group>"; };
+		5F387D7FE40947BABC43376A /* SFUIDisplay-Ultralight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Ultralight.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Ultralight.ttf"; sourceTree = "<group>"; };
+		65A9D9F9F2774488A38A85F5 /* SFUIDisplay-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Bold.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		84B89C5B513FD365CF1E44E0 /* libPods-ChatApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C687484C6424453AC030960 /* SFUIDisplay-Heavy.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Heavy.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Heavy.ttf"; sourceTree = "<group>"; };
+		9235E4911D164C5EB611C7F3 /* SFUIDisplay-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Thin.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Thin.ttf"; sourceTree = "<group>"; };
 		A101EBA711A0CF4A91622E7F /* libPods-ChatAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3437F0070FF9BA9E54DA06D /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
+		E4CCCE9483A7414088FAF0AC /* SFUIDisplay-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Regular.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		EE179559110F4EDB832B6E26 /* SFUIDisplay-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFUIDisplay-Medium.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Medium.ttf"; sourceTree = "<group>"; };
 		F9FC7B0674DCAAA2F3BFDCC7 /* Pods-ChatApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-ChatApp-tvOS/Pods-ChatApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		503F28815E9B40608FFA8404 /* SFUIDisplay-Semibold.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Semibold.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Semibold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2720BAD1D0AD4E7392B26E71 /* SFUIDisplay-Black.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Black.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		65A9D9F9F2774488A38A85F5 /* SFUIDisplay-Bold.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Bold.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		8C687484C6424453AC030960 /* SFUIDisplay-Heavy.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Heavy.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Heavy.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5DBE84BB8B994E9C92B211F1 /* SFUIDisplay-Light.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Light.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		EE179559110F4EDB832B6E26 /* SFUIDisplay-Medium.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Medium.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E4CCCE9483A7414088FAF0AC /* SFUIDisplay-Regular.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Regular.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		9235E4911D164C5EB611C7F3 /* SFUIDisplay-Thin.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Thin.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5F387D7FE40947BABC43376A /* SFUIDisplay-Ultralight.ttf */ = {isa = PBXFileReference; name = "SFUIDisplay-Ultralight.ttf"; path = "../src/assets/Fonts/SFUIDisplay-Ultralight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +170,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2DEA191353AC4C6584567506 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				503F28815E9B40608FFA8404 /* SFUIDisplay-Semibold.ttf */,
+				2720BAD1D0AD4E7392B26E71 /* SFUIDisplay-Black.ttf */,
+				65A9D9F9F2774488A38A85F5 /* SFUIDisplay-Bold.ttf */,
+				8C687484C6424453AC030960 /* SFUIDisplay-Heavy.ttf */,
+				5DBE84BB8B994E9C92B211F1 /* SFUIDisplay-Light.ttf */,
+				EE179559110F4EDB832B6E26 /* SFUIDisplay-Medium.ttf */,
+				E4CCCE9483A7414088FAF0AC /* SFUIDisplay-Regular.ttf */,
+				9235E4911D164C5EB611C7F3 /* SFUIDisplay-Thin.ttf */,
+				5F387D7FE40947BABC43376A /* SFUIDisplay-Ultralight.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		7BB973BC92FE35C76D1D4DED /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,23 +234,6 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
-		};
-		2DEA191353AC4C6584567506 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				503F28815E9B40608FFA8404 /* SFUIDisplay-Semibold.ttf */,
-				2720BAD1D0AD4E7392B26E71 /* SFUIDisplay-Black.ttf */,
-				65A9D9F9F2774488A38A85F5 /* SFUIDisplay-Bold.ttf */,
-				8C687484C6424453AC030960 /* SFUIDisplay-Heavy.ttf */,
-				5DBE84BB8B994E9C92B211F1 /* SFUIDisplay-Light.ttf */,
-				EE179559110F4EDB832B6E26 /* SFUIDisplay-Medium.ttf */,
-				E4CCCE9483A7414088FAF0AC /* SFUIDisplay-Regular.ttf */,
-				9235E4911D164C5EB611C7F3 /* SFUIDisplay-Thin.ttf */,
-				5F387D7FE40947BABC43376A /* SFUIDisplay-Ultralight.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -710,6 +709,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				INFOPLIST_FILE = ChatApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -729,6 +729,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = ChatApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
