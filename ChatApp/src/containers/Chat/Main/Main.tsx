@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { GiftedChat, Bubble, Composer, Send } from 'react-native-gifted-chat';
+import { View, Text, TouchableOpacity, Image, Button } from 'react-native';
+import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day } from 'react-native-gifted-chat';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
@@ -19,6 +19,7 @@ export interface AppState {
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
+  giftedChatRef: any
   constructor(props: AppProps) {
     super(props);
     this.state = {
@@ -56,54 +57,74 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     };
   }
 
-  customView = (data: any) => {
-    console.warn('data -> ', data)
-    return (
-      <View style={{ backgroundColor: 'red' }}>
-
-      </View>
-    )
-  }
-
   customBubble = (props: any) => {
     return (
       <Bubble
         {...props}
         //@ts-ignore
         wrapperStyle={{
-          left: {
-            backgroundColor: 'white',
-
-          },
-          right: {
-            backgroundColor: Color.chatGreen,
-
-          }
+          left: Styles.bubbleLeft,
+          right: Styles.bubbleRight
         }}
       />
     );
   }
 
   renderSend = (props: any) => {
-    return(
-      <View style={Styles.sendView}>
-    <TouchableOpacity  style={Styles.sendBtn} activeOpacity={1} onPress={() => {}}>
-      <Image source={Images.send} />
-    </TouchableOpacity>
-    </View>
+    const msg = this.giftedChatRef.state.text || '';
+    return (
+      <View>
+        <TouchableOpacity style={Styles.sendBtn} activeOpacity={1} onPress={() => {
+          if (msg.trim().length > 0) {
+            this.giftedChatRef.onSend({ text: msg.trim() }, true);
+          } else { return }
+        }}>
+          <Image source={Images.send} />
+        </TouchableOpacity>
+      </View>
     )
-}
+  }
 
-renderComposer = (props: any) => {
-  return(
-    <Composer
+  renderComposer = (props: any) => {
+    return (
+      <Composer
         {...props}
-       composerHeight={vh(45)}
-       placeholder={Strings.typeMsg}
-       textInputStyle={Styles.inputText}
+        composerHeight={vh(45)}
+        placeholder={Strings.typeMsg}
+        textInputStyle={Styles.inputContainer}
       />
-  )
-}
+    )
+  }
+
+  renderInputToolbar = (props: any) => {
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={Styles.footerStyle}
+        primaryStyle={Styles.primaryStyle}
+      />
+    )
+  }
+
+  renderTime = (props: any) => {
+    return (
+      <Time
+        {...props}
+        timeTextStyle={{
+          left: Styles.timeText,
+          right: Styles.timeText
+        }}
+      />
+    )
+  }
+
+  renderDay = () => {
+    return (
+      <Day
+        wrapperStyle={Styles.dayStyle}
+      />
+    )
+  }
 
   public render() {
     return (
@@ -113,11 +134,12 @@ renderComposer = (props: any) => {
             <Image source={Images.backBtn} />
           </TouchableOpacity>
           <TouchableOpacity style={Styles.headerImgView}>
-          <Image source = {{uri: this.props.navigation.getParam('reciverAvatar')}} style={Styles.headerImg} />
+            <Image source={{ uri: this.props.navigation.getParam('reciverAvatar') }} style={Styles.headerImg} />
           </TouchableOpacity>
-    <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
+          <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
         </View>
         <GiftedChat
+          ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
           onSend={FirebaseServices.send}
           user={this.user}
@@ -125,9 +147,11 @@ renderComposer = (props: any) => {
           renderAvatarOnTop={true}
           showUserAvatar={true}
           renderBubble={this.customBubble}
-          // onInputTextChanged={text => this.setState({typingText: text})}
           renderSend={this.renderSend}
           renderComposer={this.renderComposer}
+          renderInputToolbar={this.renderInputToolbar}
+          renderTime={this.renderTime}
+          renderDay={this.renderDay}
         />
       </>
     )

@@ -7,6 +7,9 @@ const Color = {
     weirdGreen: 'rgb(102, 235, 143)',
     transparentBG: 'rgba(0,0,0,0.001)',
     chatGreen: 'rgb(4, 131, 123)',
+    chatGrey: 'rgb(242, 242, 242)',
+    black: 'rgb(35, 35, 35)',
+    day: 'rgb(214, 231, 230)'
     
 }
 export default Color;

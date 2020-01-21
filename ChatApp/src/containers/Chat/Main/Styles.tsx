@@ -24,25 +24,48 @@ const Styles = StyleSheet.create({
     },
     headerName: {
         fontFamily: 'SFUIDisplay-Semibold',
-        fontSize: vw(15)
+        fontSize: vh(15)
     },
-    // inputContainer: {
-    //     flexDirection: 'row',
-    //     width: '80%',
-    //     height: vh(45),
-    //     margin: vh(7.5),
-    //     borderRadius: vh(5),
-    //     alignItems: 'center',
-    //     justifyContent: 'flex-start',
-    //     backgroundColor: 'red'
-    // },
-    inputText: {
-        fontSize: vh(15),
+    dayStyle: {
+        backgroundColor: Color.day,
+        paddingHorizontal: vw(13),
+        paddingVertical: vh(8), 
+        borderRadius: vh(5)
+    },
+    bubbleLeft: {
+        backgroundColor: 'white', 
+        marginBottom: vh(5),
+    },
+    bubbleRight: {
+        backgroundColor: Color.chatGreen, 
+        marginBottom: vh(5),
+    },
+    timeText: {
+        fontSize: vh(10),
         fontFamily: 'SFUIDisplay-Regular',
     },
-    sendView: {
-        padding: vh(7.5),
-        paddingLeft: 0
+    footerStyle: {
+        backgroundColor: 'transparent',
+        borderTopWidth: 0,
+        paddingRight: vh(7.5),
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: vh(45),
+    },
+    inputContainer: {
+        borderRadius: vh(5),
+        height: vh(45),
+        alignItems: 'center',
+        backgroundColor: 'white',
+        paddingTop: vw(10),
+        paddingLeft: vw(10),
+        paddingRight: vw(10),
+        paddingBottom: vw(10),
+        fontSize: vw(15),
+        fontFamily: 'SFUIDisplay-Regular',
+    },
+    primaryStyle: {
+        alignItems: 'center',
     },
     sendBtn: {
         backgroundColor: Color.tealBlue,
@@ -50,7 +73,8 @@ const Styles = StyleSheet.create({
         width: vh(45),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: vh(5)
+        borderRadius: vh(5),
+        marginLeft: vh(7.5),
     },
 
 })
