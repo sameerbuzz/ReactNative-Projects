@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { GiftedChat, Bubble, Composer, Send } from 'react-native-gifted-chat';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
-import {Color, vh, vw} from '../../../constants';
+import { Color, Images, vh, vw, Strings } from '../../../constants';
 import Styles from './Styles';
 
 export interface AppProps {
@@ -15,6 +15,7 @@ export interface AppProps {
 export interface AppState {
   messages: any,
   lastMsg: string,
+  typingText: string,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -22,7 +23,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     super(props);
     this.state = {
       messages: [],
-      lastMsg: ''
+      lastMsg: '',
+      typingText: '',
     };
   }
 
@@ -55,15 +57,15 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   customView = (data: any) => {
-    console.warn('data -> ',data)
-    return(
-      <View style={{backgroundColor: 'red'}}>
-        
-        </View>
+    console.warn('data -> ', data)
+    return (
+      <View style={{ backgroundColor: 'red' }}>
+
+      </View>
     )
   }
 
-  customBubble = (props : any) => {
+  customBubble = (props: any) => {
     return (
       <Bubble
         {...props}
@@ -71,33 +73,63 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         wrapperStyle={{
           left: {
             backgroundColor: 'white',
-            
+
           },
           right: {
             backgroundColor: Color.chatGreen,
-            
+
           }
         }}
       />
     );
   }
 
+  renderSend = (props: any) => {
+    return(
+      <View style={Styles.sendView}>
+    <TouchableOpacity  style={Styles.sendBtn} activeOpacity={1} onPress={() => {}}>
+      <Image source={Images.send} />
+    </TouchableOpacity>
+    </View>
+    )
+}
+
+renderComposer = (props: any) => {
+  return(
+    <Composer
+        {...props}
+       composerHeight={vh(45)}
+       placeholder={Strings.typeMsg}
+       textInputStyle={Styles.inputText}
+      />
+  )
+}
+
   public render() {
     return (
-    <>
-    <View style={Styles.chatHeader}>
-      </View>
-    <GiftedChat
-      messages={this.state.messages}
-      onSend={FirebaseServices.send}
-      user={this.user}
-      showAvatarForEveryMessage={false}
-      // renderCustomView={this.customView}
-      renderAvatarOnTop={true}
-      showUserAvatar={true}
-      renderBubble={this.customBubble}
-    />
-   </>
+      <>
+        <View style={Styles.chatHeader}>
+          <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop()} activeOpacity={1}>
+            <Image source={Images.backBtn} />
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.headerImgView}>
+          <Image source = {{uri: this.props.navigation.getParam('reciverAvatar')}} style={Styles.headerImg} />
+          </TouchableOpacity>
+    <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
+        </View>
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={FirebaseServices.send}
+          user={this.user}
+          showAvatarForEveryMessage={false}
+          renderAvatarOnTop={true}
+          showUserAvatar={true}
+          renderBubble={this.customBubble}
+          // onInputTextChanged={text => this.setState({typingText: text})}
+          renderSend={this.renderSend}
+          renderComposer={this.renderComposer}
+        />
+      </>
     )
   }
 }

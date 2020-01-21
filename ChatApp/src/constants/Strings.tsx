@@ -12,6 +12,7 @@ const Strings = {
     name: 'Enter name',
     chats: 'Chats',
     noChat: 'No Chats',
+    typeMsg: 'Type Message',
 
 }
 export default Strings;

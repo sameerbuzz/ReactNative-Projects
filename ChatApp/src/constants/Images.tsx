@@ -7,6 +7,7 @@ const Images = {
     plus: require('../assets/Images/plus.png'), 
     noChat : require('../assets/Images/icGraphicNoChat.png'), 
     minus: require('../assets/Images/minus_PNG41.png'),
+    send: require('../assets/Images/icSend.png'),
 
 }
 export default Images;
