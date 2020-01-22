@@ -80,9 +80,13 @@ export default class AppComponent extends React.PureComponent<Props, AppState> {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={Styles.mainView}>
           <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color={Color.tealBlue} />
+          <View style={Styles.graphicsView}>
           <TouchableOpacity style={Styles.signupView} onPress={() => this.props.navigation.navigate('SignUp')} activeOpacity={1}>
             <Text style={Styles.signupText}>{Strings.signUpSpace}</Text>
           </TouchableOpacity>
+          <Image source={Images.graphics} />
+          </View>
+          <View style={Styles.lowerView}>
           <Text style={Styles.signinText}>{Strings.signInSpace}</Text>
           <Text style={Styles.welcome}>{Strings.welcome}</Text>
           <TextInput
@@ -123,6 +127,7 @@ export default class AppComponent extends React.PureComponent<Props, AppState> {
               <Text style={Styles.btnText}>{Strings.submit}</Text>
             </TouchableOpacity>
           </LinearGradient>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     );

@@ -5,20 +5,28 @@ const Styles = StyleSheet.create({
     mainView: {
         flex: 1,
         backgroundColor: 'white',
-        paddingHorizontal: vw(30),
-        paddingTop: vh(63.5)
+    },
+    graphicsView: {
+        position: 'absolute',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        right: 0
     },
     signupView: {
-        paddingHorizontal: vw(14.5),
-        paddingVertical: vh(20),
+        zIndex: 1,
+        position: 'absolute',
         alignItems: 'center',
         width: vw(100),
-        marginLeft: vw(285.5)
     },
     signupText: {
         fontSize: vw(17),
         color: Color.tealBlue,
-        fontFamily: 'SFUIDisplay-Semibold'
+        fontFamily: 'SFUIDisplay-Semibold',
+    },
+    lowerView: {
+        paddingHorizontal: vw(30),
+        paddingTop: vh(99.5)
     },
     signinText: {
         fontSize: vw(25),
