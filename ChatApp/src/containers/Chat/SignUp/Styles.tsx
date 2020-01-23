@@ -37,26 +37,28 @@ const Styles = StyleSheet.create({
         paddingVertical: vh(16.5),
     },
     indicator: {
-        position: 'absolute',
-        top: vh(550),
-        left: vw(180)
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: vw(5)
     },
     imgStyle: {
         height: vh(140),
         width: vh(140),
         alignItems: 'center',
         marginBottom: vh(20),
-        borderRadius: vh(70)
     },
     imageStyle: {
         height: vh(140),
         width: vh(140),
-        borderRadius: vh(70)
+        borderRadius: vh(70),
     },
     edit: {
         position: 'absolute',
         bottom: 0,
-        right: 0
+        right: 0,
+        height: vh(40),
+        width: vh(40),
     },
     signupText: {
         fontSize: vw(25),
@@ -82,11 +84,14 @@ const Styles = StyleSheet.create({
     eyeView: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: vw(15)
+        paddingHorizontal: vh(15)
     },
     gradient: {
         borderRadius: vh(5),
         width: '100%'
+    },
+    disableStyle: {
+        opacity: 0.2
     },
 })
 export default Styles;

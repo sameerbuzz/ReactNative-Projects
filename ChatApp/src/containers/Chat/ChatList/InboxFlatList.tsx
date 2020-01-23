@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Styles from './Styles';
+import { Images } from '../../../constants';
 
 export interface AppProps {
     item: any,
@@ -21,13 +22,18 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     pad = (num: number) => {
         return ("0" + num).slice(-2);
     }
-    
+
     getTimeFromDate = (timestamp: number) => {
-        var date = new Date(timestamp * 1000);
+        var date = new Date(timestamp);
         var hours = date.getHours();
         var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
         return this.pad(hours) + ":" + this.pad(minutes)
+    }
+
+    selectPic = (img: string) => {
+        var pic
+        img === '' ? pic = Images.imgPlaceholder : pic = { uri: img }
+        return pic
     }
 
     public render() {
@@ -37,14 +43,15 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         return (
             <View style={Styles.mainFlatView}>
                 <View>
-                    <Image source={{ uri: compare ? user.avatar : user.ravatar }} style={Styles.imgProfile} />
+                    <Image source={compare ? this.selectPic(user.avatar) : this.selectPic(user.ravatar)}
+                        style={Styles.imgProfile} />
                 </View>
                 <TouchableOpacity style={Styles.txt}
                     activeOpacity={1}
                     onPress={() => this.props.openChat(compare ? user._id : user.id, compare ? user._name : user.name, compare ? user.avatar : user.ravatar, user.roomID)}>
                     <View style={Styles.msgView}>
                         <Text style={Styles.nameStyle}>{compare ? user._name : user.name}</Text>
-                        <Text style={Styles.lastMsg}>{item.lastMsg}</Text>
+                        <Text style={Styles.lastMsg} numberOfLines={1} >{item.lastMsg}</Text>
                     </View>
                     <View style={Styles.timeView}>
                         <Text style={Styles.timeTxt}>{this.getTimeFromDate(item.createdAt)}</Text>

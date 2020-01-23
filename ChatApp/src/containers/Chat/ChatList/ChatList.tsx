@@ -13,6 +13,7 @@ export interface AppProps {
   uid: string,
   email: string,
   updateUser: Function,
+  isOnline: Function,
   user: any,
 }
 
@@ -40,9 +41,12 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
   componentDidMount() {
     this.fetchInbox()
+    this.props.isOnline()
   }
   componentWillUnmount() {
     FirebaseServices.refOff()
+    console.warn('unmount')
+    this.props.isOnline()
   }
 
   fetchInbox = () => {

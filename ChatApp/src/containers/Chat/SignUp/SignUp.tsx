@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert, TouchableWithoutFeedback, Keyboard, Platform, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // custom imports
 import Styles from './Styles';
 import FirebaseServices from '../../../utils/FirebaseServices';
-import { Color, Strings, Images } from '../../../constants';
+import { Color, Strings, Images, vh } from '../../../constants';
 import { ImagePickerFn } from '../../../components';
 
 const colors = [Color.weirdGreen, Color.tealBlue]
+const bdWidth = vh(2)
 
 export interface AppProps {
   navigation?: any,
@@ -26,6 +28,7 @@ export interface AppState {
   source: any,
   bgBorder: number,
   showPassword: boolean,
+  btnDisable: boolean,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -34,8 +37,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      email: '', password: '', animate: false, name: '', bgBorder: 0, showPassword: true,
-      source: '',
+      email: '', password: '', animate: false, name: '', 
+      bgBorder: 0, showPassword: true, source: '', btnDisable: true,
     };
   }
 
@@ -49,7 +52,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
   signUp = () => {
     this.setState({
-      animate: true
+      animate: true,
     })
     let user = { email: this.state.email, password: this.state.password }
     FirebaseServices.signUp(user, this.loginSuccess, this.loginFail)
@@ -83,20 +86,26 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     })
   }
 
+  disableBtn = () => {
+    const { email, password, name } = this.state
+    var val = true
+      email.length >= 6 && password.length >= 3 && name.length >= 1 ? val = false : val = true 
+      return val   
+  }
+
   componentWillUnmount() {
     FirebaseServices.refOff()
   }
 
   public render() {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAwareScrollView scrollEnabled={true} enableAutomaticScroll={true} >
         <View style={Styles.outerMainView}>
           <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop()} activeOpacity={1}>
             <Image source={Images.backBtn} />
             <Text style={Styles.headerTxt}>{Strings.signInSpace}</Text>
           </TouchableOpacity>
           <View style={Styles.mainView}>
-            <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color={Color.tealBlue} />
             <Text style={Styles.signupText}>{Strings.signUpSpace}</Text>
             <TouchableOpacity style={Styles.imgStyle} onPress={() => this.imagePicker()} activeOpacity={1}>
               {this.state.source === '' ? <Image source={Images.imgPlaceholder} resizeMode='cover' style={Styles.imageStyle} /> :
@@ -105,8 +114,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
             </TouchableOpacity>
             <TextInput
               placeholder={Strings.name}
-              style={[Styles.input, { borderWidth: 1, borderColor: this.state.bgBorder === 1 ? Color.tealBlue : Color.greyish }]}
-              onChangeText={(text: string) => this.setState({ name: text })}
+              style={[Styles.input, { borderWidth: bdWidth, borderColor: this.state.bgBorder === 1 ? Color.tealBlue : Color.greyish }]}
+              onChangeText={(text: string) => this.setState({ name: text, btnDisable: this.disableBtn() })}
               returnKeyType='next'
               onSubmitEditing={() => { this.firstInput.focus(); }}
               autoCorrect={false}
@@ -116,8 +125,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
             />
             <TextInput
               placeholder={Strings.email}
-              style={[Styles.input, { borderWidth: 1, borderColor: this.state.bgBorder === 2 ? Color.tealBlue : Color.greyish }]}
-              onChangeText={(text: string) => this.setState({ email: text })}
+              style={[Styles.input, { borderWidth: bdWidth, borderColor: this.state.bgBorder === 2 ? Color.tealBlue : Color.greyish }]}
+              onChangeText={(text: string) => this.setState({ email: text, btnDisable: this.disableBtn() })}
               ref={(ref) => { this.firstInput = ref; }}
               returnKeyType='next'
               onSubmitEditing={() => { this.secondInput.focus(); }}
@@ -126,11 +135,11 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
               onFocus={() => this.setState({ bgBorder: 2 })}
               onBlur={() => this.setState({ bgBorder: 0 })}
             />
-            <View style={[Styles.passwordView, { borderWidth: 1, borderColor: this.state.bgBorder === 3 ? Color.tealBlue : Color.greyish }]}>
+            <View style={[Styles.passwordView, { borderWidth: bdWidth, borderColor: this.state.bgBorder === 3 ? Color.tealBlue : Color.greyish }]}>
               <TextInput
                 placeholder={Strings.password}
                 style={[Styles.input, Styles.passwordText]}
-                onChangeText={(text: string) => this.setState({ password: text })}
+                onChangeText={(text: string) => this.setState({ password: text, btnDisable: this.disableBtn() })}
                 ref={(ref) => { this.secondInput = ref; }}
                 returnKeyType='done'
                 onSubmitEditing={() => this.signUp()}
@@ -145,17 +154,18 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
                 activeOpacity={1}
                 onPress={() => this.setState({ showPassword: !this.state.showPassword })}
               >
-                <Image source={Images.eye} />
+                <Image source={this.state.showPassword ? Images.eye : Images.eyeEnable} />
               </TouchableOpacity>
             </View>
-            <LinearGradient start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} colors={colors} style={Styles.gradient}>
-              <TouchableOpacity style={Styles.btn} onPress={() => this.signUp()}>
+            <LinearGradient start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} colors={colors} style={[Styles.gradient, this.state.btnDisable ? Styles.disableStyle : null]}>
+              <TouchableOpacity style={Styles.btn} activeOpacity={1} onPress={() => this.state.btnDisable ? null : this.signUp()}>
                 <Text style={Styles.btnText}>{Strings.createAcc}</Text>
               </TouchableOpacity>
             </LinearGradient>
+            <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color={Color.tealBlue} />
           </View>
         </View>
-      </TouchableWithoutFeedback>
+        </KeyboardAwareScrollView>
     );
   }
 }

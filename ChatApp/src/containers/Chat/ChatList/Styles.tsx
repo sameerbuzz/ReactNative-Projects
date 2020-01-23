@@ -67,10 +67,10 @@ const Styles = StyleSheet.create({
     },
     nameStyle: {
         fontFamily: 'SFUIDisplay-Heavy',
-        fontSize: vw(15.5),
+        fontSize: vw(18.5),
     },
     lastMsg: {
-        fontSize: vw(13),
+        fontSize: vw(16),
         fontFamily: 'SFUIDisplay-Semibold'
     },
     timeView: {
@@ -80,7 +80,8 @@ const Styles = StyleSheet.create({
     },
     timeTxt: {
         fontFamily: 'SFUIDisplay-Regular',
-        fontSize: vw(12)
+        fontSize: vw(14),
+        color: Color.tealBlue
     },
     flatStyle: {
         flex: 1,

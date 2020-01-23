@@ -13,6 +13,7 @@ const Strings = {
     chats: 'Chats',
     noChat: 'No Chats',
     typeMsg: 'Type Message',
+    isOnline: 'Online',
 
 }
 export default Strings;

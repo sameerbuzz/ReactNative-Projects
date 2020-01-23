@@ -7,9 +7,9 @@ const mapDispatchToProps = (dispatch: Function) => ({
 })
 
 const mapStateToProps = (state: any) => {
-  const { user } = state.ChatList;
+  const { user, isOnline } = state.ChatList;
   return {
-    user
+    user, isOnline
   }
 }
 

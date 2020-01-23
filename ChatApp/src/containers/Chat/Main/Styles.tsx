@@ -30,7 +30,12 @@ const Styles = StyleSheet.create({
         backgroundColor: Color.day,
         paddingHorizontal: vw(13),
         paddingVertical: vh(8), 
-        borderRadius: vh(5)
+        borderRadius: vh(5),
+    },
+    dayText: {
+        fontSize: vh(11),
+        fontFamily: 'SFUIDisplay-Regular',
+        color: Color.greyishBrown
     },
     bubbleLeft: {
         backgroundColor: 'white', 
@@ -45,18 +50,17 @@ const Styles = StyleSheet.create({
         fontFamily: 'SFUIDisplay-Regular',
     },
     footerStyle: {
-        backgroundColor: 'transparent',
+        backgroundColor: 'blue',
         borderTopWidth: 0,
-        paddingRight: vh(7.5),
         alignItems: 'center',
         justifyContent: 'center',
-        height: vh(45),
+        height: vw(65),
     },
     inputContainer: {
-        borderRadius: vh(5),
-        height: vh(45),
+        borderRadius: vw(5),
+        height: vw(45),
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'red',
         paddingTop: vw(10),
         paddingLeft: vw(10),
         paddingRight: vw(10),
@@ -65,16 +69,18 @@ const Styles = StyleSheet.create({
         fontFamily: 'SFUIDisplay-Regular',
     },
     primaryStyle: {
+        flex: 1,
         alignItems: 'center',
+        justifyContent: 'flex-start',
     },
     sendBtn: {
         backgroundColor: Color.tealBlue,
-        height: vh(45),
-        width: vh(45),
+        height: vw(45),
+        width: vw(45),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: vh(5),
-        marginLeft: vh(7.5),
+        borderRadius: vw(5),
+        marginHorizontal: vh(7.5),
     },
 
 })

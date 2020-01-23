@@ -9,7 +9,8 @@ const Color = {
     chatGreen: 'rgb(4, 131, 123)',
     chatGrey: 'rgb(242, 242, 242)',
     black: 'rgb(35, 35, 35)',
-    day: 'rgb(214, 231, 230)'
+    day: 'rgb(214, 231, 230)',
+    greyishBrown: 'rgb(89, 89, 89)',
     
 }
 export default Color;

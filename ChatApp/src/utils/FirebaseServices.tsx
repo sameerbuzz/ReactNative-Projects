@@ -75,7 +75,7 @@ class FirebaseService {
   }
 
   addingUser = (user: any) => {
-    const users = { key: user.uid, displayName: user.name, email: user.email, photoURL: user.avatar }
+    const users = { key: user.uid, displayName: user.name, email: user.email, photoURL: user.avatar === null ? '' : user.avatar }
     userRef.push(users)
   }
 
@@ -140,7 +140,6 @@ class FirebaseService {
 
   // fetching last message----------------------------------
   inboxList = (uid: string, callback: Function) => {
-    debugger
     inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {
       console.log(snapshot.val())
       callback(snapshot.val())
@@ -149,6 +148,7 @@ class FirebaseService {
 
   // uploading profile pic to firebase storage--------------
   uploadPic = (uid: string, path: any, callback: Function) => {
+    if (path !== ''){
     const imageRef = firebase.storage().ref('profilePic').child(uid);
 
     return imageRef.putFile(path, { contentType: 'jpg' })
@@ -162,7 +162,9 @@ class FirebaseService {
       .catch(error => {
         console.warn('Error uploading image: ', error);
       });
-  }
+  }else{
+    callback(null)
+  }}
 
 }
 export default new FirebaseService();

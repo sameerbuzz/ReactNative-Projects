@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, Image, Button } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
 import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day } from 'react-native-gifted-chat';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
-import { Color, Images, vh, vw, Strings } from '../../../constants';
+import { Images, vh, Strings } from '../../../constants';
 import Styles from './Styles';
 
 export interface AppProps {
   navigation?: any,
   user: any,
+  isOnline: boolean,
 }
 
 export interface AppState {
@@ -38,10 +39,6 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       })
       )
     })
-  }
-
-  componentWillUnmount() {
-    FirebaseServices.refOff()
   }
 
   get user() {
@@ -118,25 +115,33 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     )
   }
 
-  renderDay = () => {
+  renderDay = (props: any) => {
     return (
       <Day
+        {...props}
         wrapperStyle={Styles.dayStyle}
+        textStyle={Styles.dayText}
       />
     )
   }
 
+  componentWillUnmount() {
+    FirebaseServices.refOff()
+  }
+
   public render() {
+    const pic = this.props.navigation.getParam('reciverAvatar')
     return (
       <>
         <View style={Styles.chatHeader}>
           <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop()} activeOpacity={1}>
             <Image source={Images.backBtn} />
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.headerImgView}>
-            <Image source={{ uri: this.props.navigation.getParam('reciverAvatar') }} style={Styles.headerImg} />
+          <TouchableOpacity activeOpacity={1} style={Styles.headerImgView} onPress={() => this.props.navigation.navigate('PicModal', {avatar: pic === '' ? Images.imgPlaceholder : { uri: pic }}) }>
+            <Image source={pic === '' ? Images.imgPlaceholder : { uri: pic }} style={Styles.headerImg} />
           </TouchableOpacity>
           <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
+          <Text style={Styles.headerName}>{this.props.isOnline ? Strings.isOnline : ''}</Text>
         </View>
         <GiftedChat
           ref={(ref) => { this.giftedChatRef = ref; }}

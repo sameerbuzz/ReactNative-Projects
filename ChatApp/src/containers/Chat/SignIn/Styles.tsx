@@ -13,11 +13,18 @@ const Styles = StyleSheet.create({
         justifyContent: 'flex-end',
         right: 0
     },
+    outerSignUp: {
+        marginTop: vh(63.5),
+        alignItems: 'center',
+        justifyContent:'flex-end',
+        flexDirection: 'row'
+    },
     signupView: {
         zIndex: 1,
-        position: 'absolute',
         alignItems: 'center',
-        width: vw(100),
+        justifyContent: 'center',
+        paddingHorizontal: vw(15),
+        paddingVertical: vw(5)
     },
     signupText: {
         fontSize: vw(17),
@@ -26,7 +33,7 @@ const Styles = StyleSheet.create({
     },
     lowerView: {
         paddingHorizontal: vw(30),
-        paddingTop: vh(99.5)
+        paddingTop: vh(20),
     },
     signinText: {
         fontSize: vw(25),
@@ -39,8 +46,7 @@ const Styles = StyleSheet.create({
         marginBottom: vh(25)
     },
     input: {
-        padding: vw(15.5),
-        marginBottom: vh(20),
+        padding: vh(15.5),
         fontSize: vw(17),
         backgroundColor: Color.greyish,
         borderRadius: vh(5),
@@ -57,49 +63,31 @@ const Styles = StyleSheet.create({
     },
     passwordView: {
         flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: Color.greyish,
         marginBottom: vh(20),
         borderRadius: vh(5),
     },
     passwordText: {
         flex: 1,
-        marginBottom: 0
     },
     eyeView: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: vw(15)
+        paddingHorizontal: vw(15),
     },
     indicator: {
-        position: 'absolute',
-        top: vh(400),
-        left: vw(180)
-    },
-    addBtn: {
-        zIndex: 1,
         flexDirection: 'row',
-        position: 'absolute',
-        bottom: vh(40),
-        right: vw(40),
-        backgroundColor: Color.darkGreen,
-        height: vw(60),
-        width: vw(60),
-        borderRadius: vw(30),
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    flatStyle: {
-        zIndex: 1,
-        flex: 1,
-        backgroundColor: Color.darkGreen,
-        position: 'absolute',
-        top: vh(100),
-        right: vw(20),
-        left: vw(20),
-        borderRadius: vw(10),
+        paddingTop: vw(5)
     },
     gradient: {
-        borderRadius: vh(5)
+        borderRadius: vh(5),
+    },
+    disableStyle: {
+        opacity: 0.2
     },
 })
 export default Styles;
