@@ -8,16 +8,22 @@ const Styles = StyleSheet.create({
     },
     graphicsView: {
         position: 'absolute',
-        flexDirection: 'row',
-        alignItems: 'center',
+        // flexDirection: 'row',
         justifyContent: 'flex-end',
-        right: 0
+        right: 0,
+        top: 0,
+        height: vh(162.5),
+        width: vh(129),
+    },
+    graphicImg: {
+        height: '100%',
+        width: '100%',
     },
     outerSignUp: {
-        marginTop: vh(63.5),
+        marginTop: (vh(63.5)),
         alignItems: 'center',
         justifyContent:'flex-end',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     signupView: {
         zIndex: 1,
@@ -71,11 +77,17 @@ const Styles = StyleSheet.create({
     },
     passwordText: {
         flex: 1,
+        marginVertical: vh(1),
+        marginLeft: vh(1)
     },
     eyeView: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: vw(15),
+        padding: vw(15),
+    },
+    eyeImg: {
+        width: vh(20),
+        height: vh(10.5),
     },
     indicator: {
         flexDirection: 'row',

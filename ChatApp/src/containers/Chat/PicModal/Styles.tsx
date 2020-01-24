@@ -1,17 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { vh, vw, Color } from '../../../constants'
 const Styles = StyleSheet.create({
-    containerStyle: {
+    container: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-        // backgroundColor: 'transparent',
+        alignItems: 'center',
+        backgroundColor: Color.modalBlack,
     },
-    dialogboxStyle: {
+    modalBody: {
         width: '100%',
         height: '50%',
         alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: 'white'
     },
     pic: {

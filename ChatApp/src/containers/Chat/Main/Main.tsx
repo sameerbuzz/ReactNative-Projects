@@ -1,22 +1,24 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
-import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day } from 'react-native-gifted-chat';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day, GiftedAvatar } from 'react-native-gifted-chat';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
-import { Images, vh, Strings } from '../../../constants';
+import { Images, Strings, vw, vh } from '../../../constants';
 import Styles from './Styles';
+import PicModal from '../PicModal/PicModal'
 
 export interface AppProps {
   navigation?: any,
   user: any,
-  isOnline: boolean,
+  isTyping: Function,
 }
 
 export interface AppState {
   messages: any,
   lastMsg: string,
-  typingText: string,
+  modalVisible: boolean,
+  isTyping: boolean,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -26,11 +28,13 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     this.state = {
       messages: [],
       lastMsg: '',
-      typingText: '',
+      modalVisible: false,
+      isTyping: false,
     };
   }
 
   componentDidMount() {
+
     // Loading msgs-------------
     FirebaseServices.refOn(this.props.navigation.getParam('roomID'), (message: any) => {
       this.setState(previousState => ({
@@ -86,7 +90,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     return (
       <Composer
         {...props}
-        composerHeight={vh(45)}
+        // composerHeight={vw(45)}
         placeholder={Strings.typeMsg}
         textInputStyle={Styles.inputContainer}
       />
@@ -125,6 +129,16 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     )
   }
 
+  renderChatFooter = () => {
+    return (
+      <View style={Styles.chatFooter} />
+    )
+  }
+
+  typingIndicator = () => {
+    
+  }
+
   componentWillUnmount() {
     FirebaseServices.refOff()
   }
@@ -135,15 +149,16 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       <>
         <View style={Styles.chatHeader}>
           <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop()} activeOpacity={1}>
-            <Image source={Images.backBtn} />
+            <Image source={Images.backBtn} style={Styles.headerBack} />
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={Styles.headerImgView} onPress={() => this.props.navigation.navigate('PicModal', {avatar: pic === '' ? Images.imgPlaceholder : { uri: pic }}) }>
+          <TouchableOpacity activeOpacity={1} style={Styles.headerImgView} onPress={() => this.setState({ modalVisible: true })}>
             <Image source={pic === '' ? Images.imgPlaceholder : { uri: pic }} style={Styles.headerImg} />
           </TouchableOpacity>
           <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
-          <Text style={Styles.headerName}>{this.props.isOnline ? Strings.isOnline : ''}</Text>
         </View>
         <GiftedChat
+          minComposerHeight={vh(45)}
+          maxComposerHeight={vh(75)}
           ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
           onSend={FirebaseServices.send}
@@ -157,7 +172,17 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           renderInputToolbar={this.renderInputToolbar}
           renderTime={this.renderTime}
           renderDay={this.renderDay}
+          renderChatFooter={this.renderChatFooter}
+          // isTyping={this.state.isTyping}
         />
+        {
+          this.state.modalVisible &&
+          <PicModal
+            image={pic === '' ? Images.imgPlaceholder : { uri: pic }}
+            visible={this.state.modalVisible}
+            handleAction={() => this.setState({ modalVisible: false })}
+          />
+        }
       </>
     )
   }

@@ -13,6 +13,10 @@ const Styles = StyleSheet.create({
         padding: vw(20),
         justifyContent: 'center',
     },
+    headerBack: {
+        height: vh(20),
+        width: vh(20)
+    },
     headerImgView: {
         padding: vw(10),
         paddingLeft: 0,
@@ -24,7 +28,7 @@ const Styles = StyleSheet.create({
     },
     headerName: {
         fontFamily: 'SFUIDisplay-Semibold',
-        fontSize: vh(15)
+        fontSize: vw(20)
     },
     dayStyle: {
         backgroundColor: Color.day,
@@ -33,39 +37,44 @@ const Styles = StyleSheet.create({
         borderRadius: vh(5),
     },
     dayText: {
-        fontSize: vh(11),
+        fontSize: vw(13),
         fontFamily: 'SFUIDisplay-Regular',
         color: Color.greyishBrown
     },
     bubbleLeft: {
         backgroundColor: 'white', 
-        marginBottom: vh(5),
+        marginBottom: vw(5),
     },
     bubbleRight: {
         backgroundColor: Color.chatGreen, 
-        marginBottom: vh(5),
+        marginBottom: vw(5),
     },
     timeText: {
-        fontSize: vh(10),
+        fontSize: vw(12),
         fontFamily: 'SFUIDisplay-Regular',
     },
+    chatFooter: {
+        height: vh(20),
+        width: '100%',
+    },
     footerStyle: {
-        backgroundColor: 'blue',
+        backgroundColor: 'transparent',
         borderTopWidth: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        height: vw(65),
+        minHeight: vh(25),
+        maxHeight: vh(80),
+        paddingVertical: vh(1)
     },
     inputContainer: {
-        borderRadius: vw(5),
-        height: vw(45),
+        borderRadius: vh(5),
+        height: vh(45),
         alignItems: 'center',
-        backgroundColor: 'red',
-        paddingTop: vw(10),
-        paddingLeft: vw(10),
-        paddingRight: vw(10),
-        paddingBottom: vw(10),
-        fontSize: vw(15),
+        backgroundColor: 'white',
+        paddingTop: vh(10),
+        paddingLeft: vh(10),
+        paddingRight: vh(10),
+        fontSize: vw(18),
         fontFamily: 'SFUIDisplay-Regular',
     },
     primaryStyle: {
@@ -75,11 +84,11 @@ const Styles = StyleSheet.create({
     },
     sendBtn: {
         backgroundColor: Color.tealBlue,
-        height: vw(45),
-        width: vw(45),
+        height: vh(45),
+        width: vh(45),
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: vw(5),
+        borderRadius: vh(5),
         marginHorizontal: vh(7.5),
     },
 

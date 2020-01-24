@@ -7,6 +7,7 @@ export interface AppProps {
     item: any,
     openChat: Function,
     uid: string,
+    openModal: any,
 }
 
 export interface AppState {
@@ -43,8 +44,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         return (
             <View style={Styles.mainFlatView}>
                 <View>
-                    <Image source={compare ? this.selectPic(user.avatar) : this.selectPic(user.ravatar)}
-                        style={Styles.imgProfile} />
+                    <TouchableOpacity onPress={() => this.props.openModal(compare ? this.selectPic(user.avatar) : this.selectPic(user.ravatar))}>
+                        <Image source={compare ? this.selectPic(user.avatar) : this.selectPic(user.ravatar)}
+                            style={Styles.imgProfile} />
+                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={Styles.txt}
                     activeOpacity={1}

@@ -7,6 +7,7 @@ import FlatlistData from './FlatlistData';
 import InboxFlatList from './InboxFlatList';
 import Styles from './Styles';
 import { Images, Strings, Color } from '../../../constants';
+import PicModal from '../PicModal/PicModal'
 
 export interface AppProps {
   navigation?: any,
@@ -27,6 +28,8 @@ export interface AppState {
   chatEmpty: boolean,
   show: boolean,
   animate: boolean,
+  modalVisible: boolean,
+  lastImg: any,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -36,7 +39,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       list: [], reRender: false,
       uid: this.props.uid,
       lastMsgData: [], currentUser: '', roomID: '',
-      chatEmpty: false, show: false, animate: false
+      chatEmpty: false, show: false, animate: false,
+      modalVisible: false, lastImg: null
     };
   }
   componentDidMount() {
@@ -121,6 +125,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         item={item}
         openChat={this.existingChatRoom}
         uid={this.props.uid}
+        openModal={(img: any) => this.setState({ modalVisible: true, lastImg: img })}
       />
     )
   }
@@ -152,6 +157,14 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           data={this.state.list}
           renderItem={this.renderItems}
         />}
+        {
+          this.state.modalVisible &&
+          <PicModal
+            image={this.state.lastImg}
+            visible={this.state.modalVisible}
+            handleAction={() => this.setState({ modalVisible: false })}
+          />
+        }
       </View>
     );
   }

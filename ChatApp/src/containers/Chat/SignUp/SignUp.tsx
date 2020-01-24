@@ -10,7 +10,7 @@ import { Color, Strings, Images, vh } from '../../../constants';
 import { ImagePickerFn } from '../../../components';
 
 const colors = [Color.weirdGreen, Color.tealBlue]
-const bdWidth = vh(2)
+const bdWidth = vh(1)
 
 export interface AppProps {
   navigation?: any,
@@ -37,7 +37,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   constructor(props: AppProps) {
     super(props);
     this.state = {
-      email: '', password: '', animate: false, name: '', 
+      email: '', password: '', animate: false, name: '',
       bgBorder: 0, showPassword: true, source: '', btnDisable: true,
     };
   }
@@ -89,8 +89,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   disableBtn = () => {
     const { email, password, name } = this.state
     var val = true
-      email.length >= 6 && password.length >= 3 && name.length >= 1 ? val = false : val = true 
-      return val   
+    email.length >= 6 && password.length >= 3 && name.length >= 1 ? val = false : val = true
+    return val
   }
 
   componentWillUnmount() {
@@ -99,10 +99,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
   public render() {
     return (
+      <View style={Styles.outerMainView}>
         <KeyboardAwareScrollView scrollEnabled={true} enableAutomaticScroll={true} >
-        <View style={Styles.outerMainView}>
           <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop()} activeOpacity={1}>
-            <Image source={Images.backBtn} />
+            <Image source={Images.backBtn} style={Styles.headerBack} />
             <Text style={Styles.headerTxt}>{Strings.signInSpace}</Text>
           </TouchableOpacity>
           <View style={Styles.mainView}>
@@ -154,7 +154,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
                 activeOpacity={1}
                 onPress={() => this.setState({ showPassword: !this.state.showPassword })}
               >
-                <Image source={this.state.showPassword ? Images.eye : Images.eyeEnable} />
+                <Image source={this.state.showPassword ? Images.eye : Images.eyeEnable} style={Styles.eyeImg} />
               </TouchableOpacity>
             </View>
             <LinearGradient start={{ x: 1, y: 0 }} end={{ x: 0, y: 1 }} colors={colors} style={[Styles.gradient, this.state.btnDisable ? Styles.disableStyle : null]}>
@@ -164,8 +164,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
             </LinearGradient>
             <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color={Color.tealBlue} />
           </View>
-        </View>
         </KeyboardAwareScrollView>
+      </View>
     );
   }
 }

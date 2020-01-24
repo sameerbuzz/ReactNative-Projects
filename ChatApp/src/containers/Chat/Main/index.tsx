@@ -1,15 +1,16 @@
 import { connect } from 'react-redux'
 import Main from './Main';
-import { } from '../../../modules/Chat/SignIn/Action';
+import { isTyping } from '../../../modules/Chat/Main/Action';
 
 const mapDispatchToProps = (dispatch: Function) => ({
-
+  isTyping: () => dispatch(isTyping()),
 })
 
 const mapStateToProps = (state: any) => {
-  const { user, isOnline } = state.ChatList;
+  const { isTyping } = state.Main;
+  const {user} = state.ChatList
   return {
-    user, isOnline
+    isTyping, user
   }
 }
 

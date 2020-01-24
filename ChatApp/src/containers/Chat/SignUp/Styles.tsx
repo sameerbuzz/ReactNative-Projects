@@ -11,7 +11,10 @@ const Styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: vh(15),
-        width: '30%'
+    },
+    headerBack: {
+        height: vh(20),
+        width: vh(20)
     },
     headerTxt: {
         fontFamily: 'SFUIDisplay-Semibold',
@@ -31,7 +34,7 @@ const Styles = StyleSheet.create({
         backgroundColor: Color.greyish,
         borderRadius: vh(5),
         fontFamily: 'SFUIDisplay-Regular',
-        width: '100%'
+        width: '100%',
     },
     btn: {
         paddingVertical: vh(16.5),
@@ -73,18 +76,26 @@ const Styles = StyleSheet.create({
     },
     passwordView: {
         flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: Color.greyish,
         marginBottom: vh(20),
         borderRadius: vh(5),
     },
     passwordText: {
         flex: 1,
-        marginBottom: 0
+        marginTop: vh(1),
+        marginBottom: vh(1),
+        marginLeft: vh(1),
     },
     eyeView: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: vh(15)
+        padding: vw(15),
+    },
+    eyeImg: {
+        width: vh(20),
+        height: vh(10.5),
     },
     gradient: {
         borderRadius: vh(5),
