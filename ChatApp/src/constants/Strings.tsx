@@ -14,6 +14,11 @@ const Strings = {
     noChat: 'No Chats',
     typeMsg: 'Type Message',
     isOnline: 'Online',
+    createGrp: 'Create Group',
+    gpName: 'Enter Group Name',
+    cancel: 'Cancel',
+    newGp: 'New Group',
+    typing: 'Typing...'
 
 }
 export default Strings;

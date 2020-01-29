@@ -10,6 +10,7 @@ import SignIn from '../containers/Chat/SignIn';
 import SignUp from '../containers/Chat/SignUp';
 import Animate from '../containers/Animation/Animate';
 import ChatList from '../containers/Chat/ChatList';
+import Group from '../containers/Chat/Group'
 
 const MainStack = createStackNavigator(
     {
@@ -23,6 +24,12 @@ const MainStack = createStackNavigator(
         Animate: Animate,
         ChatList: {
             screen: ChatList,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
+        Group: {
+            screen: Group,
             navigationOptions: {
                 headerShown: false,
             }

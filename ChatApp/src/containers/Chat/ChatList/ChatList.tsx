@@ -49,7 +49,6 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
   componentWillUnmount() {
     FirebaseServices.refOff()
-    console.warn('unmount')
     this.props.isOnline()
   }
 
@@ -73,11 +72,11 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
   fetch = () => {
     var newData: Array<any> = []
-    FirebaseServices.fetchList((message: any) => {
-      if (this.props.uid !== message.key) {
-        newData = newData.concat(message)
+    FirebaseServices.fetchList((user: any) => {
+      if (this.props.uid !== user.key) {
+        newData = newData.concat(user)
       } else {
-        this.props.updateUser(message)
+        this.props.updateUser(user)
       }
     })
     setTimeout(() => {
@@ -101,11 +100,19 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       chatRoomId = this.props.uid.concat(user.key)
     }
     this.setState({ roomID: chatRoomId, show: !this.state.show })
-    this.props.navigation.navigate('ChatMain', { roomID: chatRoomId, reciverId: user.key, receiverName: user.displayName, reciverAvatar: user.photoURL })
+    this.props.navigation.navigate('ChatMain', { type: 'normal', roomID: chatRoomId, reciverId: user.key, receiverName: user.displayName, reciverAvatar: user.photoURL })
   }
 
-  existingChatRoom = (id: string, name: string, avatar: string, roomID: string) => {
-    this.props.navigation.navigate('ChatMain', { roomID: roomID, reciverId: id, receiverName: name, reciverAvatar: avatar })
+  existingChatRoom = (type: string, id: string, name: string, avatar: string, roomID: string) => {
+    this.props.navigation.navigate('ChatMain', { type: type, roomID: roomID, reciverId: id, receiverName: name, reciverAvatar: avatar })
+  }
+
+  FlatListItemSeparator = () => {
+    return (
+      <View
+        style={Styles.separator}
+      />
+    );
   }
 
   renderItems = (rowData: any) => {
@@ -115,6 +122,18 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         item={item}
         openChat={this.chatRoom}
       />
+    )
+  }
+
+  headerItems = () => {
+    return (
+      <View style={Styles.mainView}>
+        <TouchableOpacity activeOpacity={1} style={Styles.txt} onPress={() => { this.setState({ show: !this.state.show }), this.props.navigation.navigate('Group', { list: this.state.list }) }}>
+          <View style={Styles.msgView}>
+            <Text style={Styles.nameStyle}>{Strings.createGrp}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     )
   }
 
@@ -147,13 +166,18 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           </View>
           :
           <FlatList
+            alwaysBounceVertical={false}
             data={this.state.lastMsgData}
+            ItemSeparatorComponent={this.FlatListItemSeparator}
             keyExtractor={(item, key) => key.toString()}
             renderItem={this.renderInbox}
             bounces={false}
           />}
         {this.state.show && <FlatList
+          alwaysBounceVertical={false}
           style={Styles.flatStyle}
+          ListHeaderComponent={this.state.list !== null ? this.headerItems : null}
+          ItemSeparatorComponent={this.FlatListItemSeparator}
           data={this.state.list}
           renderItem={this.renderItems}
         />}

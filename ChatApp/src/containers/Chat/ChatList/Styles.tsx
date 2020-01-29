@@ -34,8 +34,6 @@ const Styles = StyleSheet.create({
     },
     mainFlatView: {
         flex: 1,
-        borderTopWidth: vh(1),
-        borderBottomWidth: vh(1),
         borderColor: Color.greyish,
         padding: vw(15),
         flexDirection: 'row'
@@ -49,10 +47,8 @@ const Styles = StyleSheet.create({
     mainView: {
         flex: 1,
         flexDirection: 'row',
-        borderWidth: vh(2),
         alignItems: 'center',
         justifyContent: 'flex-start',
-        borderColor: Color.greyish,
         padding: vh(15),
     },
     txt: {
@@ -83,6 +79,11 @@ const Styles = StyleSheet.create({
         fontSize: vw(14),
         color: Color.tealBlue
     },
+    separator: {
+        height: vh(1),
+        width: '100%',
+        backgroundColor: Color.greyish,
+      },
     flatStyle: {
         flex: 1,
         backgroundColor: 'white',
@@ -92,6 +93,8 @@ const Styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         borderRadius: vw(10),
+        borderBottomWidth: vh(1),
+        borderColor: Color.greyish
     },
     indicator: {
         position: 'absolute',

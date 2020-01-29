@@ -8,6 +8,11 @@ let userRef = firebase.database().ref('AllUsers/')
 let chatRef = firebase.database().ref('Msgs/')
 let roomchat = firebase.database()
 let inbox = firebase.database()
+let typingRef = firebase.database().ref('Typing/')
+let createGpRef = firebase.database().ref('GroupUsers/')
+var AllGroupUsers: Array<any>
+var arr: Array<any>
+var message : any
 
 class FirebaseService {
 
@@ -97,42 +102,82 @@ class FirebaseService {
       const message = { text, user, createdAt: new Date().getTime() };
       console.log('msg sended ', message)
 
-      // adding last msg on send msg to sender inbox------
-      inbox.ref('Inbox/' + user._id).child(user.roomID).set({
-        lastMsg: message.text,
-        createdAt: message.createdAt,
-        user: message.user,
-      })
+      if (message.user.type === 'normal') {
+        // adding last msg on send msg to sender inbox------
+        const sender = { id: message.user.id, name: message.user.name, avatar: message.user.ravatar }
+        inbox.ref('Inbox/' + user._id).child(user.roomID).set({
+          lastMsg: message.text,
+          createdAt: message.createdAt,
+          roomID: user.roomID,
+          type: user.type,
+          user: sender,
+        })
 
-      // adding last msg on send msg to receiver inbox-----
-      inbox.ref('Inbox/' + user.id).child(user.roomID).set({
-        lastMsg: message.text,
-        createdAt: message.createdAt,
-        user: message.user,
-      })
+        // adding last msg on send msg to receiver inbox-----
+        const receiver = { id: message.user._id, name: message.user._name, avatar: message.user.avatar }
+        inbox.ref('Inbox/' + user.id).child(user.roomID).set({
+          lastMsg: message.text,
+          createdAt: message.createdAt,
+          roomID: user.roomID,
+          type: user.type,
+          user: receiver,
+        })
+      } else if (message.user.type === 'group') {
+
+        // adding last msg on send msg to group member's inbox------
+        const groupDetails = { id: message.user.id, name: message.user.name, avatar: message.user.ravatar }
+        AllGroupUsers.map(function (id) {
+          inbox.ref('Inbox/' + id).child(user.roomID).set({
+            lastMsg: message.text,
+            createdAt: message.createdAt,
+            roomID: user.roomID,
+            type: user.type,
+            user: groupDetails,
+          })
+        })
+      }
 
       // sending actual msg -------------------------
       roomchat.ref('chatRoom/' + user.roomID).push(message)
+
+      // typing indicator false ----------------------
+      this.falseTypingIndicator(user.roomID, user._id)
+
     }
   };
 
+  // typing indicator false ----------------------
+  falseTypingIndicator = (roomID: string, _id: string) => {
+    roomchat.ref('Typing/' + roomID)
+      .child(_id).set({
+        isTyping: false
+      }).then((data) => {
+        console.log('false isTyping ', data)
+      }).catch((error) => {
+        console.warn('error ', error)
+      })
+  }
+
   // Load msgs from Database to Chat-------------------
-  refOn = (id: string, callback: Function) => {
+  refOn = (id: string, type: string, allUsers: Array<any>, callback: Function) => {
+    if (type === 'group') {
+      AllGroupUsers = allUsers
+    }
     roomchat.ref('chatRoom/' + id)
-      // .limitToLast(20)
+      .limitToLast(20)
       .on('child_added', (snapshot: any) => { callback(this.parse(snapshot)) });
   }
 
   parse = (snapshot: any) => {
-    const { createdAt: numberStamp, text, user } = snapshot.val();
+    const { createdAt: numberStamp, text, user } = snapshot.val()
     const { key: id } = snapshot;
     const { key: _id } = snapshot;
     const createdAt = new Date(numberStamp);
-    const message = { id, _id, createdAt, text, user };
-    console.log('msgs - ',message)
+    message = { id, _id, createdAt, text, user }
+    console.log('msgs - ', message)
     return message;
-  };
-
+  }
+  
   refOff() {
     chatRef.off();
     userRef.off();
@@ -147,24 +192,57 @@ class FirebaseService {
   }
 
   // uploading profile pic to firebase storage--------------
-  uploadPic = (uid: string, path: any, callback: Function) => {
-    if (path !== ''){
-    const imageRef = firebase.storage().ref('profilePic').child(uid);
+  uploadPic = (uid: string, paths: any, callback: Function) => {
+    if (!!paths) {
+      const imageRef = firebase.storage().ref('profilePic').child(uid);
 
-    return imageRef.putFile(path, { contentType: 'jpg' })
-      .then(() => {
-        return imageRef.getDownloadURL();
+      return imageRef.putFile(paths, { contentType: 'jpg' })
+        .then(() => {
+          return imageRef.getDownloadURL();
+        })
+        .then(url => {
+          console.log(url);
+          callback(url)
+        })
+        .catch(error => {
+          console.warn('Error uploading image: ', error);
+        });
+    } else {
+      callback(null)
+    }
+  }
+
+  trueTypingIndicator = (roomID: string, myUID: string) => {
+    roomchat.ref('Typing/' + roomID)
+      .child(myUID)
+      .set({
+        isTyping: true
+      }).then((data) => {
+        console.log('true isTyping ', data)
+      }).catch((error) => {
+        console.warn('error ', error)
       })
-      .then(url => {
-        console.log(url);
-        callback(url)
+  }
+
+  fetchTyping = (roomID: string, uid: string, callback: Function) => {
+    roomchat.ref('Typing/' + roomID)
+      .child(uid)
+      .on('value', function (snapshot: any) {
+        callback(snapshot.val())
       })
-      .catch(error => {
-        console.warn('Error uploading image: ', error);
-      });
-  }else{
-    callback(null)
-  }}
+  }
+
+  creatingGroup = (gpId: string, allUsers: any, gpPic: string, creator: Object, callback: Function) => {
+    const data = { avatar: gpPic === null ? '' : gpPic, creator: creator, AllUsers: allUsers }
+    createGpRef.child(`/${gpId}`)
+      .push(data)
+    callback(data)
+  }
+
+  fetchGroupUsers = (roomID: string, callback: Function) => {
+    firebase.database().ref('GroupUsers/' + roomID)
+      .on('child_added', (snapshot: any) => { callback(snapshot.val()) });
+  }
 
 }
 export default new FirebaseService();

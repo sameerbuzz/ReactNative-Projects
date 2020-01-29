@@ -40,20 +40,19 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     public render() {
         const { item } = this.props
         const { user } = this.props.item
-        const compare = this.props.uid === user.id
         return (
             <View style={Styles.mainFlatView}>
                 <View>
-                    <TouchableOpacity onPress={() => this.props.openModal(compare ? this.selectPic(user.avatar) : this.selectPic(user.ravatar))}>
-                        <Image source={compare ? this.selectPic(user.avatar) : this.selectPic(user.ravatar)}
+                    <TouchableOpacity onPress={() => this.props.openModal(this.selectPic(user.avatar))}>
+                        <Image source={this.selectPic(user.avatar)}
                             style={Styles.imgProfile} />
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={Styles.txt}
                     activeOpacity={1}
-                    onPress={() => this.props.openChat(compare ? user._id : user.id, compare ? user._name : user.name, compare ? user.avatar : user.ravatar, user.roomID)}>
+                    onPress={() => this.props.openChat(item.type, user.id, user.name, user.avatar, item.roomID)}>
                     <View style={Styles.msgView}>
-                        <Text style={Styles.nameStyle}>{compare ? user._name : user.name}</Text>
+                        <Text style={Styles.nameStyle}>{user.name}</Text>
                         <Text style={Styles.lastMsg} numberOfLines={1} >{item.lastMsg}</Text>
                     </View>
                     <View style={Styles.timeView}>

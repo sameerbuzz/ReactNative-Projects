@@ -8,17 +8,17 @@ import { Images, Strings, vw, vh } from '../../../constants';
 import Styles from './Styles';
 import PicModal from '../PicModal/PicModal'
 
-export interface AppProps {
+interface AppProps {
   navigation?: any,
   user: any,
-  isTyping: Function,
 }
 
-export interface AppState {
+interface AppState {
   messages: any,
   lastMsg: string,
   modalVisible: boolean,
   isTyping: boolean,
+  allGroupUsers: Array<any>
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -30,13 +30,56 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       lastMsg: '',
       modalVisible: false,
       isTyping: false,
+      allGroupUsers: []
     };
   }
 
   componentDidMount() {
 
+    // fetching all members of group, if type is group
+    if (this.props.navigation.getParam('type') === 'group') {
+      FirebaseServices.fetchGroupUsers(this.props.navigation.getParam('roomID'), this.setGroupUsers)
+    }else{
     // Loading msgs-------------
-    FirebaseServices.refOn(this.props.navigation.getParam('roomID'), (message: any) => {
+    this.refOn()
+    }
+
+    // fetching typing status
+    if (this.props.navigation.getParam('type') === 'normal') {
+      FirebaseServices.fetchTyping(this.props.navigation.getParam('roomID'), this.props.navigation.getParam('reciverId'), this.setTyping)
+    }
+  }
+
+  get user() {
+    if (this.props.navigation.getParam('type') === 'normal') {
+      return {
+        _id: this.props.user.key,
+        _name: this.props.user.displayName,
+        avatar: this.props.user.photoURL,
+        id: this.props.navigation.getParam('reciverId'),
+        name: this.props.navigation.getParam('receiverName'),
+        ravatar: this.props.navigation.getParam('reciverAvatar'),
+        email: this.props.user.email,
+        roomID: this.props.navigation.getParam('roomID'),
+        type: 'normal',
+      }
+    } else if (this.props.navigation.getParam('type') === 'group') {
+      return {
+        _id: this.props.user.key,
+        _name: this.props.user.displayName,
+        avatar: this.props.user.photoURL,
+        id: this.props.navigation.getParam('roomID'),
+        name: this.props.navigation.getParam('receiverName'),
+        ravatar: this.props.navigation.getParam('reciverAvatar'),
+        email: this.props.user.email,
+        roomID: this.props.navigation.getParam('roomID'),
+        type: 'group',
+      }
+    }
+  }
+
+  refOn = () => {
+    FirebaseServices.refOn(this.props.navigation.getParam('roomID'), this.props.navigation.getParam('type'), this.props.navigation.getParam('type') === 'normal' ? [] : this.state.allGroupUsers, (message: any) => {
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
         lastMsg: message,
@@ -45,17 +88,18 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     })
   }
 
-  get user() {
-    return {
-      _id: this.props.user.key,
-      _name: this.props.user.displayName,
-      avatar: this.props.user.photoURL,
-      id: this.props.navigation.getParam('reciverId'),
-      name: this.props.navigation.getParam('receiverName'),
-      ravatar: this.props.navigation.getParam('reciverAvatar'),
-      email: this.props.user.email,
-      roomID: this.props.navigation.getParam('roomID'),
-    };
+  setGroupUsers = (userList: any) => {
+    var arr = userList.AllUsers.map((obj: { key: string; }) => obj.key)
+    arr = arr.concat(userList.creator.key)
+    this.setState({
+      allGroupUsers: arr
+    }, () => this.refOn())
+  }
+
+  setTyping = (data: any) => {
+    if (data !== null) {
+      this.setState({ isTyping: data.isTyping })
+    }
   }
 
   customBubble = (props: any) => {
@@ -90,7 +134,6 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     return (
       <Composer
         {...props}
-        // composerHeight={vw(45)}
         placeholder={Strings.typeMsg}
         textInputStyle={Styles.inputContainer}
       />
@@ -135,8 +178,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     )
   }
 
-  typingIndicator = () => {
-    
+  typingIndicator = (text: string) => {
+    if (text !== '') {
+      FirebaseServices.trueTypingIndicator(this.props.navigation.getParam('roomID'), this.props.user.key)
+    }
   }
 
   componentWillUnmount() {
@@ -155,6 +200,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
             <Image source={pic === '' ? Images.imgPlaceholder : { uri: pic }} style={Styles.headerImg} />
           </TouchableOpacity>
           <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
+          {this.state.isTyping ? <Text style={Styles.headerName}>  ({Strings.typing})</Text> : null}
         </View>
         <GiftedChat
           minComposerHeight={vh(45)}
@@ -173,7 +219,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           renderTime={this.renderTime}
           renderDay={this.renderDay}
           renderChatFooter={this.renderChatFooter}
-          // isTyping={this.state.isTyping}
+          loadEarlier={true}
+          // onLoadEarlier={this.refOn()}
+          // isLoadingEarlier={true}
+          onInputTextChanged={(text: string) => this.typingIndicator(text)}
         />
         {
           this.state.modalVisible &&

@@ -10,6 +10,7 @@ const Images = {
     minus: require('../assets/Images/minus_PNG41.png'),
     send: require('../assets/Images/icSend.png'),
     graphics: require('../assets/Images/icSignUpGraphic.png'),
+    CheckGreen: require('../assets/Images/icCheckGreen.png'),
 
 }
 export default Images;
