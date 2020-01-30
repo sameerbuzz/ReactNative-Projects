@@ -88,7 +88,7 @@ const Styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         position: 'absolute',
-        top: vh(80),
+        top: vh(85),
         right: 0,
         left: 0,
         bottom: 0,

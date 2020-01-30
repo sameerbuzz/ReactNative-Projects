@@ -6,6 +6,16 @@ const Styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: vh(30),
         alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    leftHeaderView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    rightHeaderView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: vw(10)
     },
     headerView: {
         flexDirection: 'row',

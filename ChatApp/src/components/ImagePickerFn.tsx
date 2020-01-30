@@ -1,32 +1,31 @@
 import ImagePicker from 'react-native-image-crop-picker';
 
+
 const myPicker = {
 
     getSinglePic : (callback: Function) => {
         ImagePicker.openPicker({     
             cropping: true
-        }).then((image: { path: any; }) => {
+        }).then((image: { path: string; }) => {
             callback(image.path)
         });  
     },
 
-    // getMultiplePic : (callback) => {
-    //     let temp = [];
-    //     ImagePicker.openPicker({     
-    //     cropping: true,
-    //     multiple: true,
-    // }).then(image => {
-    //     image.forEach((item)=> {
-    //     temp.push(item.path);
-    //   });
-    //   callback(temp)
-    //     })
-    // },
+    getMultiplePic : (callback: Function) => {
+        let temp: Array<string>;
+        ImagePicker.openPicker({     
+        cropping: false,
+        multiple: true,
+    }).then((image: Array<any>) => {
+        temp = image.map( item => item.path);
+      callback(temp)
+        })
+    },
 
     getCamera : (callback: Function) => {
         ImagePicker.openCamera({     
             cropping: true
-          }).then((image: { path: any; }) => {
+          }).then((image: { path: string; }) => {
             callback(image.path)
           });
     },

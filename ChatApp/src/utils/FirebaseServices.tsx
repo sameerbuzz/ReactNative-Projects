@@ -12,7 +12,8 @@ let typingRef = firebase.database().ref('Typing/')
 let createGpRef = firebase.database().ref('GroupUsers/')
 var AllGroupUsers: Array<any>
 var arr: Array<any>
-var message : any
+var message: any
+const myImage = 'https://firebasestorage.googleapis.com/v0/b/chat-e6b69.appspot.com/o/profilePic%2F0OQWhIgUxKfidUPO0Yi4LfwyDy23?alt=media&token=4f5353fd-3bef-48e2-93e6-eab0a70e11a9'
 
 class FirebaseService {
 
@@ -96,10 +97,11 @@ class FirebaseService {
   }
 
   // Storing msgs on Firebase Database---------------
-  send = (messages: Array<any>) => {
+  send = (messages: Array<any>, image?: string) => {
+    console.warn('msgs ',messages)
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
-      const message = { text, user, createdAt: new Date().getTime() };
+      const message = { text, user, createdAt: new Date().getTime(), image: image, };
       console.log('msg sended ', message)
 
       if (message.user.type === 'normal') {
@@ -159,25 +161,21 @@ class FirebaseService {
   }
 
   // Load msgs from Database to Chat-------------------
-  refOn = (id: string, type: string, allUsers: Array<any>, callback: Function) => {
+  refOn = (counter: number, id: string, type: string, allUsers: Array<any>, callback: Function) => {
     if (type === 'group') {
       AllGroupUsers = allUsers
     }
     roomchat.ref('chatRoom/' + id)
-      .limitToLast(20)
-      .on('child_added', (snapshot: any) => { callback(this.parse(snapshot)) });
+      .limitToLast(counter === 1 ? 20 : 20*counter)
+      .on('value', (snapshot: any) => { snapshot.val() === null ? callback([]) : callback(this.parse(snapshot)) });
   }
 
   parse = (snapshot: any) => {
-    const { createdAt: numberStamp, text, user } = snapshot.val()
-    const { key: id } = snapshot;
-    const { key: _id } = snapshot;
-    const createdAt = new Date(numberStamp);
-    message = { id, _id, createdAt, text, user }
-    console.log('msgs - ', message)
-    return message;
+    var result = Object.keys(snapshot.val()).map(key => snapshot.val()[key])
+    result.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
+    return result;
   }
-  
+
   refOff() {
     chatRef.off();
     userRef.off();
@@ -185,8 +183,7 @@ class FirebaseService {
 
   // fetching last message----------------------------------
   inboxList = (uid: string, callback: Function) => {
-    inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {
-      console.log(snapshot.val())
+    inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {     
       callback(snapshot.val())
     })
   }
@@ -195,6 +192,27 @@ class FirebaseService {
   uploadPic = (uid: string, paths: any, callback: Function) => {
     if (!!paths) {
       const imageRef = firebase.storage().ref('profilePic').child(uid);
+
+      return imageRef.putFile(paths, { contentType: 'jpg' })
+        .then(() => {
+          return imageRef.getDownloadURL();
+        })
+        .then(url => {
+          console.log(url);
+          callback(url)
+        })
+        .catch(error => {
+          console.warn('Error uploading image: ', error);
+        });
+    } else {
+      callback(null)
+    }
+  }
+
+   // uploading msg pic to firebase storage--------------
+   uploadMsgPic = ( paths: any, callback: Function) => {
+    if (!!paths) {
+      const imageRef = firebase.storage().ref('msgPics').child(Math.random().toString());
 
       return imageRef.putFile(paths, { contentType: 'jpg' })
         .then(() => {

@@ -6,7 +6,7 @@ import FirebaseServices from '../../../utils/FirebaseServices';
 import FlatlistData from './FlatlistData';
 import InboxFlatList from './InboxFlatList';
 import Styles from './Styles';
-import { Images, Strings, Color } from '../../../constants';
+import { Images, Strings, Color, VectorIcons, vw, vh } from '../../../constants';
 import PicModal from '../PicModal/PicModal'
 
 export interface AppProps {
@@ -58,6 +58,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         var objData = Object.keys(data).map(function (key) {
           return data[key]
         })
+        objData.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
         this.setState({
           chatEmpty: false,
           lastMsgData: objData,
@@ -155,7 +156,11 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         <ActivityIndicator animating={this.state.animate} size={"large"} style={Styles.indicator} color={Color.tealBlue} />
         <View style={Styles.header}>
           <TouchableOpacity style={Styles.addBtn} onPress={() => this.showAllUsers()}>
-            <Image source={this.state.show ? Images.minus : Images.plus} style={Styles.addImg} />
+            <VectorIcons.Entypo
+              name={this.state.show ? 'circle-with-minus' : 'circle-with-plus'}
+              size={vw(40)}
+              color={Color.tealBlue}
+            />
           </TouchableOpacity>
         </View>
         <Text style={Styles.chatTxt}>{Strings.chats}</Text>

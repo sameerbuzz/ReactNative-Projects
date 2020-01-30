@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day, GiftedAvatar } from 'react-native-gifted-chat';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day } from 'react-native-gifted-chat';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
-import { Images, Strings, vw, vh } from '../../../constants';
+import { Images, Strings, vw, vh, VectorIcons, Color } from '../../../constants';
 import Styles from './Styles';
 import PicModal from '../PicModal/PicModal'
+import { ImagePickerFn } from '../../../components';
+
+var counter: number = 1
 
 interface AppProps {
   navigation?: any,
@@ -18,7 +21,10 @@ interface AppState {
   lastMsg: string,
   modalVisible: boolean,
   isTyping: boolean,
-  allGroupUsers: Array<any>
+  allGroupUsers: Array<any>,
+  loadState: boolean,
+  multipleSource: Array<string>,
+  source: string,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -30,18 +36,24 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       lastMsg: '',
       modalVisible: false,
       isTyping: false,
-      allGroupUsers: []
+      allGroupUsers: [],
+      loadState: false,
+      multipleSource: [],
+      source: '',
     };
   }
 
   componentDidMount() {
 
+    // reset counter
+    counter = 1
+
     // fetching all members of group, if type is group
     if (this.props.navigation.getParam('type') === 'group') {
       FirebaseServices.fetchGroupUsers(this.props.navigation.getParam('roomID'), this.setGroupUsers)
-    }else{
-    // Loading msgs-------------
-    this.refOn()
+    } else {
+      // Loading msgs-------------
+      this.refOn()
     }
 
     // fetching typing status
@@ -79,12 +91,16 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   refOn = () => {
-    FirebaseServices.refOn(this.props.navigation.getParam('roomID'), this.props.navigation.getParam('type'), this.props.navigation.getParam('type') === 'normal' ? [] : this.state.allGroupUsers, (message: any) => {
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, message),
+    FirebaseServices.refOn(counter, this.props.navigation.getParam('roomID'), this.props.navigation.getParam('type'), this.props.navigation.getParam('type') === 'normal' ? [] : this.state.allGroupUsers, (message: any) => {
+      if (message.length !== 20 * counter) {
+        this.setState({ loadState: false })
+      } else {
+        this.setState({ loadState: true })
+      }
+      this.setState({
+        messages: message,
         lastMsg: message,
       })
-      )
     })
   }
 
@@ -102,6 +118,28 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     }
   }
 
+  multipleImagePicker = () => {
+    ImagePickerFn.getMultiplePic((response: Array<string>) => {
+      this.setState({
+        multipleSource: response
+      }, () => console.log(this.state.multipleSource))
+    })
+  }
+
+  singleImagePicker = () => {
+    ImagePickerFn.getSinglePic((response: string) => {
+      this.uploadImage(response)
+    })
+  }
+
+  uploadImage = (img: string) => {
+    FirebaseServices.uploadMsgPic(img, (url: string) => {
+      this.setState({
+        source: url
+      }, () => this.giftedChatRef.onSend({ text: '' }, true))
+    })
+  }
+
   customBubble = (props: any) => {
     return (
       <Bubble
@@ -115,12 +153,14 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     );
   }
 
-  renderSend = (props: any) => {
+  renderSend = () => {
     const msg = this.giftedChatRef.state.text || '';
     return (
       <View>
         <TouchableOpacity style={Styles.sendBtn} activeOpacity={1} onPress={() => {
           if (msg.trim().length > 0) {
+            this.giftedChatRef.onSend({ text: msg.trim() }, true);
+          } else if (this.state.source !== '') {
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
           } else { return }
         }}>
@@ -184,6 +224,17 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     }
   }
 
+  loadMsgs = () => {
+    counter = counter + 1
+    this.refOn()
+  }
+
+  renderFooter = (props: any) => {
+    return(
+      <View></View>
+    )
+  }
+
   componentWillUnmount() {
     FirebaseServices.refOff()
   }
@@ -193,21 +244,41 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     return (
       <>
         <View style={Styles.chatHeader}>
-          <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop()} activeOpacity={1}>
-            <Image source={Images.backBtn} style={Styles.headerBack} />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={Styles.headerImgView} onPress={() => this.setState({ modalVisible: true })}>
-            <Image source={pic === '' ? Images.imgPlaceholder : { uri: pic }} style={Styles.headerImg} />
-          </TouchableOpacity>
-          <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
-          {this.state.isTyping ? <Text style={Styles.headerName}>  ({Strings.typing})</Text> : null}
+          <View style={Styles.leftHeaderView}>
+            <TouchableOpacity style={Styles.headerView} onPress={() => this.props.navigation.pop(2)} activeOpacity={1}>
+              <Image source={Images.backBtn} style={Styles.headerBack} />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1} style={Styles.headerImgView} onPress={() => this.setState({ modalVisible: true })}>
+              <Image source={pic === '' ? Images.imgPlaceholder : { uri: pic }} style={Styles.headerImg} />
+            </TouchableOpacity>
+            <Text style={Styles.headerName}>{this.props.navigation.getParam('receiverName')}</Text>
+            {this.state.isTyping ? <Text style={Styles.headerName}>  ({Strings.typing})</Text> : null}
+          </View>
+          <View style={Styles.rightHeaderView}>
+            <VectorIcons.FontAwesome
+              name='camera'
+              size={vw(30)}
+              color={Color.tealBlue}
+              onPress={() => {
+                Alert.alert(
+                  'Pick photo from...',
+                  '',
+                  [
+                    { text: 'Gallery', onPress: () => this.singleImagePicker() },
+                    { text: 'Cancel', onPress: () => console.log('cancelled') },
+                  ],
+                  { cancelable: true },
+                )
+              }}
+            />
+          </View>
         </View>
         <GiftedChat
           minComposerHeight={vh(45)}
           maxComposerHeight={vh(75)}
           ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
-          onSend={FirebaseServices.send}
+          onSend={(messages) => FirebaseServices.send(messages, this.state.source)}
           user={this.user}
           showAvatarForEveryMessage={false}
           renderAvatarOnTop={true}
@@ -219,10 +290,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           renderTime={this.renderTime}
           renderDay={this.renderDay}
           renderChatFooter={this.renderChatFooter}
-          loadEarlier={true}
-          // onLoadEarlier={this.refOn()}
-          // isLoadingEarlier={true}
+          loadEarlier={this.state.loadState}
+          onLoadEarlier={this.loadMsgs}
           onInputTextChanged={(text: string) => this.typingIndicator(text)}
+          // renderFooter={this.renderFooter}
         />
         {
           this.state.modalVisible &&
