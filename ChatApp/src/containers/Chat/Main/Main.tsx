@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native';
 import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day } from 'react-native-gifted-chat';
 
 // custom imports
@@ -10,10 +10,16 @@ import PicModal from '../PicModal/PicModal'
 import { ImagePickerFn } from '../../../components';
 
 var counter: number = 1
+var imgCounter: number = 0
 
 interface AppProps {
   navigation?: any,
   user: any,
+  showFooter: boolean,
+  updateFooter: Function,
+  addImagesToBuffer: Function,
+  images: any,
+  removeImagesFromBuffer: Function
 }
 
 interface AppState {
@@ -25,6 +31,8 @@ interface AppState {
   loadState: boolean,
   multipleSource: Array<string>,
   source: string,
+  openFooter: boolean,
+  sendingSource: string,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -40,6 +48,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       loadState: false,
       multipleSource: [],
       source: '',
+      openFooter: false,
+      sendingSource: '',
     };
   }
 
@@ -119,25 +129,64 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   multipleImagePicker = () => {
-    ImagePickerFn.getMultiplePic((response: Array<string>) => {
-      this.setState({
-        multipleSource: response
-      }, () => console.log(this.state.multipleSource))
+    ImagePickerFn.getMultiplePic((response: Array<any>) => {
+      var i= 0
+      response.map(res => {
+        i++
+        var obj = { img: res, roomID: this.props.navigation.getParam('roomID'), userID: this.props.user.key }
+        console.warn('adding ... ', i)
+        this.props.addImagesToBuffer(obj)
+        if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
+          this.setState({
+            source: obj.img
+          }, () => {
+            this.props.updateFooter()
+            this.refOn()
+            console.warn('uploading... ',i)
+            this.uploadImage()
+          })
+
+        }
+      })
+      // console.warn(response.length === i)
+      // response.length === i ? this.uploading() : null
+      // console.warn('img => ',this.props.images)
+      // this.setState({
+      //   multipleSource: response
+      // }, () => { this.props.updateFooter(), this.refOn(), this.uploadImage(this.state.multipleSource) })
     })
+
   }
 
-  singleImagePicker = () => {
-    ImagePickerFn.getSinglePic((response: string) => {
-      this.uploadImage(response)
-    })
-  }
+  // uploading = () => {
+  //   console.warn('here')
+  //   this.props.updateFooter()
+  //   this.refOn()
+  //   this.uploadImage()
+  // }
 
-  uploadImage = (img: string) => {
-    FirebaseServices.uploadMsgPic(img, (url: string) => {
-      this.setState({
-        source: url
-      }, () => this.giftedChatRef.onSend({ text: '' }, true))
+  // singleImagePicker = () => {
+  //   ImagePickerFn.getSinglePic((response: any) => {
+  //     this.setState({
+  //       source: response.path
+  //     }, () => { this.props.updateFooter(), this.refOn(), this.uploadImage(this.state.source) })
+  //   })
+  // }
+
+  uploadImage = () => {
+    // console.warn('uploading ', obj)
+    this.props.images.map((obj: any) => {
+      if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
+        FirebaseServices.uploadMsgPic(obj.img, (url: string, name: string) => {
+          console.warn('getting ... ')
+          this.setState({
+            sendingSource: url
+          }, () => { this.props.updateFooter(), this.giftedChatRef.onSend({ text: '' }, true), this.props.removeImagesFromBuffer() })
+        })
+      }
+
     })
+
   }
 
   customBubble = (props: any) => {
@@ -160,7 +209,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         <TouchableOpacity style={Styles.sendBtn} activeOpacity={1} onPress={() => {
           if (msg.trim().length > 0) {
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
-          } else if (this.state.source !== '') {
+          } else if (this.state.sendingSource !== '') {
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
           } else { return }
         }}>
@@ -229,10 +278,17 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     this.refOn()
   }
 
-  renderFooter = (props: any) => {
-    return(
-      <View></View>
+  renderFooter = () => {
+    return (
+      this.props.showFooter ?
+        <View style={Styles.imageFooter}>
+          <Image source={{ uri: this.state.source }} style={Styles.sendingImg} />
+          <ActivityIndicator animating={true} size='large' color={Color.chatGreen} style={Styles.indicator} />
+        </View>
+        :
+        <></>
     )
+
   }
 
   componentWillUnmount() {
@@ -264,7 +320,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
                   'Pick photo from...',
                   '',
                   [
-                    { text: 'Gallery', onPress: () => this.singleImagePicker() },
+                    { text: 'Gallery', onPress: () => this.multipleImagePicker() },
                     { text: 'Cancel', onPress: () => console.log('cancelled') },
                   ],
                   { cancelable: true },
@@ -278,7 +334,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           maxComposerHeight={vh(75)}
           ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
-          onSend={(messages) => FirebaseServices.send(messages, this.state.source)}
+          onSend={(messages) => FirebaseServices.send(messages, this.state.sendingSource)}
           user={this.user}
           showAvatarForEveryMessage={false}
           renderAvatarOnTop={true}
@@ -293,7 +349,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           loadEarlier={this.state.loadState}
           onLoadEarlier={this.loadMsgs}
           onInputTextChanged={(text: string) => this.typingIndicator(text)}
-          // renderFooter={this.renderFooter}
+          renderFooter={this.renderFooter}
         />
         {
           this.state.modalVisible &&

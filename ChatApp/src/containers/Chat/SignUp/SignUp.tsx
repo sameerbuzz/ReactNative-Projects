@@ -25,7 +25,7 @@ export interface AppState {
   password: string,
   animate: boolean,
   name: string,
-  source: any,
+  source: string,
   bgBorder: number,
   showPassword: boolean,
   btnDisable: boolean,
@@ -43,9 +43,9 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   imagePicker = () => {
-    ImagePickerFn.getSinglePic((response: string) => {
+    ImagePickerFn.getSinglePic((response: any) => {
       this.setState({
-        source: response
+        source: response.path
       })
     })
   }

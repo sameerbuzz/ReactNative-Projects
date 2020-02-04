@@ -5,9 +5,10 @@ const myPicker = {
 
     getSinglePic : (callback: Function) => {
         ImagePicker.openPicker({     
-            cropping: true
+            cropping: false
         }).then((image: { path: string; }) => {
-            callback(image.path)
+            // console.warn(image)
+            callback(image)
         });  
     },
 
@@ -30,38 +31,13 @@ const myPicker = {
           });
     },
 
-    // getVideo : (callback) => {
-    //     ImagePicker.openPicker({ 
-    //         mediaType: 'video'    
-    //         }).then(video => {
-    //           callback(video.path)
-    //     });
-    // },
-
-    // uploadmyPic : ( key, callback) => {
-        
-    //     const file= {
-    //         uri: "file://"+key,
-    //         name: "pics1",
-    //         type: 'image/jpeg'
-    //       }
-
-    //     const options = {
-    //         bucket: "appinventiv-development",
-    //         region: "us-east-1",
-    //         accessKey: "AKIAJ3UHQTWRRT2AH3RA",
-    //         secretKey: "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"
-    //       };
-
-    //       RNS3.put(file, options).then(response => {
-    //         if (response.status !== 201) {
-    //           throw new Error('Failed to upload image to S3', response);
-    //         }
-    //         callback(response.body)
-    //       })
-    //       .catch(err => console.error(err))
-         
-    // }
+    getVideo : (callback: Function) => {
+        ImagePicker.openPicker({ 
+            mediaType: 'video'    
+            }).then((video: { path: string; }) => {
+              callback(video.path)
+        });
+    },
 }
 
 

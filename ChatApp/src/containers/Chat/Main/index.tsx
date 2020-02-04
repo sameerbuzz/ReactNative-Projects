@@ -1,16 +1,19 @@
 import { connect } from 'react-redux'
 import Main from './Main';
-import { isTyping } from '../../../modules/Chat/Main/Action';
+import { updateFooter, addImagesToBuffer, removeImagesFromBuffer } from '../../../modules/Chat/Main/Action';
 
 const mapDispatchToProps = (dispatch: Function) => ({
-  isTyping: () => dispatch(isTyping()),
+  updateFooter: () => dispatch(updateFooter()),
+  addImagesToBuffer: (data: any) => dispatch(addImagesToBuffer(data)),
+  removeImagesFromBuffer: () => dispatch(removeImagesFromBuffer()),
 })
 
 const mapStateToProps = (state: any) => {
-  const { isTyping } = state.Main;
-  const {user} = state.ChatList
+  const { user } = state.ChatList
+  const { showFooter, images } = state.Main
+  // console.warn('state ', showFooter)
   return {
-    isTyping, user
+    user, showFooter, images
   }
 }
 

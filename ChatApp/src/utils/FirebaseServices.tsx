@@ -25,19 +25,41 @@ class FirebaseService {
     if (!firebase.apps.length) {
       firebase.initializeApp(
         {
-          apiKey: 'AIzaSyBD-hkynfptGEvUQTngmUERlYCHcTPQ3mI',
+          apiKey: 'AIzaSyAQSYFYltGodgXvYHwtXkuTFCSPBy9P3cw',
           appId: Platform.OS === 'ios'
-            ? '1:601645735289:ios:1d3732df4a5311de5e23a8'
+            ? '1:25234890207:ios:bbe41559b4cd0663aa386a'
             : '1:601645735289:android:c6ab2bf90d411d055e23a8',
-          databaseURL: 'https://chat-e6b69.firebaseio.com',
-          messagingSenderId: '601645735289',
-          projectId: 'chat-e6b69',
-          storageBucket: 'chat-e6b69.appspot.com',
+          databaseURL: 'https://chatapp-b103e.firebaseio.com',
+          messagingSenderId: '25234890207',
+          projectId: 'chatapp-b103e',
+          storageBucket: 'chatapp-b103e.appspot.com',
         },
         'Chat'
       );
     }
   }
+
+  // {
+  //   apiKey: 'AIzaSyC6zjIr9sdzs9cQz0DKqR8_dWu_lglR-_k',
+  //   appId: Platform.OS === 'ios'
+  //     ? '1:367694714799:ios:28918414ef998f586d015a'
+  //     : '1:601645735289:android:c6ab2bf90d411d055e23a8',
+  //   databaseURL: 'https://appinventiv-54850.firebaseio.com',
+  //   messagingSenderId: '367694714799',
+  //   projectId: 'appinventiv-54850',
+  //   storageBucket: 'appinventiv-54850.appspot.com',
+  // },
+
+  // {
+  //   apiKey: 'AIzaSyBD-hkynfptGEvUQTngmUERlYCHcTPQ3mI',
+  //   appId: Platform.OS === 'ios'
+  //     ? '1:601645735289:ios:1d3732df4a5311de5e23a8'
+  //     : '1:601645735289:android:c6ab2bf90d411d055e23a8',
+  //   databaseURL: 'https://chat-e6b69.firebaseio.com',
+  //   messagingSenderId: '601645735289',
+  //   projectId: 'chat-e6b69',
+  //   storageBucket: 'chat-e6b69.appspot.com',
+  // },
 
   // Add data in DB ----------------------
   writeUserData(email: string, fname: string, lname: string) {
@@ -98,7 +120,6 @@ class FirebaseService {
 
   // Storing msgs on Firebase Database---------------
   send = (messages: Array<any>, image?: string) => {
-    console.warn('msgs ',messages)
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
       const message = { text, user, createdAt: new Date().getTime(), image: image, };
@@ -212,7 +233,8 @@ class FirebaseService {
    // uploading msg pic to firebase storage--------------
    uploadMsgPic = ( paths: any, callback: Function) => {
     if (!!paths) {
-      const imageRef = firebase.storage().ref('msgPics').child(Math.random().toString());
+      const name = Math.random().toString()
+      const imageRef = firebase.storage().ref('msgPics').child(name);
 
       return imageRef.putFile(paths, { contentType: 'jpg' })
         .then(() => {
@@ -220,7 +242,7 @@ class FirebaseService {
         })
         .then(url => {
           console.log(url);
-          callback(url)
+          callback(url, name)
         })
         .catch(error => {
           console.warn('Error uploading image: ', error);
