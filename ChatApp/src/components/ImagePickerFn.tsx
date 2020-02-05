@@ -17,6 +17,7 @@ const myPicker = {
         ImagePicker.openPicker({     
         cropping: false,
         multiple: true,
+        compressImageQuality: 0.1,
     }).then((image: Array<any>) => {
         temp = image.map( item => item.path);
       callback(temp)

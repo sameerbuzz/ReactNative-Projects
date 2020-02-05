@@ -27,7 +27,7 @@ class FirebaseService {
         {
           apiKey: 'AIzaSyAQSYFYltGodgXvYHwtXkuTFCSPBy9P3cw',
           appId: Platform.OS === 'ios'
-            ? '1:25234890207:ios:bbe41559b4cd0663aa386a'
+            ? '1:25234890207:ios:27cae1999b7edfd8aa386a'
             : '1:601645735289:android:c6ab2bf90d411d055e23a8',
           databaseURL: 'https://chatapp-b103e.firebaseio.com',
           messagingSenderId: '25234890207',
@@ -38,28 +38,6 @@ class FirebaseService {
       );
     }
   }
-
-  // {
-  //   apiKey: 'AIzaSyC6zjIr9sdzs9cQz0DKqR8_dWu_lglR-_k',
-  //   appId: Platform.OS === 'ios'
-  //     ? '1:367694714799:ios:28918414ef998f586d015a'
-  //     : '1:601645735289:android:c6ab2bf90d411d055e23a8',
-  //   databaseURL: 'https://appinventiv-54850.firebaseio.com',
-  //   messagingSenderId: '367694714799',
-  //   projectId: 'appinventiv-54850',
-  //   storageBucket: 'appinventiv-54850.appspot.com',
-  // },
-
-  // {
-  //   apiKey: 'AIzaSyBD-hkynfptGEvUQTngmUERlYCHcTPQ3mI',
-  //   appId: Platform.OS === 'ios'
-  //     ? '1:601645735289:ios:1d3732df4a5311de5e23a8'
-  //     : '1:601645735289:android:c6ab2bf90d411d055e23a8',
-  //   databaseURL: 'https://chat-e6b69.firebaseio.com',
-  //   messagingSenderId: '601645735289',
-  //   projectId: 'chat-e6b69',
-  //   storageBucket: 'chat-e6b69.appspot.com',
-  // },
 
   // Add data in DB ----------------------
   writeUserData(email: string, fname: string, lname: string) {
@@ -129,7 +107,7 @@ class FirebaseService {
         // adding last msg on send msg to sender inbox------
         const sender = { id: message.user.id, name: message.user.name, avatar: message.user.ravatar }
         inbox.ref('Inbox/' + user._id).child(user.roomID).set({
-          lastMsg: message.text,
+          lastMsg: message.image !== '' ? 'Photo' : message.text,
           createdAt: message.createdAt,
           roomID: user.roomID,
           type: user.type,
@@ -139,7 +117,7 @@ class FirebaseService {
         // adding last msg on send msg to receiver inbox-----
         const receiver = { id: message.user._id, name: message.user._name, avatar: message.user.avatar }
         inbox.ref('Inbox/' + user.id).child(user.roomID).set({
-          lastMsg: message.text,
+          lastMsg: message.image !== '' ? 'Photo' : message.text,
           createdAt: message.createdAt,
           roomID: user.roomID,
           type: user.type,
@@ -151,7 +129,7 @@ class FirebaseService {
         const groupDetails = { id: message.user.id, name: message.user.name, avatar: message.user.ravatar }
         AllGroupUsers.map(function (id) {
           inbox.ref('Inbox/' + id).child(user.roomID).set({
-            lastMsg: message.text,
+            lastMsg: message.image !== '' ? 'Photo' : message.text,
             createdAt: message.createdAt,
             roomID: user.roomID,
             type: user.type,

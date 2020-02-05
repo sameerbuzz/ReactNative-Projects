@@ -103,7 +103,7 @@ const Styles = StyleSheet.create({
     },
     imageFooter: {
         backgroundColor: Color.chatGreen,
-        width: vh(140),
+        width: vw(140),
         height: vh(100),
         alignItems: 'center',
         justifyContent: 'center',

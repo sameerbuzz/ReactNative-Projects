@@ -16,10 +16,14 @@ interface AppProps {
   navigation?: any,
   user: any,
   showFooter: boolean,
-  updateFooter: Function,
+  showingFooter: Function,
+  hideFooter: Function,
   addImagesToBuffer: Function,
-  images: any,
-  removeImagesFromBuffer: Function
+  images: Array<any>,
+  removeImagesFromBuffer: Function,
+  clearImageBuffer: Function,
+  changeCurrentImage: Function,
+  currentImg: string,
 }
 
 interface AppState {
@@ -30,7 +34,7 @@ interface AppState {
   allGroupUsers: Array<any>,
   loadState: boolean,
   multipleSource: Array<string>,
-  source: string,
+  // source: string,
   openFooter: boolean,
   sendingSource: string,
 }
@@ -47,7 +51,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       allGroupUsers: [],
       loadState: false,
       multipleSource: [],
-      source: '',
+      // source: '',
       openFooter: false,
       sendingSource: '',
     };
@@ -130,63 +134,29 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
   multipleImagePicker = () => {
     ImagePickerFn.getMultiplePic((response: Array<any>) => {
-      var i= 0
       response.map(res => {
-        i++
         var obj = { img: res, roomID: this.props.navigation.getParam('roomID'), userID: this.props.user.key }
-        console.warn('adding ... ', i)
         this.props.addImagesToBuffer(obj)
         if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
-          this.setState({
-            source: obj.img
-          }, () => {
-            this.props.updateFooter()
+          this.props.changeCurrentImage( obj.img
+          , () => {
+            this.props.showingFooter()
             this.refOn()
-            console.warn('uploading... ',i)
-            this.uploadImage()
+            FirebaseServices.uploadMsgPic(this.props.currentImg, (url: string, name: string) => { this.uploadImage(url) })
           })
-
         }
       })
-      // console.warn(response.length === i)
-      // response.length === i ? this.uploading() : null
-      // console.warn('img => ',this.props.images)
-      // this.setState({
-      //   multipleSource: response
-      // }, () => { this.props.updateFooter(), this.refOn(), this.uploadImage(this.state.multipleSource) })
     })
-
   }
 
-  // uploading = () => {
-  //   console.warn('here')
-  //   this.props.updateFooter()
-  //   this.refOn()
-  //   this.uploadImage()
-  // }
-
-  // singleImagePicker = () => {
-  //   ImagePickerFn.getSinglePic((response: any) => {
-  //     this.setState({
-  //       source: response.path
-  //     }, () => { this.props.updateFooter(), this.refOn(), this.uploadImage(this.state.source) })
-  //   })
-  // }
-
-  uploadImage = () => {
-    // console.warn('uploading ', obj)
-    this.props.images.map((obj: any) => {
-      if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
-        FirebaseServices.uploadMsgPic(obj.img, (url: string, name: string) => {
-          console.warn('getting ... ')
-          this.setState({
-            sendingSource: url
-          }, () => { this.props.updateFooter(), this.giftedChatRef.onSend({ text: '' }, true), this.props.removeImagesFromBuffer() })
-        })
-      }
-
-    })
-
+  uploadImage = (url: string) => {
+    this.setState({
+      sendingSource: url
+    }, () => {
+      this.props.hideFooter()
+      this.giftedChatRef.onSend({ text: '' }, true), this.props.removeImagesFromBuffer(() => {})
+    }
+    )
   }
 
   customBubble = (props: any) => {
@@ -279,10 +249,11 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   renderFooter = () => {
+    // console.warn('render   ', this.props.showFooter, this.props.images)
     return (
       this.props.showFooter ?
         <View style={Styles.imageFooter}>
-          <Image source={{ uri: this.state.source }} style={Styles.sendingImg} />
+          <Image source={{ uri: this.props.currentImg }} style={Styles.sendingImg} />
           <ActivityIndicator animating={true} size='large' color={Color.chatGreen} style={Styles.indicator} />
         </View>
         :
