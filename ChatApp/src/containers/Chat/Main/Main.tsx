@@ -24,6 +24,8 @@ interface AppProps {
   clearImageBuffer: Function,
   changeCurrentImage: Function,
   currentImg: string,
+  uploadAndSend: Function,
+  sendingURL: string,
 }
 
 interface AppState {
@@ -37,6 +39,7 @@ interface AppState {
   // source: string,
   openFooter: boolean,
   sendingSource: string,
+  showFooter: boolean,
 }
 
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
@@ -54,6 +57,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       // source: '',
       openFooter: false,
       sendingSource: '',
+      showFooter: false,
     };
   }
 
@@ -61,6 +65,9 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
     // reset counter
     counter = 1
+
+    // checking for sending media
+    this.reRenderMessages()
 
     // fetching all members of group, if type is group
     if (this.props.navigation.getParam('type') === 'group') {
@@ -137,15 +144,18 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       response.map(res => {
         var obj = { img: res, roomID: this.props.navigation.getParam('roomID'), userID: this.props.user.key }
         this.props.addImagesToBuffer(obj)
-        if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
-          this.props.changeCurrentImage( obj.img
-          , () => {
-            this.props.showingFooter()
-            this.refOn()
-            FirebaseServices.uploadMsgPic(this.props.currentImg, (url: string, name: string) => { this.uploadImage(url) })
-          })
-        }
+        // if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
+        //   this.props.changeCurrentImage(obj.img
+        //     , () => {
+        //       this.setState({ showFooter: true })
+        //       this.props.showingFooter()
+        //       this.refOn()
+        //       // FirebaseServices.uploadMsgPic(this.props.currentImg, (url: string, name: string) => { this.uploadImage(url) })
+
+        //     })
+        // }
       })
+      this.props.uploadAndSend(this.props.navigation.getParam('roomID'), this.props.user.key, this.giftedChatRef)
     })
   }
 
@@ -154,7 +164,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       sendingSource: url
     }, () => {
       this.props.hideFooter()
-      this.giftedChatRef.onSend({ text: '' }, true), this.props.removeImagesFromBuffer(() => {})
+      this.setState({ showFooter: false })
+      this.giftedChatRef.onSend({ text: '' }, true), this.props.removeImagesFromBuffer(() => { })
     }
     )
   }
@@ -179,7 +190,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         <TouchableOpacity style={Styles.sendBtn} activeOpacity={1} onPress={() => {
           if (msg.trim().length > 0) {
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
-          } else if (this.state.sendingSource !== '') {
+          } else if (this.props.sendingURL !== '') {
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
           } else { return }
         }}>
@@ -248,18 +259,36 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     this.refOn()
   }
 
-  renderFooter = () => {
-    // console.warn('render   ', this.props.showFooter, this.props.images)
-    return (
-      this.props.showFooter ?
-        <View style={Styles.imageFooter}>
-          <Image source={{ uri: this.props.currentImg }} style={Styles.sendingImg} />
-          <ActivityIndicator animating={true} size='large' color={Color.chatGreen} style={Styles.indicator} />
-        </View>
-        :
-        <></>
-    )
+  reRenderMessages = () => {
+    let array = this.props.images.filter((item: any) => item.roomID === this.props.navigation.getParam('roomID') && item.userID === this.props.user.key)
+    if (array.length !== 0) {
+      // this.props.ArrayLenght(array.length)
+      this.setState({
+        showFooter: true,
+        messages: this.state.messages.splice(0)
+      })
+    } else {
+      this.setState({
+        showFooter: false
+      })
+    }
+  }
 
+  renderFooter = () => {
+    let array = this.props.images.filter((item: any) => item.roomID === this.props.navigation.getParam('roomID') && item.userID === this.props.user.key)
+    if (array.length !== 0) {
+      return (
+        this.props.showFooter ?
+          <View style={Styles.imageFooter}>
+            <Image source={{ uri: this.props.currentImg }} style={Styles.sendingImg} />
+            <ActivityIndicator animating={true} size='large' color={Color.chatGreen} style={Styles.indicator} />
+          </View>
+          :
+          <></>
+      )
+    } else {
+      return null;
+    }
   }
 
   componentWillUnmount() {
@@ -305,7 +334,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           maxComposerHeight={vh(75)}
           ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
-          onSend={(messages) => FirebaseServices.send(messages, this.state.sendingSource)}
+          onSend={(messages) => FirebaseServices.send(messages, this.props.sendingURL)}
           user={this.user}
           showAvatarForEveryMessage={false}
           renderAvatarOnTop={true}

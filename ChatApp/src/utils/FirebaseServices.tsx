@@ -210,6 +210,7 @@ class FirebaseService {
 
    // uploading msg pic to firebase storage--------------
    uploadMsgPic = ( paths: any, callback: Function) => {
+    debugger
     if (!!paths) {
       const name = Math.random().toString()
       const imageRef = firebase.storage().ref('msgPics').child(name);
