@@ -1,9 +1,10 @@
-import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE } from './Type';
+import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE, URL_VIDEO } from './Type';
 const initialState = {
     showFooter: false,
     images: [],
     currentImg: '',
     sendingURL: '',
+    videoURL: '',
 }
 
 const Reducer = (state = initialState, action: any) => {
@@ -22,6 +23,8 @@ const Reducer = (state = initialState, action: any) => {
             return { ...state, currentImg: action.payload.data }
         case URL_IMAGE:
             return { ...state, sendingURL: action.payload.data }
+            case URL_VIDEO:
+            return { ...state, videoURL: action.payload.data }
         default:
             return state
     }

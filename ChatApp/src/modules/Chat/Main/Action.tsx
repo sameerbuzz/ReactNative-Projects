@@ -1,4 +1,4 @@
-import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE } from './Type'
+import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE, URL_VIDEO } from './Type'
 import FirebaseServices from '../../../utils/FirebaseServices';
 
 export const showingFooter = () => {
@@ -20,6 +20,12 @@ export const addImagesToBuffer = (values: Object) => {
         const { images } = getState().Main;
         images.push(values)
         dispatch({ type: MULTI_PICS, payload: { data: images } });
+    }
+}
+
+export const addVideo = (values: Object) => {
+    return (dispatch: any) => {
+        dispatch({ type: URL_VIDEO, payload: { data: values } });
     }
 }
 
@@ -47,42 +53,45 @@ export const changeCurrentImage = (image: string, callback: Function) => {
     }
 }
 
-export const uploadAndSend = (roomID: string, userID: string, ref: any) => {
+export const uploadAndSend = (roomID: string, userID: string, ref: any, callback: Function) => {
 
     return (dispatch: any, getState: any) => {
         const { images } = getState().Main;
         images.map((obj: any) => {
             if (obj.roomID === roomID && obj.userID === userID) {
-                dispatch({ type: SHOW_FOOTER, payload: { data: true } });
+                dispatch({ type: CURRENT_IMAGE, payload: { data: obj.img } });
                 FirebaseServices.uploadMsgPic(obj.img, (url: string, name: string) => {
-                    console.warn('url ', url)
-                    // ref.onSend({ text: '' }, true), removeImagesFromBuffer(() => { })
-                    uploadImage(dispatch, url, ref)
+                    dispatch({ type: URL_IMAGE, payload: { data: url } });
+                    ref.onSend({ text: '' }, true)
+                    const { image } = getState().Main;
+                    image.splice(1)
+                    dispatch({ type: REMOVE_PICS, payload: { data: images } });
+                    callback()
                 });
             }
         })
-
-
-
-        // dispatch({ type: CURRENT_IMAGE, payload: { data: image } });
-        // if(callback){
-        //     callback()
-        // }
     }
 }
 
-const uploadImage = (dispatch: any, url: string, ref: any) => {
-    console.warn('okkk');
-    dispatch({ type: URL_IMAGE, payload: {data: url} });
-    console.warn('done');
-    ref.onSend({ text: '' }, true), removeImagesFromBuffer(() => { })
+export const uploadAndSendVideo = (roomID: string, userID: string, ref: any, callback: Function) => {
 
-    // this.setState({
-    //   sendingSource: url
-    // }, () => {
-    //   this.props.hideFooter()
-    //   this.setState({ showFooter: false })
-    //   this.giftedChatRef.onSend({ text: '' }, true), this.props.removeImagesFromBuffer(() => { })
-    // }
-    // )
+    return (dispatch: any, getState: any) => {
+        const { videoURL } = getState().Main;
+        if (videoURL.roomID === roomID && videoURL.userID === userID) {
+            dispatch({ type: CURRENT_IMAGE, payload: { data: videoURL.video } });
+            FirebaseServices.uploadMsgVideo(videoURL.video, (url: string, name: string) => {
+                console.warn('url ', url)
+                dispatch({ type: URL_VIDEO, payload: { data: url } });
+                ref.onSend({ text: '' }, true)
+                callback()
+            });
+        }
+
+    }
+}
+
+export const removeVideo = () => {
+    return (dispatch: any) => {
+        dispatch({ type: URL_VIDEO, payload: { data: '' } });
+    }
 }

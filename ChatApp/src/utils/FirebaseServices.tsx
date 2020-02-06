@@ -97,17 +97,18 @@ class FirebaseService {
   }
 
   // Storing msgs on Firebase Database---------------
-  send = (messages: Array<any>, image?: string) => {
+  send = (messages: Array<any>, image?: string, video?: string) => {
+    console.warn('firebase url ', messages)
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
-      const message = { text, user, createdAt: new Date().getTime(), image: image, };
+      const message = { text, user, createdAt: new Date().getTime(), image: image, video: video };
       console.log('msg sended ', message)
 
       if (message.user.type === 'normal') {
         // adding last msg on send msg to sender inbox------
         const sender = { id: message.user.id, name: message.user.name, avatar: message.user.ravatar }
         inbox.ref('Inbox/' + user._id).child(user.roomID).set({
-          lastMsg: message.image !== '' ? 'Photo' : message.text,
+          lastMsg: message.image !== '' ? ('Photo') : (message.video !== '' ? ('Video') : (message.text)),
           createdAt: message.createdAt,
           roomID: user.roomID,
           type: user.type,
@@ -117,7 +118,7 @@ class FirebaseService {
         // adding last msg on send msg to receiver inbox-----
         const receiver = { id: message.user._id, name: message.user._name, avatar: message.user.avatar }
         inbox.ref('Inbox/' + user.id).child(user.roomID).set({
-          lastMsg: message.image !== '' ? 'Photo' : message.text,
+          lastMsg: message.image !== '' ? 'Photo' : (message.video !== '' ? ('Video') : (message.text)),
           createdAt: message.createdAt,
           roomID: user.roomID,
           type: user.type,
@@ -129,7 +130,7 @@ class FirebaseService {
         const groupDetails = { id: message.user.id, name: message.user.name, avatar: message.user.ravatar }
         AllGroupUsers.map(function (id) {
           inbox.ref('Inbox/' + id).child(user.roomID).set({
-            lastMsg: message.image !== '' ? 'Photo' : message.text,
+            lastMsg: message.image !== '' ? 'Photo' : (message.video !== '' ? ('Video') : (message.text)),
             createdAt: message.createdAt,
             roomID: user.roomID,
             type: user.type,
@@ -165,7 +166,7 @@ class FirebaseService {
       AllGroupUsers = allUsers
     }
     roomchat.ref('chatRoom/' + id)
-      .limitToLast(counter === 1 ? 20 : 20*counter)
+      .limitToLast(counter === 1 ? 20 : 20 * counter)
       .on('value', (snapshot: any) => { snapshot.val() === null ? callback([]) : callback(this.parse(snapshot)) });
   }
 
@@ -182,7 +183,7 @@ class FirebaseService {
 
   // fetching last message----------------------------------
   inboxList = (uid: string, callback: Function) => {
-    inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {     
+    inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {
       callback(snapshot.val())
     })
   }
@@ -208,8 +209,8 @@ class FirebaseService {
     }
   }
 
-   // uploading msg pic to firebase storage--------------
-   uploadMsgPic = ( paths: any, callback: Function) => {
+  // uploading msg pic to firebase storage--------------
+  uploadMsgPic = (paths: any, callback: Function) => {
     debugger
     if (!!paths) {
       const name = Math.random().toString()
@@ -225,6 +226,29 @@ class FirebaseService {
         })
         .catch(error => {
           console.warn('Error uploading image: ', error);
+        });
+    } else {
+      callback(null)
+    }
+  }
+
+  // uploading msg video to firebase storage--------------
+  uploadMsgVideo = (paths: any, callback: Function) => {
+    debugger
+    if (!!paths) {
+      const name = Math.random().toString()
+      const videoRef = firebase.storage().ref('msgVideos').child(name);
+
+      return videoRef.putFile(paths, { contentType: 'mp4' })
+        .then(() => {
+          return videoRef.getDownloadURL();
+        })
+        .then(url => {
+          console.log(url);
+          callback(url, name)
+        })
+        .catch(error => {
+          console.warn('Error uploading video: ', error);
         });
     } else {
       callback(null)

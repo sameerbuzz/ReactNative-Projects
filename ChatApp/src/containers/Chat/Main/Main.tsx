@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native';
 import { GiftedChat, Bubble, Composer, InputToolbar, Time, Day } from 'react-native-gifted-chat';
+import Video from 'react-native-video';
 
 // custom imports
 import FirebaseServices from '../../../utils/FirebaseServices';
@@ -26,6 +27,10 @@ interface AppProps {
   currentImg: string,
   uploadAndSend: Function,
   sendingURL: string,
+  addVideo: Function,
+  videoURL: string,
+  uploadAndSendVideo: Function,
+  removeVideo: Function
 }
 
 interface AppState {
@@ -144,18 +149,33 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       response.map(res => {
         var obj = { img: res, roomID: this.props.navigation.getParam('roomID'), userID: this.props.user.key }
         this.props.addImagesToBuffer(obj)
-        // if (obj.roomID === this.props.navigation.getParam('roomID') && obj.userID === this.props.user.key) {
-        //   this.props.changeCurrentImage(obj.img
-        //     , () => {
-        //       this.setState({ showFooter: true })
-        //       this.props.showingFooter()
-        //       this.refOn()
-        //       // FirebaseServices.uploadMsgPic(this.props.currentImg, (url: string, name: string) => { this.uploadImage(url) })
-
-        //     })
-        // }
       })
-      this.props.uploadAndSend(this.props.navigation.getParam('roomID'), this.props.user.key, this.giftedChatRef)
+      this.props.showingFooter()
+      this.setState({ showFooter: true })
+      this.refOn()
+      this.props.uploadAndSend(this.props.navigation.getParam('roomID'), this.props.user.key, this.giftedChatRef, () => {
+        this.props.hideFooter()
+        this.setState({ showFooter: false })
+        console.warn('hide footer')
+        this.refOn()
+      })
+    })
+  }
+
+  videoPicker = () => {
+    ImagePickerFn.getVideo((response: Array<any>) => {
+      var obj = { video: response, roomID: this.props.navigation.getParam('roomID'), userID: this.props.user.key }
+      this.props.addVideo(obj)
+      this.props.showingFooter()
+      this.setState({ showFooter: true })
+      this.refOn()
+      this.props.uploadAndSendVideo(this.props.navigation.getParam('roomID'), this.props.user.key, this.giftedChatRef, () => {
+        this.props.hideFooter()
+        this.setState({ showFooter: false })
+        console.warn('hide footer')
+        this.refOn()
+        this.props.removeVideo()
+      })
     })
   }
 
@@ -191,6 +211,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           if (msg.trim().length > 0) {
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
           } else if (this.props.sendingURL !== '') {
+            console.warn('url-> ', this.props.sendingURL)
             this.giftedChatRef.onSend({ text: msg.trim() }, true);
           } else { return }
         }}>
@@ -259,6 +280,15 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     this.refOn()
   }
 
+  renderMessageVideo = () => {
+    return (
+      <Video
+        source={{ uri: this.props.videoURL }}
+        style={Styles.backgroundVideo}
+      />
+    )
+  }
+
   reRenderMessages = () => {
     let array = this.props.images.filter((item: any) => item.roomID === this.props.navigation.getParam('roomID') && item.userID === this.props.user.key)
     if (array.length !== 0) {
@@ -278,7 +308,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     let array = this.props.images.filter((item: any) => item.roomID === this.props.navigation.getParam('roomID') && item.userID === this.props.user.key)
     if (array.length !== 0) {
       return (
-        this.props.showFooter ?
+        this.props.showFooter && this.state.showFooter ?
           <View style={Styles.imageFooter}>
             <Image source={{ uri: this.props.currentImg }} style={Styles.sendingImg} />
             <ActivityIndicator animating={true} size='large' color={Color.chatGreen} style={Styles.indicator} />
@@ -315,12 +345,30 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
               name='camera'
               size={vw(30)}
               color={Color.tealBlue}
+              style={Styles.cameraIcon}
               onPress={() => {
                 Alert.alert(
                   'Pick photo from...',
                   '',
                   [
                     { text: 'Gallery', onPress: () => this.multipleImagePicker() },
+                    { text: 'Cancel', onPress: () => console.log('cancelled') },
+                  ],
+                  { cancelable: true },
+                )
+              }}
+            />
+            <VectorIcons.Entypo
+              name='video-camera'
+              size={vw(34)}
+              color={Color.tealBlue}
+              style={Styles.cameraIcon}
+              onPress={() => {
+                Alert.alert(
+                  'Pick video from...',
+                  '',
+                  [
+                    { text: 'Gallery', onPress: () => this.videoPicker() },
                     { text: 'Cancel', onPress: () => console.log('cancelled') },
                   ],
                   { cancelable: true },
@@ -334,7 +382,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           maxComposerHeight={vh(75)}
           ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
-          onSend={(messages) => FirebaseServices.send(messages, this.props.sendingURL)}
+          onSend={(messages) => FirebaseServices.send(messages, this.props.sendingURL, this.props.videoURL)}
           user={this.user}
           showAvatarForEveryMessage={false}
           renderAvatarOnTop={true}
@@ -350,6 +398,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           onLoadEarlier={this.loadMsgs}
           onInputTextChanged={(text: string) => this.typingIndicator(text)}
           renderFooter={this.renderFooter}
+          renderMessageVideo={this.renderMessageVideo}
         />
         {
           this.state.modalVisible &&

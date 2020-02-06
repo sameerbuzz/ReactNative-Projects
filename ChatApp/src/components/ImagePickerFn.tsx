@@ -34,7 +34,8 @@ const myPicker = {
 
     getVideo : (callback: Function) => {
         ImagePicker.openPicker({ 
-            mediaType: 'video'    
+            compressVideoPreset: 'Passthrough',
+            mediaType: 'video',   
             }).then((video: { path: string; }) => {
               callback(video.path)
         });

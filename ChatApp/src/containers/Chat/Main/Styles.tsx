@@ -15,7 +15,11 @@ const Styles = StyleSheet.create({
     rightHeaderView: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: vw(10)
+        paddingRight: vw(10),
+        justifyContent: 'space-around',
+    },
+    cameraIcon: {
+        paddingHorizontal: vw(10),
     },
     headerView: {
         flexDirection: 'row',
@@ -122,6 +126,11 @@ const Styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
+    },
+    backgroundVideo: {
+        height: vw(100),
+        width: vw(170),
+        marginTop: vw(10),
     },
 
 })
