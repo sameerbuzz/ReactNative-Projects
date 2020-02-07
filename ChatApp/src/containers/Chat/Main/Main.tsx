@@ -27,9 +27,11 @@ interface AppProps {
   uploadAndSend: Function,
   sendingURL: string,
   addVideo: Function,
-  videoURL: string,
+  videoURL: any,
   uploadAndSendVideo: Function,
-  removeVideo: Function
+  removeVideo: Function,
+  currentVideo: string,
+  sendingVideoURL: string,
 }
 
 interface AppState {
@@ -157,7 +159,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         this.setState({ showFooter: false })
         console.warn('hide footer')
         this.refOn()
-        this.props.removeImagesFromBuffer(() => {console.warn('removed')})
+        this.props.removeImagesFromBuffer(() => { console.log('removed') })
       })
     })
   }
@@ -172,9 +174,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       this.props.uploadAndSendVideo(this.props.navigation.getParam('roomID'), this.props.user.key, this.giftedChatRef, () => {
         this.props.hideFooter()
         this.setState({ showFooter: false })
-        console.warn('hide footer')
         this.refOn()
-        this.props.removeVideo()
+        this.props.removeVideo(() => { console.log('removed') })
       })
     })
   }
@@ -280,10 +281,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     this.refOn()
   }
 
-  renderMessageVideo = () => {
+  renderMessageVideo = (props: any) => {
     return (
       <Video
-        source={{ uri: this.props.videoURL }}
+        source={{ uri: props.currentMessage.video }}
         style={Styles.backgroundVideo}
       />
     )
@@ -312,6 +313,16 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           <View style={Styles.imageFooter}>
             <Image source={{ uri: this.props.currentImg }} style={Styles.sendingImg} />
             <ActivityIndicator animating={true} size='large' color={Color.chatGreen} style={Styles.indicator} />
+          </View>
+          :
+          <></>
+      )
+    } else if (this.props.videoURL !== '' && this.props.videoURL.roomID === this.props.navigation.getParam('roomID') && this.props.videoURL.userID === this.props.user.key) {
+      return (
+        this.props.showFooter && this.state.showFooter ?
+          <View style={Styles.imageFooter}>
+            <Video source={{ uri: this.props.currentVideo }} style={Styles.sendingImg} />
+            <ActivityIndicator animating={true} size='large' color='white' style={Styles.indicator} />
           </View>
           :
           <></>
@@ -382,7 +393,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           maxComposerHeight={vh(75)}
           ref={(ref) => { this.giftedChatRef = ref; }}
           messages={this.state.messages}
-          onSend={(messages) => FirebaseServices.send(messages, this.props.sendingURL, this.props.videoURL)}
+          onSend={(messages) => FirebaseServices.send(messages, this.props.sendingURL, this.props.sendingVideoURL)}
           user={this.user}
           showAvatarForEveryMessage={false}
           renderAvatarOnTop={true}

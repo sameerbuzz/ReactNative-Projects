@@ -39,7 +39,7 @@ const MainStack = createStackNavigator(
         },
     },
     {
-        initialRouteName: 'ChatList',
+        initialRouteName: 'Animate',
     },
 );
 
@@ -69,7 +69,7 @@ export default createAppContainer(createSwitchNavigator(
         MainStack: MainStack,
     },
     {
-        initialRouteName: 'AuthStack',
+        initialRouteName: 'MainStack',
         defaultNavigationOptions: ({ navigation }) => ({
             headerBackTitle: null,
             headerShown: false,

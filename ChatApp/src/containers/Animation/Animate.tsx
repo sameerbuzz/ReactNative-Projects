@@ -12,11 +12,19 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   animatedValue: any;
   animatedValue1: any;
   animatedValue2: any;
+  animatedValueB1: any;
+  animatedValueB2: any;
+  animatedValueB3: any;
+  animatedValueB4: any;
   constructor(props: AppProps) {
     super(props);
     this.animatedValue = new Animated.Value(0)
     this.animatedValue1 = new Animated.Value(0)
     this.animatedValue2 = new Animated.Value(0)
+    this.animatedValueB1 = new Animated.Value(0)
+    this.animatedValueB2 = new Animated.Value(0)
+    this.animatedValueB3 = new Animated.Value(0)
+    this.animatedValueB4 = new Animated.Value(0)
     this.state = {
       anim: true
     };
@@ -24,6 +32,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
 
   componentDidMount(){
     // this.startAnimation()
+    this.loadingAnim()
   }
 
   startAnimation = () => {
@@ -63,6 +72,19 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
     }).start();
   }
 
+  loadingAnim = () => {
+      Animated.parallel([
+        Animated.timing(this.animatedValueB1, {
+          toValue: 1,
+          duration: 2000
+        }),
+        Animated.timing(this.animatedValueB2, {
+          toValue: 1,
+          duration: 2000
+        }),
+    ]).start(() => {this.animatedValueB1.setValue(0), this.animatedValueB2.setValue(0),this.loadingAnim()})
+  }
+
   public render() {
     
     const viewHeight = this.animatedValue.interpolate({
@@ -77,17 +99,32 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
       inputRange: [0, 1],
       outputRange: [50, 500]
     })
+    const viewHeightB1 = this.animatedValueB1.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [5, 20, 5]
+    })
+    const viewHeightB2 = this.animatedValueB2.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [20, 5, 20]
+    })
 
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start',}}>
-         <Animated.View style={{ height: viewHeight, backgroundColor: 'red', width: 2}} />
-         <Animated.View style={{position:"absolute",top: this.state.anim ? viewHeight1 : viewHeight2, left: 100, right: 0, bottom: 0, width: 100, height: 40 }}>
-           <TextInput style={{borderWidth: 2, width: 100, height: 40}}
-           onFocus={() => this.topAnim()}
-           onSubmitEditing={() => this.topAnim()}
-           />
-           </Animated.View>
+    // return (
+    //   <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start',}}>
+    //      <Animated.View style={{ height: viewHeight, backgroundColor: 'red', width: 2}} />
+    //      <Animated.View style={{position:"absolute",top: this.state.anim ? viewHeight1 : viewHeight2, left: 100, right: 0, bottom: 0, width: 100, height: 40 }}>
+    //        <TextInput style={{borderWidth: 2, width: 100, height: 40}}
+    //        onFocus={() => this.topAnim()}
+    //        onSubmitEditing={() => this.topAnim()}
+    //        />
+    //        </Animated.View>
+    //   </View>
+    // );
+
+    return(
+      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+        <Animated.View style={{height: viewHeightB1, width: viewHeightB1, borderRadius: viewHeightB1, backgroundColor: 'red', marginHorizontal: 10,}} />
+        <Animated.View style={{height: viewHeightB2, width: viewHeightB2, borderRadius: viewHeightB2, backgroundColor: 'blue'}}  />
       </View>
-    );
+    )
   }
 }

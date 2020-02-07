@@ -12,15 +12,15 @@ const mapDispatchToProps = (dispatch: Function) => ({
   uploadAndSend: (roomID: string, userID: string, ref: any, callback: Function) => dispatch(uploadAndSend(roomID, userID, ref, callback)),
   addVideo: (data: any) => dispatch(addVideo(data)),
   uploadAndSendVideo: (roomID: string, userID: string, ref: any, callback: Function) => dispatch(uploadAndSendVideo(roomID, userID, ref, callback)),
-  removeVideo: () => dispatch(removeVideo()),
+  removeVideo: (callback: Function) => dispatch(removeVideo(callback)),
 })
 
 const mapStateToProps = (state: any) => {
   const { user } = state.ChatList
-  const { showFooter, images, currentImg, sendingURL, videoURL } = state.Main
+  const { showFooter, images, currentImg, sendingURL, videoURL, currentVideo, sendingVideoURL } = state.Main
   // console.warn('state ', showFooter)
   return {
-    user, showFooter, images, currentImg, sendingURL, videoURL
+    user, showFooter, images, currentImg, sendingURL, videoURL, currentVideo, sendingVideoURL
   }
 }
 

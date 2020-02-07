@@ -1,4 +1,4 @@
-import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE, URL_VIDEO } from './Type'
+import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE, URL_VIDEO, CURRENT_VIDEO, ADD_VIDEO } from './Type'
 import FirebaseServices from '../../../utils/FirebaseServices';
 
 export const showingFooter = () => {
@@ -25,7 +25,7 @@ export const addImagesToBuffer = (values: Object) => {
 
 export const addVideo = (values: Object) => {
     return (dispatch: any) => {
-        dispatch({ type: URL_VIDEO, payload: { data: values } });
+        dispatch({ type: ADD_VIDEO, payload: { data: values } });
     }
 }
 
@@ -40,6 +40,7 @@ export const removeImagesFromBuffer = (callback: Function) => {
         const { images } = getState().Main;
         images.splice(1)
         dispatch({ type: REMOVE_PICS, payload: { data: images } });
+        dispatch({ type: URL_IMAGE, payload: { data: '' } });
         if (callback) {
             callback()
         }
@@ -75,9 +76,8 @@ export const uploadAndSendVideo = (roomID: string, userID: string, ref: any, cal
     return (dispatch: any, getState: any) => {
         const { videoURL } = getState().Main;
         if (videoURL.roomID === roomID && videoURL.userID === userID) {
-            dispatch({ type: CURRENT_IMAGE, payload: { data: videoURL.video } });
+            dispatch({ type: CURRENT_VIDEO, payload: { data: videoURL.video } });
             FirebaseServices.uploadMsgVideo(videoURL.video, (url: string, name: string) => {
-                console.warn('url ', url)
                 dispatch({ type: URL_VIDEO, payload: { data: url } });
                 ref.onSend({ text: '' }, true)
                 callback()
@@ -87,8 +87,12 @@ export const uploadAndSendVideo = (roomID: string, userID: string, ref: any, cal
     }
 }
 
-export const removeVideo = () => {
+export const removeVideo = (callback: Function) => {
     return (dispatch: any) => {
         dispatch({ type: URL_VIDEO, payload: { data: '' } });
+        dispatch({ type: ADD_VIDEO, payload: { data: '' } });
+        if(callback){
+            callback()
+        }
     }
 }

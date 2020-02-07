@@ -130,7 +130,8 @@ const Styles = StyleSheet.create({
     backgroundVideo: {
         height: vw(100),
         width: vw(170),
-        marginTop: vw(10),
+        margin: vw(4),
+        borderRadius: vw(15)
     },
 
 })

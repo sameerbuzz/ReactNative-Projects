@@ -26,11 +26,12 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
     }
 
     imagePicker = () => {
-        ImagePickerFn.getSinglePic((response: string) => {
+        ImagePickerFn.getSinglePic((response: any) => {
             this.setState({
-                source: response
+                source: response.path
             })
         })
+        
     }
 
     public render() {
@@ -44,7 +45,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
                     <TouchableOpacity activeOpacity={1} style={Styles.modalBody}>
                         <TouchableOpacity style={Styles.imgStyle} onPress={() => this.imagePicker()} activeOpacity={1}>
                             {this.state.source === '' ? <Image source={Images.imgPlaceholder} resizeMode='cover' style={Styles.imageStyle} /> :
-                                <Image source={{ uri: this.state.source }} resizeMode='cover' style={Styles.imageStyle} />}
+                                <Image source={{uri: this.state.source} } resizeMode='cover' style={Styles.imageStyle} />}
                             <Image source={Images.edit} style={Styles.edit} />
                         </TouchableOpacity>
                         <TextInput
