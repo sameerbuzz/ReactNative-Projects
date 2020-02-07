@@ -63,9 +63,6 @@ export const uploadAndSend = (roomID: string, userID: string, ref: any, callback
                 FirebaseServices.uploadMsgPic(obj.img, (url: string, name: string) => {
                     dispatch({ type: URL_IMAGE, payload: { data: url } });
                     ref.onSend({ text: '' }, true)
-                    const { image } = getState().Main;
-                    image.splice(1)
-                    dispatch({ type: REMOVE_PICS, payload: { data: images } });
                     callback()
                 });
             }

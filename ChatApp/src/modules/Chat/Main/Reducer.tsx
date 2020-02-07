@@ -23,7 +23,7 @@ const Reducer = (state = initialState, action: any) => {
             return { ...state, currentImg: action.payload.data }
         case URL_IMAGE:
             return { ...state, sendingURL: action.payload.data }
-            case URL_VIDEO:
+        case URL_VIDEO:
             return { ...state, videoURL: action.payload.data }
         default:
             return state

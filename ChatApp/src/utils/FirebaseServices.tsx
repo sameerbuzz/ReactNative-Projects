@@ -98,7 +98,6 @@ class FirebaseService {
 
   // Storing msgs on Firebase Database---------------
   send = (messages: Array<any>, image?: string, video?: string) => {
-    console.warn('firebase url ', messages)
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
       const message = { text, user, createdAt: new Date().getTime(), image: image, video: video };

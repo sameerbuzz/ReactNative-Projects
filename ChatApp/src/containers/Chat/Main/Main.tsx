@@ -11,7 +11,6 @@ import PicModal from '../PicModal/PicModal'
 import { ImagePickerFn } from '../../../components';
 
 var counter: number = 1
-var imgCounter: number = 0
 
 interface AppProps {
   navigation?: any,
@@ -158,12 +157,13 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         this.setState({ showFooter: false })
         console.warn('hide footer')
         this.refOn()
+        this.props.removeImagesFromBuffer(() => {console.warn('removed')})
       })
     })
   }
 
   videoPicker = () => {
-    ImagePickerFn.getVideo((response: Array<any>) => {
+    ImagePickerFn.getVideo((response: any) => {
       var obj = { video: response, roomID: this.props.navigation.getParam('roomID'), userID: this.props.user.key }
       this.props.addVideo(obj)
       this.props.showingFooter()
