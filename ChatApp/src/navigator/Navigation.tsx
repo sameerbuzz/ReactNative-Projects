@@ -1,4 +1,3 @@
-import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Color } from '../constants'
@@ -12,6 +11,7 @@ import Animate from '../containers/Animation/Animate';
 import ChatList from '../containers/Chat/ChatList';
 import Group from '../containers/Chat/Group'
 import BottomNavigation from '../containers/Animation/BottomIndex';
+import Counter from '../containers/Counter/Counter';
 
 
 const MainStack = createStackNavigator(
@@ -37,9 +37,10 @@ const MainStack = createStackNavigator(
                 headerShown: false,
             }
         },
+        Counter: Counter,
     },
     {
-        initialRouteName: 'Animate',
+        initialRouteName: 'Counter',
     },
 );
 
