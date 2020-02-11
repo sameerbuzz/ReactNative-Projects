@@ -12,6 +12,7 @@ import ChatList from '../containers/Chat/ChatList';
 import Group from '../containers/Chat/Group'
 import BottomNavigation from '../containers/Animation/BottomIndex';
 import Counter from '../containers/Counter/Counter';
+import Filters from '../containers/Counter/Filters';
 
 
 const MainStack = createStackNavigator(
@@ -38,9 +39,10 @@ const MainStack = createStackNavigator(
             }
         },
         Counter: Counter,
+        Filters: Filters,
     },
     {
-        initialRouteName: 'Counter',
+        initialRouteName: 'Filters',
     },
 );
 

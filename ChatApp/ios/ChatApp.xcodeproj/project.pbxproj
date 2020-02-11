@@ -12,6 +12,8 @@
 		0C78E8AD23F12AA00029AA97 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C78E8AC23F12AA00029AA97 /* Counter.swift */; };
 		0C78E8AF23F12B640029AA97 /* Counter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C78E8AE23F12B640029AA97 /* Counter.m */; };
 		0CC271D323E9A66100B6A6E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CC271D223E9A66100B6A6E0 /* GoogleService-Info.plist */; };
+		0CEEA0DA23F270170089F261 /* RNImageFillter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEEA0D923F270170089F261 /* RNImageFillter.swift */; };
+		0CEEA0DD23F270220089F261 /* RNImageFillter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEEA0DC23F270220089F261 /* RNImageFillter.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -60,6 +62,9 @@
 		0C78E8AC23F12AA00029AA97 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		0C78E8AE23F12B640029AA97 /* Counter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Counter.m; sourceTree = "<group>"; };
 		0CC271D223E9A66100B6A6E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0CEEA0D923F270170089F261 /* RNImageFillter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNImageFillter.swift; sourceTree = "<group>"; };
+		0CEEA0DB23F2701D0089F261 /* Image_Fillter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image_Fillter-Bridging-Header.h"; sourceTree = "<group>"; };
+		0CEEA0DC23F270220089F261 /* RNImageFillter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNImageFillter.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ChatApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ChatApp/AppDelegate.m; sourceTree = "<group>"; };
@@ -147,6 +152,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0CEEA0D823F270010089F261 /* ImageFilter */ = {
+			isa = PBXGroup;
+			children = (
+				0CEEA0D923F270170089F261 /* RNImageFillter.swift */,
+				0CEEA0DB23F2701D0089F261 /* Image_Fillter-Bridging-Header.h */,
+				0CEEA0DC23F270220089F261 /* RNImageFillter.m */,
+			);
+			path = ImageFilter;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +234,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0CEEA0D823F270010089F261 /* ImageFilter */,
 				13B07FAE1A68108700A75B9A /* ChatApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ChatAppTests */,
@@ -651,10 +667,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CEEA0DD23F270220089F261 /* RNImageFillter.m in Sources */,
 				0C78E8AF23F12B640029AA97 /* Counter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				0C78E8AD23F12AA00029AA97 /* Counter.swift in Sources */,
+				0CEEA0DA23F270170089F261 /* RNImageFillter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

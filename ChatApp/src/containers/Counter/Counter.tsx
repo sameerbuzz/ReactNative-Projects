@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, NativeModules, Button, NativeEventEmitter } from 'react-native';
+import { View, Text, NativeModules, Button, NativeEventEmitter } from 'react-native';
+import NativeMethods from './NativeMethods';
 
 export interface AppProps {
 }
@@ -27,43 +28,15 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
         )
     }
 
-    decrement = async () => {
-        try {
-            const res = await NativeModules.Counter.decrement()
-            console.warn(res)
-        } catch (e) {
-            console.warn(e.message, e.code)
-        }
-        this.counterVal()
-    }
-
-    increment = async () => {
-        try {
-            const res = await NativeModules.Counter.inc()
-            console.warn(res)
-        } catch (e) {
-            console.warn(e.message, e.code)
-        }
-        this.counterVal()
-    }
-
-    counterVal = () => {
-        NativeModules.Counter.getCount((value: string, number: string, name: string) => {
-            this.setState({ counter: value })
-        })
-    }
-
     public render() {
         // console.warn(NativeModules.Counter)
-        console.warn(NativeModules.Counter.increment());
-        // NativeModules.Counter.getCount((value: string, number: string, name: string) => {
-        //     console.warn("count is " + value, number, name)
-        // })
+        // console.warn(NativeModules.Counter.increment());
+        NativeMethods.counterVal((val: string) => {this.setState({counter: val })})
         return (
             <View>
                 <Text>Counter {this.state.counter}</Text>
-                <Button title='Increment' onPress={() => this.increment()} />
-                <Button title='Decrement' onPress={() => this.decrement()} />
+                <Button title='Increment' onPress={() => NativeMethods.increment()} />
+                <Button title='Decrement' onPress={() => NativeMethods.decrement()} />
             </View>
         );
     }
