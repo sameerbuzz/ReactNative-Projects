@@ -34,8 +34,10 @@ class RNImageFilter: NSObject {
     }
   }
   
-  
-  
+  @objc
+  static func requiresMainQueueSetup() -> Bool {
+     return true
+   }
   
   
   @objc func getSourceImage(_ trackinfo: NSDictionary,callback: @escaping RCTResponseSenderBlock) -> Void{

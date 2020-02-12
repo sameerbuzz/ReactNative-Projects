@@ -19,6 +19,7 @@
     "@react-native-firebase/storage": "^6.2.0",
     "@types/react-native-video": "^5.0.0",
     "add": "^2.0.6",
+    "concat-color-matrices": "^1.0.0",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-gesture-handler": "^1.5.3",
@@ -38,6 +39,7 @@
     "react-thunk": "^1.0.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "rn-color-matrices": "^4.1.0",
     "yarn": "^1.21.1"
   },
   "devDependencies": {

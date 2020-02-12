@@ -21,7 +21,6 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
         }
     }
 
-
     imageFillter = async (i: number) => {
         let result = await new Promise((resolve, reject) => {
             NativeModules.RNImageFilter.getSourceImage({
@@ -71,9 +70,10 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
         return (
             <View style={{ flex: 1, alignItems: "center" }}>
                 <Image source={{ uri: this.state.imageSoure }} style={{ height: 300, width: 300 }} />
-                <Button title={"pressMe"} onPress={(() => this.onPress())} />
-                <Button title={"FilterImage"} onPress={(() => this.FilterImage())} />
+                <Button title={"Select Photo"} onPress={(() => this.onPress())} />
+                <Button title={"Show Filters"} onPress={(() => this.FilterImage())} />
                 <FlatList
+                    keyExtractor={(item, index) => index.toString()}
                     horizontal={true}
                     data={this.state.imageArraySoure}
                     renderItem={({ item }) => (

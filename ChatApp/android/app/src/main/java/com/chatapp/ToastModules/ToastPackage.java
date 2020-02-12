@@ -1,7 +1,8 @@
-package com.chatapp;
+package com.chatapp.ToastModules;
 
 import androidx.annotation.NonNull;
 
+import com.chatapp.ToastModules.ToastModule;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
