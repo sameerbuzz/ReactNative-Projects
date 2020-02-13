@@ -12,6 +12,10 @@ const Color = {
     greyishBrown: 'rgb(89, 89, 89)',
     modalBlack: 'rgba(0,0,0,0.7)',
     fadedTealBlue: 'rgb(225, 252, 249)',
+    newBlue: 'rgb(0, 204, 250)',
+    newLightBlue: 'rgb(99, 244, 247)',
+    newViolet: 'rgb(169, 118, 235)',
+    newLightViolet: 'rgb(227, 193, 234)',
     
 }
 export default Color;

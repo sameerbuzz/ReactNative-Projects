@@ -56,6 +56,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                     // Task completed successfully
                                     // ..
                                     resultText = firebaseVisionText.getText();
+                                    callback.invoke(resultText);
                                 }
                             })
                             .addOnFailureListener(
@@ -64,10 +65,11 @@ public class TRModule extends ReactContextBaseJavaModule {
                                         public void onFailure(@NonNull Exception e) {
                                             // Task failed with an exception
                                             // ...
+                                            callback.invoke("");
                                         }
                                     });
 
-            callback.invoke(resultText);
+
 
         } catch (Exception ex) {
             Log.e("ERR", ex.getMessage());

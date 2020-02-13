@@ -15,6 +15,7 @@ import Filters from '../containers/Counter/Filters';
 import Toast from '../containers/Counter/Toast';
 import MLKit from '../containers/MLKit';
 import TextRecognition from '../containers/MLKit/TextRecognition/Main'
+import FaceDetection from '../containers/MLKit/FaceDetection/FaceDetection'
 
 const MainStack = createStackNavigator(
     {
@@ -44,6 +45,7 @@ const MainStack = createStackNavigator(
         Toast: Toast,
         MLKit: MLKit,
         TextRecognition: TextRecognition,
+        FaceDetection: FaceDetection,
     },
     {
         initialRouteName: 'MLKit',
