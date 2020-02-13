@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ChatAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ChatAppTests.m */; };
 		02D6F5920EDC4ADEB46EA183 /* libPods-ChatApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D9AE97E28EAA0214A4C2326 /* libPods-ChatApp-tvOSTests.a */; };
+		0C03C38823F3FB20002A6897 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C03C38723F3FB20002A6897 /* TextRecognition.swift */; };
+		0C03C38A23F3FBFD002A6897 /* TextRecognition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C03C38923F3FBFD002A6897 /* TextRecognition.m */; };
+		0C03C38C23F42131002A6897 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0C03C38B23F42131002A6897 /* GoogleService-Info.plist */; };
 		0C78E8AD23F12AA00029AA97 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C78E8AC23F12AA00029AA97 /* Counter.swift */; };
 		0C78E8AF23F12B640029AA97 /* Counter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C78E8AE23F12B640029AA97 /* Counter.m */; };
-		0CC271D323E9A66100B6A6E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CC271D223E9A66100B6A6E0 /* GoogleService-Info.plist */; };
 		0CEEA0DA23F270170089F261 /* RNImageFillter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEEA0D923F270170089F261 /* RNImageFillter.swift */; };
 		0CEEA0DD23F270220089F261 /* RNImageFillter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEEA0DC23F270220089F261 /* RNImageFillter.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -58,12 +60,13 @@
 		00E356EE1AD99517003FC87E /* ChatAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ChatAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatAppTests.m; sourceTree = "<group>"; };
+		0C03C38723F3FB20002A6897 /* TextRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
+		0C03C38923F3FBFD002A6897 /* TextRecognition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextRecognition.m; sourceTree = "<group>"; };
+		0C03C38B23F42131002A6897 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0C78E8AB23F12A9F0029AA97 /* ChatApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C78E8AC23F12AA00029AA97 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		0C78E8AE23F12B640029AA97 /* Counter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Counter.m; sourceTree = "<group>"; };
-		0CC271D223E9A66100B6A6E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CEEA0D923F270170089F261 /* RNImageFillter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNImageFillter.swift; sourceTree = "<group>"; };
-		0CEEA0DB23F2701D0089F261 /* Image_Fillter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Image_Fillter-Bridging-Header.h"; sourceTree = "<group>"; };
 		0CEEA0DC23F270220089F261 /* RNImageFillter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNImageFillter.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ChatApp/AppDelegate.h; sourceTree = "<group>"; };
@@ -152,11 +155,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0C03C38623F3FAEC002A6897 /* TextRecognition */ = {
+			isa = PBXGroup;
+			children = (
+				0C03C38723F3FB20002A6897 /* TextRecognition.swift */,
+				0C03C38923F3FBFD002A6897 /* TextRecognition.m */,
+			);
+			path = TextRecognition;
+			sourceTree = "<group>";
+		};
 		0CEEA0D823F270010089F261 /* ImageFilter */ = {
 			isa = PBXGroup;
 			children = (
 				0CEEA0D923F270170089F261 /* RNImageFillter.swift */,
-				0CEEA0DB23F2701D0089F261 /* Image_Fillter-Bridging-Header.h */,
 				0CEEA0DC23F270220089F261 /* RNImageFillter.m */,
 			);
 			path = ImageFilter;
@@ -170,7 +181,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				0CC271D223E9A66100B6A6E0 /* GoogleService-Info.plist */,
+				0C03C38B23F42131002A6897 /* GoogleService-Info.plist */,
 				0C78E8AC23F12AA00029AA97 /* Counter.swift */,
 				0C78E8AE23F12B640029AA97 /* Counter.m */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -234,6 +245,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0C03C38623F3FAEC002A6897 /* TextRecognition */,
 				0CEEA0D823F270010089F261 /* ImageFilter */,
 				13B07FAE1A68108700A75B9A /* ChatApp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -404,12 +416,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				0CC271D323E9A66100B6A6E0 /* GoogleService-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				210E54CFC679455DB4589176 /* SFUIDisplay-Semibold.ttf in Resources */,
 				F210A200B2C8442785272C5F /* SFUIDisplay-Black.ttf in Resources */,
 				4211B22CB5334B0B89E0C12C /* SFUIDisplay-Bold.ttf in Resources */,
 				82D69088C7834E21AC93E683 /* SFUIDisplay-Heavy.ttf in Resources */,
+				0C03C38C23F42131002A6897 /* GoogleService-Info.plist in Resources */,
 				814C77D8B30944DDB0CC100A /* SFUIDisplay-Light.ttf in Resources */,
 				8EFFBEBCB51541ABBE542B03 /* SFUIDisplay-Medium.ttf in Resources */,
 				CE684298294342218B275DC9 /* SFUIDisplay-Regular.ttf in Resources */,
@@ -457,6 +469,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ChatApp/Pods-ChatApp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLVisionTextModel/GoogleMVTextDetectorResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
@@ -478,6 +491,7 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVTextDetectorResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QBImagePicker.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
@@ -668,6 +682,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CEEA0DD23F270220089F261 /* RNImageFillter.m in Sources */,
+				0C03C38823F3FB20002A6897 /* TextRecognition.swift in Sources */,
+				0C03C38A23F3FBFD002A6897 /* TextRecognition.m in Sources */,
 				0C78E8AF23F12B640029AA97 /* Counter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

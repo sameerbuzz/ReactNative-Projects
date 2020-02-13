@@ -3,7 +3,9 @@ package com.chatapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.chatapp.RNImageFilter.RNImageFilterPackage;
 import com.chatapp.ImageFilter.ColorMatrixImageFiltersPackage;
+import com.chatapp.TextRecognition.TRPackage;
 import com.chatapp.ToastModules.ToastPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
             packages.add(new ToastPackage());
             packages.add(new ColorMatrixImageFiltersPackage());
+            packages.add(new RNImageFilterPackage());
+            packages.add(new TRPackage());
           return packages;
         }
 

@@ -1,6 +1,5 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Color } from '../constants'
 
 // custom imports
 import Main from '../containers/DataBase/Main';
@@ -14,7 +13,8 @@ import BottomNavigation from '../containers/Animation/BottomIndex';
 import Counter from '../containers/Counter/Counter';
 import Filters from '../containers/Counter/Filters';
 import Toast from '../containers/Counter/Toast';
-// import ColorMAtrix from '../containers/Counter/';
+import MLKit from '../containers/MLKit';
+import TextRecognition from '../containers/MLKit/TextRecognition/Main'
 
 const MainStack = createStackNavigator(
     {
@@ -42,10 +42,11 @@ const MainStack = createStackNavigator(
         Counter: Counter,
         Filters: Filters,
         Toast: Toast,
-
+        MLKit: MLKit,
+        TextRecognition: TextRecognition,
     },
     {
-        initialRouteName: 'Filters',
+        initialRouteName: 'MLKit',
     },
 );
 

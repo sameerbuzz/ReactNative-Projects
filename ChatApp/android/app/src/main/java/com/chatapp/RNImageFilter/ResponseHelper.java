@@ -1,4 +1,4 @@
-package com.chatapp.Filter;
+package com.chatapp.RNImageFilter;
 
 //import androidx.annotation.NonNull;
 
@@ -54,6 +54,7 @@ public class ResponseHelper {
     public void invokeError(@NonNull final Callback callback, @NonNull final String error) {
         cleanResponse();
         response.putString("error", error);
+
         invokeResponse(callback);
     }
 

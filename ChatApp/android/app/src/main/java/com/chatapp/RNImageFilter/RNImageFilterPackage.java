@@ -1,5 +1,5 @@
 
-package com.chatapp.Filter;
+package com.chatapp.RNImageFilter;
 
 import java.util.Arrays;
 import java.util.Collections;
