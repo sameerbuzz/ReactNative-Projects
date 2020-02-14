@@ -33,28 +33,7 @@ class TextRecognition: NSObject {
         // Recognized text
         
         let resultText = myText.text
-        //        for block in myText.blocks {
-        //            let blockText = block.text
-        //            let blockConfidence = block.confidence
-        //            let blockLanguages = block.recognizedLanguages
-        //            let blockCornerPoints = block.cornerPoints
-        //            let blockFrame = block.frame
-        //            for line in block.lines {
-        //                let lineText = line.text
-        //                let lineConfidence = line.confidence
-        //                let lineLanguages = line.recognizedLanguages
-        //                let lineCornerPoints = line.cornerPoints
-        //                let lineFrame = line.frame
-        //                for element in line.elements {
-        //                    let elementText = element.text
-        //                    let elementConfidence = element.confidence
-        //                    let elementLanguages = element.recognizedLanguages
-        //                    let elementCornerPoints = element.cornerPoints
-        //                    let elementFrame = element.frame
-        //                }
-        //            }
-        //        }
-        
+        if let countryCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String {    print(countryCode)}
         let seconds = 0.1;
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
           callback([resultText])
@@ -82,4 +61,48 @@ class TextRecognition: NSObject {
       }
     }
   }
+  
+  @objc
+  func translate(_ trackinfo: NSDictionary,callback: @escaping RCTResponseSenderBlock) -> Void{
+    guard let infoDictionary = trackinfo as? [String: Any] else {
+      return
+    }
+    let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: .hi)
+    let englishGermanTranslator = NaturalLanguage.naturalLanguage().translator(options: options)
+    
+    let conditions = ModelDownloadConditions(
+      allowsCellularAccess: false,
+      allowsBackgroundDownloading: true
+    )
+    englishGermanTranslator.downloadModelIfNeeded(with: conditions) { error in
+      guard error == nil else { return }
+      
+      // Model downloaded successfully. Okay to start translating.
+    }
+    
+    load(fileName: infoDictionary["imageSource"] as! String,completion:{ result in
+      englishGermanTranslator.translate(infoDictionary["imageSource"] as! String) { translatedText, error in
+        guard error == nil, let translatedText = translatedText else { return }
+        
+        // Translation succeeded.
+        print("translated text ", translatedText)
+      }
+    })
+  }
+  
+  @objc
+  func downloadLanguage(condition: ModelDownloadConditions, completion: @escaping (UIImage)->()) {
+    DispatchQueue.global(qos: .background).async {
+      do {
+        //        let data = try Data.init(contentsOf: URL.init(string:fileName)!)
+        DispatchQueue.main.async {
+          //          completion(UIImage(data: data)!)
+        }
+      }
+      catch {
+        print("Not able to load image")
+      }
+    }
+  }
+  
 }

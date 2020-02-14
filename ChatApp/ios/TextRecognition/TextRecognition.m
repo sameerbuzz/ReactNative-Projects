@@ -11,4 +11,7 @@
 @interface RCT_EXTERN_MODULE(TextRecognition, NSObject)
 
 RCT_EXTERN_METHOD(getSourceImage:(NSDictionary*)trackinfo callback:(RCTResponseSenderBlock))
+
+RCT_EXTERN_METHOD(translate:(NSDictionary*)trackinfo callback:(RCTResponseSenderBlock))
+
 @end
