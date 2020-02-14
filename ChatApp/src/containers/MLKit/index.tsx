@@ -13,7 +13,7 @@ export interface AppState {
 
 const data = [
   { path: 'TextRecognition', title: 'Image Recognition' },
-  { path: 'FaceDetection', title: 'Face Detection' },
+  { path: 'FaceDetection', title: 'Face Detection' }, 
 ]
 
 const colors = [Color.newLightBlue, Color.newBlue]
