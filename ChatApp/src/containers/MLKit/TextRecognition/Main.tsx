@@ -62,6 +62,17 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
         })
     }
 
+    translate = async () => {
+        let result = await new Promise((resolve, reject) => {
+            NativeModules.TextRecognition.translate({
+                imageSource: this.state.textResult,
+            }, (source: any) => {
+                resolve(source)
+            });
+        })
+        console.warn('text ', result);
+    }
+
     public render() {
         return (
             <View style={Styles.MainView}>
@@ -87,6 +98,11 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
                             </LinearGradient>
                         </TouchableOpacity>
                         {this.state.textResult !== '' ? <ScrollView><Text style={Styles.resultText} >{this.state.textResult}</Text></ScrollView> : null}
+                        <TouchableOpacity onPress={() => this.translate()} style={Styles.cardView} >
+                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={colors} style={Styles.cardView}>
+                                <Text style={Styles.cardText}>Translate</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
                 }
             </View>
