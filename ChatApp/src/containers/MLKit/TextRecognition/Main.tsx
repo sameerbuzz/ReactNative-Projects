@@ -101,6 +101,13 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
             { value: 'Greek' }, { value: 'English' }, { value: 'Esperanto' }, { value: 'Spanish' }, { value: 'Estonian' },
             { value: 'Persian' }, { value: 'Finnish' }, { value: 'French' }, { value: 'Irish' }, { value: 'Galician' },
             { value: 'Gujarati' }, { value: 'Hebrew' }, { value: 'Hindi' }, { value: 'Croatian' }, { value: 'Haitian' },
+            { value: 'Hungarian' }, { value: 'Indonesian' }, { value: 'Icelandic' }, { value: 'Italian' }, { value: 'Japanese' },
+            { value: 'Georgian' }, { value: 'Kannada' }, { value: 'Korean' }, { value: 'Lithuanian' }, { value: 'Latvian' },
+            { value: 'Macedonian' }, { value: 'Marathi' }, { value: 'Malay' }, { value: 'Maltese' }, { value: 'Dutch' },
+            { value: 'Norwegian' }, { value: 'Polish' }, { value: 'Portuguese' }, { value: 'Romanian' }, { value: 'Russian' },
+            { value: 'Slovak' }, { value: 'Slovenian' }, { value: 'Albanian' }, { value: 'Swedish' }, { value: 'Swahili' },
+            { value: 'Tamil' }, { value: 'Telugu' }, { value: 'Thai' }, { value: 'Tagalog' }, { value: 'Turkish' },
+            { value: 'Ukranian' }, { value: 'Urdu' }, { value: 'Vietnamese' }, { value: 'Chinese' }
         ];
 
         return (
