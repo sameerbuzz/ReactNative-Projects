@@ -65,11 +65,13 @@ class TextRecognition: NSObject {
   
   @objc
   func translate(_ trackinfo: NSDictionary,callback: @escaping RCTResponseSenderBlock) -> Void{
+    
     guard let infoDictionary = trackinfo as? [String: Any] else {
       return
     }
     
-    let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: .ga)
+    let options = TranslatorOptions(sourceLanguage: .en, targetLanguage: TranslateLanguage(rawValue: infoDictionary["language"] as! UInt)!)
+    
     let englishTranslator = NaturalLanguage.naturalLanguage().translator(options: options)
     
     downloadLanguage(translator: englishTranslator, completion:{
@@ -85,26 +87,21 @@ class TextRecognition: NSObject {
   @objc
   func downloadLanguage(translator: Translator, completion: @escaping ()->()) {
     DispatchQueue.global(qos: .background).async {
+      let conditions: ModelDownloadConditions
       do {
-        //        let data = try Data.init(contentsOf: URL.init(string:fileName)!)
-        let conditions = ModelDownloadConditions(
+        conditions = ModelDownloadConditions(
           allowsCellularAccess: false,
           allowsBackgroundDownloading: true
         )
-        translator.downloadModelIfNeeded(with: conditions) { error in
-          guard error == nil else { return }
-          
-          // Model downloaded successfully. Okay to start translating.
-        }
         DispatchQueue.main.async {
-          //          completion(UIImage(data: data)!)
-          completion()
+          translator.downloadModelIfNeeded(with: conditions) { error in
+            guard error == nil else { return }
+            
+            // Model downloaded successfully. Okay to start translating.
+            completion()
+          }
         }
-      }
-      catch {
-        print("Not able to load image")
       }
     }
   }
-  
 }

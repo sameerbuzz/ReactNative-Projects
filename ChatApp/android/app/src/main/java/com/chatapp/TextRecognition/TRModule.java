@@ -2,23 +2,27 @@ package com.chatapp.TextRecognition;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableMap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 
 public class TRModule extends ReactContextBaseJavaModule {
 
@@ -26,6 +30,7 @@ public class TRModule extends ReactContextBaseJavaModule {
     ReadableMap options;
     protected Callback callback;
     String IMAGE_SOURCE = "imageSource";
+    String LANGUAGE = "language";
     String resultText;
 
     public TRModule(ReactApplicationContext reactContext) {
@@ -70,6 +75,68 @@ public class TRModule extends ReactContextBaseJavaModule {
                                     });
 
 
+
+        } catch (Exception ex) {
+            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
+        }
+
+    }
+
+    @ReactMethod
+    public void translate(final ReadableMap options, final Callback callback) {
+        try {
+
+            this.options = options;
+
+            int languageCode = (int)(options.getDouble(LANGUAGE));
+
+            // Create an English to any other language translator:
+            FirebaseTranslatorOptions option =
+                    new FirebaseTranslatorOptions.Builder()
+                            .setSourceLanguage(FirebaseTranslateLanguage.EN)
+                            .setTargetLanguage(languageCode)
+                            .build();
+
+            final FirebaseTranslator englishTranslator =
+                    FirebaseNaturalLanguage.getInstance().getTranslator(option);
+
+            FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder()
+                    .build();
+            englishTranslator.downloadModelIfNeeded(conditions)
+                    .addOnSuccessListener(
+                            new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void v) {
+                                    // Model downloaded successfully. Okay to start translating.
+                                    // (Set a flag, unhide the translation UI, etc.)
+                                    englishTranslator.translate(options.getString(IMAGE_SOURCE))
+                                            .addOnSuccessListener(
+                                                    new OnSuccessListener<String>() {
+                                                        @Override
+                                                        public void onSuccess(@NonNull String translatedText) {
+                                                            // Translation successful.
+                                                            callback.invoke(translatedText);
+                                                        }
+                                                    })
+                                            .addOnFailureListener(
+                                                    new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // Error.
+                                                            // ...
+                                                        }
+                                                    });
+                                }
+                            })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Model couldn’t be downloaded or other internal error.
+                                    // ...
+                                    Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                                }
+                            });
 
         } catch (Exception ex) {
             Log.e("ERR", ex.getMessage());
