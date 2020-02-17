@@ -129,12 +129,12 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
                         </View>}
                     {!this.state.status &&
                         <View>
-                            <TouchableOpacity onPress={() => this.setState({ status: !this.state.status, textResult: null, translatedText: null })} style={Styles.cardView} >
+                            <TouchableOpacity onPress={() => this.setState({ status: !this.state.status, textResult: null, translatedText: null, language: 11 })} style={Styles.cardView} >
                                 <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} colors={colors} style={Styles.cardView}>
                                     <Text style={Styles.cardText}>Try Another</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            {this.state.textResult !== null ? <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}><Text style={Styles.resultText} >{this.state.textResult}</Text></ScrollView> : null}
+                            {this.state.textResult !== '' ? <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}><Text style={Styles.resultText} >{this.state.textResult}</Text></ScrollView> : null}
                         </View>
                     }
                 </View>
@@ -151,7 +151,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
                                     <Text style={Styles.cardText}>Translate</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            {this.state.translatedText !== null ? <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}><Text style={Styles.resultText} >{this.state.translatedText}</Text></ScrollView> : null}
+                            {this.state.translatedText !== '' ? <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}><Text style={Styles.resultText} >{this.state.translatedText}</Text></ScrollView> : null}
                         </View>
                     }
                 </View>

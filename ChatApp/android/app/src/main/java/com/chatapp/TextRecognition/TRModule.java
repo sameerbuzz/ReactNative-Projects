@@ -1,7 +1,6 @@
 package com.chatapp.TextRecognition;
 
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -70,6 +69,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                         public void onFailure(@NonNull Exception e) {
                                             // Task failed with an exception
                                             // ...
+                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
                                             callback.invoke("");
                                         }
                                     });
@@ -78,6 +78,7 @@ public class TRModule extends ReactContextBaseJavaModule {
 
         } catch (Exception ex) {
             Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
+            callback.invoke("");
         }
 
     }
@@ -124,6 +125,8 @@ public class TRModule extends ReactContextBaseJavaModule {
                                                         public void onFailure(@NonNull Exception e) {
                                                             // Error.
                                                             // ...
+                                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                                                            callback.invoke("");
                                                         }
                                                     });
                                 }
@@ -135,11 +138,13 @@ public class TRModule extends ReactContextBaseJavaModule {
                                     // Model couldn’t be downloaded or other internal error.
                                     // ...
                                     Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                                    callback.invoke("");
                                 }
                             });
 
         } catch (Exception ex) {
-            Log.e("ERR", ex.getMessage());
+            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
+            callback.invoke("");
         }
 
     }
