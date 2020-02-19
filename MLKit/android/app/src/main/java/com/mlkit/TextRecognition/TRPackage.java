@@ -1,4 +1,4 @@
-package com.chatapp.TextRecognition;
+package com.mlkit.TextRecognition;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;

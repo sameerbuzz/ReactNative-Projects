@@ -1,118 +1,62 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import * as React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import SignIn from './screens/SignIn'
+import SignUp from './screens/SignUp'
+import ResetPassword from './screens/ResetPassword'
+import Home from './screens/Home'
+import { View } from 'react-native';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+const AuthStack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const RootStack = createStackNavigator();
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const AuthNavigator = (): React.ReactElement => (
+  <AuthStack.Navigator headerMode='screen' initialRouteName="SIGNIN">
+    <AuthStack.Screen name={"SIGNIN"} component={SignIn} />
+    <AuthStack.Screen name={"SIGNUP"} component={SignUp} />
+    <AuthStack.Screen name={"RESETPASSWORD"} component={ResetPassword} />
+  </AuthStack.Navigator>
+);
 
-declare var global: {HermesInternal: null | {}};
+const HomeNavigator = (): React.ReactElement => (
+  <HomeStack.Navigator headerMode='screen' initialRouteName="HOME">
+    <HomeStack.Screen name={"HOME"} component={Home} />
+  </HomeStack.Navigator>
+);
 
-const App = () => {
+const AppNavigator = () => (
+  <NavigationContainer>
+    <RootStack.Screen name="SignIn" component={SignIn} />
+    {/* <RootStack.Screen name="HomeNavigator" component={HomeNavigator} /> */}
+  </NavigationContainer>
+);
+
+export default function App() {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+    <NavigationContainer>
+      <RootStack.Navigator>
+        <RootStack.Screen name="AuthNavigator" component={AuthNavigator} />
+        <RootStack.Screen name="HomeNavigator" component={HomeNavigator} />
+      </RootStack.Navigator>
+    </NavigationContainer>
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+  )
+}
+// export default AppNavigator;
+// import React, { PureComponent } from 'react'
+// import { View, Text } from 'react-native'
+// import Styles from './screens/Styles'
+// interface Props {
 
-export default App;
+// }
+
+// export default class App extends PureComponent<Props> {
+//   render() {
+//     return (
+//       <View style={Styles.mainView}>
+//         <Text>App</Text>
+//         </View>
+//     )
+//   }
+// }

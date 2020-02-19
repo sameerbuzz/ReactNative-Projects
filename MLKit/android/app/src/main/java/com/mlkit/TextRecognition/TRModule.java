@@ -1,4 +1,4 @@
-package com.chatapp.TextRecognition;
+package com.mlkit.TextRecognition;
 
 import android.net.Uri;
 import android.widget.Toast;
