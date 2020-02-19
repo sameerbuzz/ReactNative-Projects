@@ -12,7 +12,7 @@ function SignUp({ navigation }: any): ReactElement {
             <Text>SignUp</Text>
             <Button
                 title="Go to Home"
-                onPress={() => navigation.navigate('HomeNav')}
+                onPress={() => navigation.navigate('HomeNavigator')}
             />
         </View>
     )

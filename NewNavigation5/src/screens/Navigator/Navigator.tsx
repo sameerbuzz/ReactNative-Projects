@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import SignIn from './screens/SignIn'
-import SignUp from './screens/SignUp'
-import ResetPassword from './screens/ResetPassword'
-import Home from './screens/Home'
+import SignIn from '../../screens/SignIn'
+import SignUp from '../../screens/SignUp'
+import ResetPassword from '../../screens/ResetPassword'
+import Home from '../../screens/Home'
 
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
