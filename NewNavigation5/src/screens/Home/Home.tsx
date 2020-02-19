@@ -1,8 +1,11 @@
 import React, { ReactElement } from 'react'
 import { Text, View, Button } from 'react-native'
-import Styles from './Styles'
+import Styles from '../Styles'
+
 interface Props {
-    
+    updateEmail: Function,
+    updateUid: Function,
+    updatePassword: Function,
 }
 
 function SignIn({ navigation }: any): ReactElement {

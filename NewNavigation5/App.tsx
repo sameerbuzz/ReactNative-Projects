@@ -1,37 +1,24 @@
 import * as React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import SignIn from './screens/SignIn'
-import SignUp from './screens/SignUp'
-import ResetPassword from './screens/ResetPassword'
-import Home from './screens/Home'
+import { Provider } from "react-redux";
+import Navigation from './src/navigator/Navigator';
+import store from './src/reducer/index';
 
-const AuthStack = createStackNavigator();
-const HomeStack = createStackNavigator();
-const RootStack = createStackNavigator();
+interface AppProps {
+}
 
-const AuthNavigator = (): React.ReactElement => (
-  <AuthStack.Navigator headerMode='screen' initialRouteName="SIGNIN">
-    <AuthStack.Screen name={"SIGNIN"} component={SignIn} />
-    <AuthStack.Screen name={"SIGNUP"} component={SignUp} />
-    <AuthStack.Screen name={"RESETPASSWORD"} component={ResetPassword} />
-  </AuthStack.Navigator>
-);
+interface State {
+}
 
-const HomeNavigator = (): React.ReactElement => (
-  <HomeStack.Navigator headerMode='screen' initialRouteName="HOME">
-    <HomeStack.Screen name={"HOME"} component={Home} />
-  </HomeStack.Navigator>
-);
+export default class App extends React.PureComponent<AppProps, State> {
+  constructor(props: AppProps) {
+    super(props);
+  }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <RootStack.Navigator>
-        <RootStack.Screen name="AuthNavigator" component={AuthNavigator} />
-        <RootStack.Screen name="HomeNavigator" component={HomeNavigator} />
-      </RootStack.Navigator>
-    </NavigationContainer>
-
-  )
+  public render() {
+    return (
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    );
+  }
 }
