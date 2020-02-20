@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
-import Home from '../modules/Reducer'
+import Home from '../modules/Home/Reducer'
+import SignIn from '../modules/SignIn/Reducer'
 
 const reducer = combineReducers({
-    Home
+    Home,
+    SignIn
 });
 
 export default reducer;

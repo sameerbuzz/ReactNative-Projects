@@ -3,6 +3,7 @@ const initialState = {
     uid: '',
     email: '',
     password: '',
+    token: '',
 }
 
 const Reducer = (state = initialState, action: any) => {

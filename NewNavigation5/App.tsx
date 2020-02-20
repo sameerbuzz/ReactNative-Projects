@@ -1,24 +1,19 @@
 import * as React from 'react';
 import { Provider } from "react-redux";
-import Navigation from './src/navigator/Navigator';
-import store from './src/reducer/index';
+import Navigator from './src/navigator/Navigator';
+import { store, persistor } from './src/reducer';
+import { PersistGate } from 'redux-persist/es/integration/react'
 
-interface AppProps {
+const App = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate
+        loading={null}
+        persistor={persistor}
+      >
+      <Navigator />
+      </PersistGate>
+    </Provider>
+  );
 }
-
-interface State {
-}
-
-export default class App extends React.PureComponent<AppProps, State> {
-  constructor(props: AppProps) {
-    super(props);
-  }
-
-  public render() {
-    return (
-      <Provider store={store}>
-        <Navigation />
-      </Provider>
-    );
-  }
-}
+export default App;
