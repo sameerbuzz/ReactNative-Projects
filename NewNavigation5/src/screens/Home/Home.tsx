@@ -3,6 +3,7 @@ import { Text, View, Button, TextInput } from 'react-native'
 import Styles from '../Styles'
 import { useDispatch, useSelector } from "react-redux";
 import { updateUid, updateEmail, updatePassword } from '../../modules/Home/Action';
+import {updateToken} from '../../modules/SignIn/Action'
 
 function Home({ navigation }: any): ReactElement {
 
@@ -17,6 +18,8 @@ function Home({ navigation }: any): ReactElement {
     const dispatch = useDispatch()
     React.useEffect(() => {
         // console.warn('email ', email, ' password ', password, ' uid ', uid)
+        // console.warn('token ',token, token === '');
+        
     }, [])
     return (
         <View style={Styles.mainView}>
@@ -25,13 +28,12 @@ function Home({ navigation }: any): ReactElement {
             <TextInput placeholder='enter password' onChangeText={(text: string) => { dispatch(updatePassword(text)) }} value={password} />
             <TextInput placeholder='enter uid' onChangeText={(text: string) => { dispatch(updateUid(text)) }} value={uid} />
             <Text>{token}</Text>
-            {/* <Button
-                title="Go to Sign In"
-                onPress={() => navigation.pop()}
-            /> */}
+            <Button
+                title="Refresh Token"
+                onPress={() => dispatch(updateToken(''))}
+            />
         </View>
     )
 }
 
 export default Home
-

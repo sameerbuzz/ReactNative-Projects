@@ -26,14 +26,19 @@ const HomeNavigator = () => (
   </HomeStack.Navigator>
 );
 
-export default class Navigator extends React.Component {
+export interface Props {
+  token: string
+}
+
+export default class Navigator extends React.PureComponent<Props>  {
   render() {
+    // console.warn('my token ', this.props.token, this.props.token === ''); 
     return (
       <NavigationContainer>
         <RootStack.Navigator headerMode='none' initialRouteName="AuthNavigator">
-
-          <RootStack.Screen name="AuthNavigator" component={AuthNavigator} />
-          <RootStack.Screen name="HomeNavigator" component={HomeNavigator} />
+          {this.props.token === '' ?
+            <RootStack.Screen name="AuthNavigator" component={AuthNavigator} /> :
+            <RootStack.Screen name="HomeNavigator" component={HomeNavigator} />}
         </RootStack.Navigator>
       </NavigationContainer>
     )

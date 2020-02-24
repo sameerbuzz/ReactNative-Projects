@@ -430,7 +430,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - RSKImageCropper
-  - RNReanimated (1.4.0):
+  - RNReanimated (1.7.0):
     - React
   - RNScreens (2.0.0-alpha.22):
     - React
@@ -669,7 +669,7 @@ SPEC CHECKSUMS:
   RNFBStorage: 336c47daa7ba460fcac8b61054f68130c618cfaa
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNImageCropPicker: 9d1a7eea4f8368fc479cbd2bf26459bd3c74d9aa
-  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
+  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: 6adf01eb4080f44af6cca551207c6b0505066857
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a

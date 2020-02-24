@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider } from "react-redux";
-import Navigator from './src/navigator/Navigator';
+import Navigator from './src/navigator';
 import { store, persistor } from './src/reducer';
 import { PersistGate } from 'redux-persist/es/integration/react'
 

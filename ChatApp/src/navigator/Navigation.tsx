@@ -7,6 +7,7 @@ import ChatMain from '../containers/Chat/Main';
 import SignIn from '../containers/Chat/SignIn';
 import SignUp from '../containers/Chat/SignUp';
 import Animate from '../containers/Animation/Animate';
+import Reanimated from '../containers/Animation/Reanimated';
 import ChatList from '../containers/Chat/ChatList';
 import Group from '../containers/Chat/Group'
 import BottomNavigation from '../containers/Animation/BottomIndex';
@@ -46,9 +47,10 @@ const MainStack = createStackNavigator(
         MLKit: MLKit,
         TextRecognition: TextRecognition,
         FaceDetection: FaceDetection,
+        Reanimated: Reanimated,
     },
     {
-        initialRouteName: 'MLKit',
+        initialRouteName: 'Reanimated',
     },
 );
 

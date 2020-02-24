@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, StyleSheet, Text, Animated, TextInput } from 'react-native';
+import { vw } from '../../constants';
 
 export interface AppProps {
 }
@@ -16,6 +17,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   animatedValueB2: any;
   animatedValueB3: any;
   animatedValueB4: any;
+  animatedCircle: any;
   constructor(props: AppProps) {
     super(props);
     this.animatedValue = new Animated.Value(0)
@@ -25,6 +27,7 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
     this.animatedValueB2 = new Animated.Value(0)
     this.animatedValueB3 = new Animated.Value(0)
     this.animatedValueB4 = new Animated.Value(0)
+    this.animatedCircle = new Animated.Value(0)
     this.state = {
       anim: true
     };
@@ -33,7 +36,15 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
   componentDidMount(){
     // this.startAnimation()
     this.loadingAnim()
+    // this.startCircleAnimation()
   }
+
+  startCircleAnimation = () => {
+    Animated.timing(this.animatedCircle, {
+      toValue: 1,
+      duration: 2000
+    }).start();
+  };
 
   startAnimation = () => {
     Animated.timing(this.animatedValue, {
@@ -108,6 +119,20 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
       outputRange: [20, 5, 20]
     })
 
+    const viewHeightCircle = this.animatedCircle.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 200]
+    })
+    const viewWidthCircle = this.animatedCircle.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 200]
+    })
+    const viewRadiusCircle = this.animatedCircle.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 100]
+    })
+
+
     // return (
     //   <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start',}}>
     //      <Animated.View style={{ height: viewHeight, backgroundColor: 'red', width: 2}} />
@@ -126,5 +151,13 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
         <Animated.View style={{height: viewHeightB2, width: viewHeightB2, borderRadius: viewHeightB2, backgroundColor: 'blue'}}  />
       </View>
     )
+    // return(
+    //   <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    //     <View style={{height: 200, width: 200, borderRadius: 100, backgroundColor: 'red', position: 'absolute', top: 200, bottom: 0, left: 110, right: 0}}>
+    //       <Animated.View style={{height: viewHeightCircle, width: 200, borderBottomLeftRadius: 100, borderBottomRightRadius: 100, borderTopRadius: 0, backgroundColor: 'blue', position: 'absolute'}}>
+    //         </Animated.View>
+    //       </View>
+    //     </View>
+    // )
   }
 }
