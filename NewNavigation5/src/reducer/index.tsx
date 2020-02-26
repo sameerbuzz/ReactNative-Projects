@@ -4,12 +4,13 @@ import createSagaMiddleware from 'redux-saga'
 import reducer from './reducer';
 import { persistStore, persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage'
+import { hitApiSaga } from '../screens/APIHit/saga';
 
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
     whitelist: ['Home', 'SignIn'],
-    blacklist: [],
+    blacklist: ['APIHit'],
 }
 
 // create the saga middleware
@@ -24,8 +25,9 @@ const store = createStore(persistedReducer, enhancer2);
 
 // Middleware: Redux Persist Persister
 let persistor = persistStore(store);
+sagaMiddleware.run(hitApiSaga);
 
 export {
     store,
     persistor
-  };
+};

@@ -1,6 +1,5 @@
-import { UPDATE_TOKEN, HIT_API, LOADING_API } from './Type'
+import { HIT_API, LOADING_API } from './Type'
 const initialState = {
-    token: '',
     newsArray: [],
     isloading: false,
     isrefreshing: false
@@ -8,8 +7,10 @@ const initialState = {
 
 const Reducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case UPDATE_TOKEN:
-            return { ...state, token: action.payload.data }
+        case HIT_API:
+            return { ...state, newsArray: action.payload.data, isloading: false }
+        case LOADING_API:
+            return { ...state, isloading: true }
         default:
             return state
     }

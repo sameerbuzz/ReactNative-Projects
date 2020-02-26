@@ -6,6 +6,7 @@ import SignUp from '../screens/SignUp'
 import ResetPassword from '../screens/ResetPassword'
 import Home from '../screens/Home/Home'
 import IDNow from '../screens/IDNow/IDNow'
+import APIHit from '../screens/APIHit/APIHit';
 
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -20,9 +21,10 @@ const AuthNavigator = () => (
 );
 
 const HomeNavigator = () => (
-  <HomeStack.Navigator headerMode='screen' initialRouteName="HOME">
+  <HomeStack.Navigator headerMode='screen' initialRouteName="APIHit">
     <HomeStack.Screen name={"HOME"} component={Home} />
     <HomeStack.Screen name={"IDNow"} component={IDNow} />
+    <HomeStack.Screen name={"APIHit"} component={APIHit} />
   </HomeStack.Navigator>
 );
 
@@ -35,7 +37,7 @@ export default class Navigator extends React.PureComponent<Props>  {
     // console.warn('my token ', this.props.token, this.props.token === ''); 
     return (
       <NavigationContainer>
-        <RootStack.Navigator headerMode='none' initialRouteName="AuthNavigator">
+        <RootStack.Navigator headerMode='none' initialRouteName="HomeNavigator">
           {this.props.token === '' ?
             <RootStack.Screen name="AuthNavigator" component={AuthNavigator} /> :
             <RootStack.Screen name="HomeNavigator" component={HomeNavigator} />}

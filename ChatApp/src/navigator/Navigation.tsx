@@ -17,6 +17,7 @@ import Toast from '../containers/Counter/Toast';
 import MLKit from '../containers/MLKit';
 import TextRecognition from '../containers/MLKit/TextRecognition/Main'
 import FaceDetection from '../containers/MLKit/FaceDetection/FaceDetection'
+import APIHit from '../containers/HitAPI/APIHit';
 
 const MainStack = createStackNavigator(
     {
@@ -48,9 +49,10 @@ const MainStack = createStackNavigator(
         TextRecognition: TextRecognition,
         FaceDetection: FaceDetection,
         Reanimated: Reanimated,
+        APIHit: APIHit,
     },
     {
-        initialRouteName: 'Reanimated',
+        initialRouteName: 'APIHit',
     },
 );
 
