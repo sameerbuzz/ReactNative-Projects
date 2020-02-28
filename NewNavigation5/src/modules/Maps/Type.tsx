@@ -1,0 +1,1 @@
+export const UPDATE_MARKERS = "Maps/UPDATE_MARKERS";

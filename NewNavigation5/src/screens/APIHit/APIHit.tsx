@@ -5,7 +5,8 @@ import { vw } from 'src/constants';
 import { useDispatch, useSelector } from "react-redux";
 import { LOADING_API } from '../../modules/SignIn/Type';
 
-export interface AppProps {
+ interface AppProps {
+    navigation?: any
 }
 let page = 1
 let newsAPI = 'http://newsapi.org/v2/everything?q='

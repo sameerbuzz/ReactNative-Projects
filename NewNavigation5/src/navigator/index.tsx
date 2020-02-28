@@ -3,8 +3,9 @@ import Navigator from './Navigator';
 
 const mapStateToProps = (state: any) => {
   const { token } = state.SignIn;
+  const { modalVisible } = state.MyMaps
   return {
-    token
+    token, modalVisible
   }
 }
 

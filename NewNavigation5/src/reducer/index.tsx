@@ -9,7 +9,7 @@ import { hitApiSaga } from '../screens/APIHit/saga';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['Home', 'SignIn'],
+    whitelist: ['Home', 'SignIn', 'MyMaps'],
     blacklist: ['APIHit'],
 }
 
@@ -21,11 +21,11 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 const enhancer = compose(applyMiddleware(thunk));
 const enhancer2 = applyMiddleware(sagaMiddleware)
 
-const store = createStore(persistedReducer, enhancer2);
+const store = createStore(persistedReducer, enhancer);
 
 // Middleware: Redux Persist Persister
 let persistor = persistStore(store);
-sagaMiddleware.run(hitApiSaga);
+// sagaMiddleware.run(hitApiSaga);
 
 export {
     store,
