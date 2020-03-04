@@ -17,8 +17,8 @@ export default class ResultFlatList extends React.PureComponent<AppProps, any> {
         const { position } = this.props.data
         return (
             <View style={Styles.mainViewFlat}>
-                <TouchableOpacity onPress={() => this.props.getCoordinates(position)}>
-                    <Text numberOfLines={1} style={Styles.searchText}>{address} </Text>
+                <TouchableOpacity onPress={() => this.props.getCoordinates(position, address)}>
+                    <Text numberOfLines ={1} style={Styles.searchText}>{address} </Text>
                 </TouchableOpacity>
             </View>
         );

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Group from './Group';
-import { } from '../../../modules/Chat/ChatList/Action';
+import { } from '../../../modules/ChatList/Action';
 
 const mapDispatchToProps = (dispatch: Function) => ({
 

@@ -16,6 +16,6 @@ const Color = {
     newLightBlue: 'rgb(99, 244, 247)',
     newViolet: 'rgb(169, 118, 235)',
     newLightViolet: 'rgb(227, 193, 234)',
-    
+    mapBlue: 'rgb(11, 118, 224)',
 }
 export default Color;

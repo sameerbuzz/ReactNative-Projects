@@ -1,5 +1,5 @@
 import { SHOW_FOOTER, MULTI_PICS, REMOVE_PICS, CLEAR_BUFFER, HIDE_FOOTER, CURRENT_IMAGE, URL_IMAGE, URL_VIDEO, CURRENT_VIDEO, ADD_VIDEO } from './Type'
-import FirebaseServices from '../../../utils/FirebaseServices';
+import FirebaseServices from '../../utils/FirebaseServices';
 
 export const showingFooter = () => {
     return (dispatch: any) => {

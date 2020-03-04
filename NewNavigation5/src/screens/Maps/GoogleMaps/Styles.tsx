@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from 'react-native';
-import { vw, vh } from '../../../constants';
+import { vw, vh, Color } from '../../../constants';
 const Styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
@@ -26,6 +26,8 @@ const Styles = StyleSheet.create({
         paddingHorizontal: vw(10),
         paddingVertical: Platform.OS === 'ios' ? vw(10) : 0,
         zIndex: 99,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     searchBarFlat: {
         position: 'absolute',
@@ -37,13 +39,16 @@ const Styles = StyleSheet.create({
         zIndex: 99,
     },
     searchText: {
-        fontSize: vw(18)
+        fontSize: vw(18),
+        width: vw(350),
     },
     separator: {
         flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
         height: vw(0.7),
-        backgroundColor: 'grey',
+        backgroundColor: 'lightgrey',
+        marginHorizontal: vw(30)
     },
     modalStyle: {
         height: '50%',
@@ -95,7 +100,49 @@ const Styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
         borderRadius: vw(5),
-    }
+    },
+    findRouteView: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'white',
+        paddingHorizontal: vw(20),
+        paddingVertical: Platform.OS === 'ios' ? vw(10) : 0,
+        zIndex: 99,
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    findRouteText: {
+        fontSize: vw(18),
+        padding: vw(10),
+        width: vw(250)
+    },
+    directionBtn: {
+        backgroundColor: Color.mapBlue,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: vw(2),
+        height: vw(40)
+    },
+    directionTxt: {
+        color: 'white',
+        padding: vw(10)
+    },
+    clearBtn: {
+        paddingHorizontal: vw(5)
+    },
+    transportView: {
+        padding: vw(10),
+        paddingHorizontal: vw(13),
+        backgroundColor: Color.mapBlue,
+        alignItems: 'center',
+    },
+    transportText: {
+        fontSize: vw(18),
+        width: '100%',
+        color: 'white'
+    },
 })
 
 export default Styles

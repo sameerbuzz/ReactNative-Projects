@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Main from './Main';
-import { showingFooter, hideFooter, addImagesToBuffer, removeImagesFromBuffer, clearImageBuffer, changeCurrentImage,uploadAndSend, addVideo, uploadAndSendVideo, removeVideo } from '../../../modules/Chat/Main/Action';
+import { showingFooter, hideFooter, addImagesToBuffer, removeImagesFromBuffer, clearImageBuffer, changeCurrentImage,uploadAndSend, addVideo, uploadAndSendVideo, removeVideo } from '../../../modules/Main/Action';
 
 const mapDispatchToProps = (dispatch: Function) => ({
   showingFooter: () => dispatch(showingFooter()),

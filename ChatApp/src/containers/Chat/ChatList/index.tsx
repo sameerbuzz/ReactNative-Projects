@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ChatList from './ChatList';
-import { updateUser, isOnline } from '../../../modules/Chat/ChatList/Action';
+import { updateUser, isOnline } from '../../../modules/ChatList/Action';
 
 const mapDispatchToProps = (dispatch: Function) => ({
   updateUser: (user: any) => dispatch(updateUser(user)),

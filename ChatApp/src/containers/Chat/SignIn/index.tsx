@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import SignIn from './SignIn';
-import { updateUid, updateEmail } from '../../../modules/Chat/SignIn/Action';
+import { updateUid, updateEmail } from '../../../modules/SignIn/Action';
 
 const mapDispatchToProps = (dispatch: Function) => {
   return {
