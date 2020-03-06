@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, NativeModules, Platform, ActivityIndicator, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, NativeModules, Platform, ActivityIndicator, ScrollView, Alert, Clipboard } from 'react-native';
 import { ImagePickerFn } from '../../../components';
 import LinearGradient from 'react-native-linear-gradient'
 import { Color } from '../../../constants';
@@ -134,7 +134,11 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
                                     <Text style={Styles.cardText}>Try Another</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            {this.state.textResult !== null ? <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}><Text style={Styles.resultText} >{this.state.textResult}</Text></ScrollView> : null}
+                            {this.state.textResult !== null ?
+                                <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}>
+                                    <Text onLongPress={() => { Clipboard.setString(this.state.textResult), Platform.OS === 'android' ? NativeModules.TextRecognition.getToast() : null }}
+                                        style={Styles.resultText} >{this.state.textResult}</Text>
+                                </ScrollView> : null}
                         </View>
                     }
                 </View>
@@ -151,7 +155,11 @@ export default class AppComponent extends React.Component<AppProps, AppState> {
                                     <Text style={Styles.cardText}>Translate</Text>
                                 </LinearGradient>
                             </TouchableOpacity>
-                            {this.state.translatedText !== null ? <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}><Text style={Styles.resultText} >{this.state.translatedText}</Text></ScrollView> : null}
+                            {this.state.translatedText !== null ?
+                                <ScrollView style={Styles.resultTextView} showsVerticalScrollIndicator={false}>
+                                    <Text onLongPress={() => { Clipboard.setString(this.state.translatedText), Platform.OS === 'android' ? NativeModules.TextRecognition.getToast() : null }}
+                                        style={Styles.resultText} >{this.state.translatedText}</Text>
+                                </ScrollView> : null}
                         </View>
                     }
                 </View>

@@ -10,6 +10,7 @@ import APIHit from '../screens/APIHit/APIHit';
 import MyMap from '../screens/Maps/GoogleMaps';
 import MarkerModal from '../screens/Maps/GoogleMaps/MarkerModal';
 import OpenMap from '../screens/Maps/OenLayers/OpenMap';
+import test from '../screens/Maps/GoogleMaps/test';
 
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -31,6 +32,7 @@ const HomeNavigator = () => (
     <HomeStack.Screen name="APIHit" component={APIHit} />
     <HomeStack.Screen name="MyMap" component={MyMap} />
     <HomeStack.Screen name="OpenMap" component={OpenMap} />
+    <HomeStack.Screen name="test" component={test} />
   </HomeStack.Navigator>
 );
 

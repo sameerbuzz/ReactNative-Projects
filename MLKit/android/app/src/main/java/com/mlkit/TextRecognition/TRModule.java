@@ -43,6 +43,11 @@ public class TRModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void getToast(){
+        Toast.makeText(getReactApplicationContext(), "Text copied to Clipboard", Toast.LENGTH_SHORT).show();
+    }
+
+    @ReactMethod
     public void getSourceImage(final ReadableMap options, final Callback callback) {
         try {
            // this.callback = callback;
@@ -69,7 +74,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                         public void onFailure(@NonNull Exception e) {
                                             // Task failed with an exception
                                             // ...
-                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                             callback.invoke("");
                                         }
                                     });
@@ -77,7 +82,7 @@ public class TRModule extends ReactContextBaseJavaModule {
 
 
         } catch (Exception ex) {
-            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
+            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             callback.invoke("");
         }
 
@@ -125,7 +130,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                                         public void onFailure(@NonNull Exception e) {
                                                             // Error.
                                                             // ...
-                                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                                             callback.invoke("");
                                                         }
                                                     });
@@ -137,13 +142,13 @@ public class TRModule extends ReactContextBaseJavaModule {
                                 public void onFailure(@NonNull Exception e) {
                                     // Model couldn’t be downloaded or other internal error.
                                     // ...
-                                    Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                                    Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                     callback.invoke("");
                                 }
                             });
 
         } catch (Exception ex) {
-            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT);
+            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             callback.invoke("");
         }
 

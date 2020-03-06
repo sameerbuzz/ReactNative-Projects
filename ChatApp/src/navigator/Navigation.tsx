@@ -18,6 +18,7 @@ import MLKit from '../containers/MLKit';
 import TextRecognition from '../containers/MLKit/TextRecognition/Main'
 import FaceDetection from '../containers/MLKit/FaceDetection/FaceDetection'
 import APIHit from '../containers/HitAPI/APIHit';
+import MapAsync from '../containers/Animation/MapAsync';
 
 const MainStack = createStackNavigator(
     {
@@ -50,9 +51,10 @@ const MainStack = createStackNavigator(
         FaceDetection: FaceDetection,
         Reanimated: Reanimated,
         APIHit: APIHit,
+        MapAsync: MapAsync,
     },
     {
-        initialRouteName: 'APIHit',
+        initialRouteName: 'MapAsync',
     },
 );
 

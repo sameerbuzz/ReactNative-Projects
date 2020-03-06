@@ -41,7 +41,7 @@ target 'MLKit' do
   pod 'Firebase/MLNaturalLanguage'
   pod 'Firebase/MLNLLanguageID'
   pod 'Firebase/MLNLTranslate'
-  
+
   post_install do |installer|
     # Other stuff here ...
     system('cd Pods/Headers/Public; ln -s Protobuf protobuf')

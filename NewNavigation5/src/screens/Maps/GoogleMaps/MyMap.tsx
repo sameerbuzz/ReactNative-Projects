@@ -36,6 +36,7 @@ interface AppState {
   route: Array<any>,
   lastCoordinates: any,
   transport: Array<any>,
+  showTransport: boolean
 }
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
   mapView: any;
@@ -63,7 +64,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       toggleDirection: false,
       route: [],
       lastCoordinates: null,
-      transport: []
+      transport: [],
+      showTransport: false
     }
   }
 
@@ -127,27 +129,53 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     )
   }
 
-  getDirections = () => {
+  getDirections = async () => {
     // this.setState({ toggleDirection: false })
+    this.setState({ showTransport: true })
+
+
     // this.mapView.animateCamera({ center: { latitude: this.state.searchCoordinates.latitude, longitude: this.state.searchCoordinates.longitude }, pitch: 2, heading: 20, altitude: 200, zoom: 100 }, 1000)
-    transportType.map(type => {
-      this.hitRouteAPI(type.title, (res: any) => {
-        let temp = this.state.route
-        temp = temp.concat({
-          tittle: type.title,
-          route: res[0].legs[0].points
-        })
+
+    transportType.map((type) => {
+      debugger
+
+      this.hitDIrectionAPI(type.title, new Promise((res: any) => {
+        let temp: any[] = this.state.transport
+        temp = temp.concat(res)
+        debugger
         this.setState({
           transport: temp
-        }, () => console.warn(this.state.transport)
+        }, () => console.warn('state transport', this.state.transport)
         )
-      })
+      }))
+
     })
+
+
+  }
+
+  hitDIrectionAPI = (type: string, promise: any) => {
+    debugger
+    let temp: any[] = []
+    return promise.then((callback: Function) => {
+      debugger
+
+      this.hitRouteAPI(type, (data: any) => {
+        temp = temp.concat({
+          tittle: type,
+          route: data[0].legs[0].points
+        })
+        debugger
+        // this.setState({
+        //   route: temp
+        // })
+      })
+    }).catch((error: any) => console.warn(error))
   }
 
   hitRouteAPI = (type: string, callback: Function) => {
     try {
-      axios.get(`https://api.tomtom.com/routing/1/calculateRoute/${this.state.lastCoordinates.latitude}%2C${this.state.lastCoordinates.longitude}%3A${this.state.searchCoordinates.latitude}%2C${this.state.searchCoordinates.longitude}/json?avoid=unpavedRoads&travelMode=${type}&key=sZ5pXo5YudONmsTxZU2ZpAhs2HWUCPjP`)
+      axios.get(`https://api.tomtom.com/routing/1/calculateRoute/${this.state.searchCoordinates.latitude}%2C${this.state.searchCoordinates.longitude}%3A${this.state.lastCoordinates.latitude}%2C${this.state.lastCoordinates.longitude}/json?avoid=unpavedRoads&travelMode=${type}&key=sZ5pXo5YudONmsTxZU2ZpAhs2HWUCPjP`)
         .then((response: any) => {
           callback(response.data.routes)
         })
@@ -241,13 +269,13 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         {/* Finding Route option ---------- */}
         {this.state.toggleDirection ?
           <View style={Styles.findRouteView}>
-            <FlatList
+            {this.state.showTransport ? <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal={true}
-              data={this.state.transport}
+              data={transportType}
               keyExtractor={(item, index) => index.toString()}
               renderItem={this.renderTransportItems}
-            />
+            /> : null}
             <View style={{ flexDirection: 'row' }}>
               <Text numberOfLines={2} style={Styles.findRouteText}>{this.type === 'S' ? this.state.queryS : this.state.queryD}</Text>
               {this.state.queryS !== '' && this.state.queryD !== '' ? <TouchableOpacity style={Styles.directionBtn} onPress={() => this.getDirections()} >
