@@ -1,1 +1,2 @@
 export const UPDATE_MARKERS = "Maps/UPDATE_MARKERS";
+export const UPDATE_RECENT_SEARCH = "Maps/UPDATE_RECENT_SEARCH;"

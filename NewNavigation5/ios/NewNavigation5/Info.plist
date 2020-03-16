@@ -37,6 +37,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>For Current location</string>
+	<key>NSFileProviderDomainUsageDescription</key>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Require to access Map</string>
 	<key>UILaunchStoryboardName</key>

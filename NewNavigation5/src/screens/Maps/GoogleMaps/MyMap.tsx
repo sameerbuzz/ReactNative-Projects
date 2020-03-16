@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, Alert, TextInput, TouchableOpacity, FlatList, Platform, ActivityIndicator } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import axios from 'axios';
+import Geolocation from '@react-native-community/geolocation';
 
 // custom imports
 import Styles from './Styles';
@@ -14,7 +15,9 @@ const transportType = [{ title: 'car' }, { title: 'truck' }, { title: 'motorcycl
 interface AppProps {
   navigation?: any,
   marker: Array<any>,
-  updateMarkers: Function
+  updateMarkers: Function,
+  recentSearch: Array<any>,
+  updateSearch: Function
 }
 interface AppState {
   region: any,
@@ -33,6 +36,8 @@ interface AppState {
   showTransport: boolean,
   animate: boolean,
   currentVehicle: string,
+  showNavigation: boolean,
+  currentPosition: any
 }
 export default class AppComponent extends React.PureComponent<AppProps, AppState> {
   mapView: any;
@@ -44,10 +49,10 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     this.searchText = React.createRef()
     this.state = {
       region: {
-        latitude: 28.606226,
-        longitude: 77.362085,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
       },
       x: null,
       getCoordinates: null,
@@ -63,8 +68,29 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
       transport: {},
       showTransport: false,
       animate: false,
-      currentVehicle: 'car'
+      currentVehicle: 'car',
+      showNavigation: false,
+      currentPosition: null,
     }
+  }
+
+  componentDidMount() {
+    console.warn('recent ',this.props.recentSearch);
+    
+    Geolocation.getCurrentPosition(info => {
+      this.setState({
+        currentPosition: {
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        },
+      }, () => this.setState({
+        region: this.state.currentPosition,
+        queryS: 'Current Location',
+        searchCoordinates: this.state.currentPosition
+      }))
+    });
   }
 
   hitSearchAPI = () => {
@@ -96,6 +122,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   getMapRegion = (coordinates: any, place: string) => {
+    this.props.updateSearch(coordinates, place)
+
     this.type === 'S' ?
       this.setState({ resultS: [], queryS: place, toggleDirection: true, showTransport: false }) :
       this.setState({ resultD: [], queryD: place, toggleDirection: true, showTransport: false })
@@ -128,24 +156,23 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   getDirections = async () => {
-
-    this.setState({ showTransport: false, animate: true })
-
-    await Promise.all(transportType.map(async (type) => {
-      let result = await new Promise((resolve, reject) => {
-        this.hitRouteAPI(type.title, (response: any) => {
-          resolve(response)
+    this.setState({ showTransport: false, animate: true, searchCoordinates: this.state.currentPosition }, async () => {
+      await Promise.all(transportType.map(async (type) => {
+        let result = await new Promise((resolve, reject) => {
+          this.hitRouteAPI(type.title, (response: any) => {
+            resolve(response)
+          })
         })
-      })
-      let temp = this.state.transport
-      let newType = type.title.toString()
-      Object.assign(temp, { [newType]: result })
-      this.setState({
-        transport: temp
-      })
-    }
-    ))
-    this.setState({ animate: false, showTransport: true }, () => this.getPaths('car'))
+        let temp = this.state.transport
+        let newType = type.title.toString()
+        Object.assign(temp, { [newType]: result })
+        this.setState({
+          transport: temp
+        })
+      }
+      ))
+      this.setState({ animate: false, showTransport: true }, () => this.getPaths('car'))
+    })
   }
 
   hitRouteAPI = (type: string, callback: Function) => {
@@ -159,28 +186,6 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     } catch (error) {
       console.warn(error)
     }
-  }
-
-  renderItems = (rowData: any) => {
-    const { item, index } = rowData
-    return (
-      <ResultFlatList
-        data={item}
-        getCoordinates={this.getMapRegion}
-      />
-    )
-  }
-
-  renderTransportItems = (rowData: any) => {
-    const { item, index } = rowData
-    return (
-      <TransportFlatList
-        data={item}
-        currentVehicle={this.state.currentVehicle}
-        time={this.state.transport[item.title]}
-        getPath={this.getPaths}
-      />
-    )
   }
 
   getPaths = (title: string) => {
@@ -215,6 +220,72 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
     });
   }
 
+  startNavigation = () => {
+    this.setState({
+      showTransport: false,
+      showNavigation: true,
+      currentPosition: {
+        latitude: this.state.currentPosition.latitude,
+        longitude: this.state.currentPosition.longitude,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001,
+      }
+    }, () => this.mapView.animateToRegion(this.state.currentPosition, 1000))
+
+    Geolocation.watchPosition((info) => {
+      this.setState({
+        currentPosition: {
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+          latitudeDelta: 0.001,
+          longitudeDelta: 0.001,
+        }
+      })
+    }, (error) => {
+      console.warn(error);
+    },
+      { enableHighAccuracy: true, distanceFilter: 1 }
+    )
+  }
+
+  stopNavigation = () => {
+    this.setState({
+      showTransport: true,
+      showNavigation: false
+    }, () => Geolocation.stopObserving())
+  }
+
+  renderItems = (rowData: any) => {
+    const { item, index } = rowData
+    console.warn('here');
+    return (
+      <ResultFlatList
+        dataAddress={this.state.resultD === [] ? item.address : item.address.freeformAddress}
+        dataPosition={item.position}
+        getCoordinates={this.getMapRegion}
+      />
+    )
+  }
+
+  renderTransportItems = (rowData: any) => {
+    const { item, index } = rowData
+    return (
+      <TransportFlatList
+        data={item}
+        currentVehicle={this.state.currentVehicle}
+        time={this.state.transport[item.title]}
+        getPath={this.getPaths}
+      />
+    )
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      showTransport: true,
+      showNavigation: false
+    }, () => Geolocation.stopObserving())
+  }
+
   public render() {
     return (
       <View style={Styles.container}>
@@ -222,7 +293,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         {/* Source search bar and Normal search Bar ---------------------- */}
         <View style={Styles.searchBarView}>
           <TextInput
-            onFocus={() => this.type = 'S'}
+            editable={false}
+            onFocus={() => { this.type = 'S', this.setState({ resultD: [] }) }}
             ref={ref => this.searchText = ref}
             numberOfLines={1}
             autoCorrect={false}
@@ -232,15 +304,16 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
             onChangeText={(text: string) => this.setState({ queryS: text }, () => setTimeout(() => { this.hitSearchAPI() }, 800))}
           />
           {this.state.queryS === '' ? null :
-            <TouchableOpacity activeOpacity={0.8} style={Styles.clearBtn} onPress={() => this.setState({ queryS: '', resultS: [], toggleDirection: false })}>
-              <Text style={[Styles.searchText, { color: 'grey' }]}>X</Text>
+            <TouchableOpacity activeOpacity={0.8} style={Styles.clearBtn} >
+              {/* onPress={() => this.setState({ queryS: '', resultS: [], toggleDirection: false })}> */}
+              <Text style={[Styles.searchText, { color: 'grey' }]}></Text>
             </TouchableOpacity>}
         </View>
 
         {/* Destination search bar  ---------------------- */}
         <View style={[Styles.searchBarView, { marginTop: Platform.OS === 'ios' ? vh(45) : vh(65) }]}>
           <TextInput
-            onFocus={() => this.type = 'D'}
+            onFocus={() => { this.type = 'D', this.setState({ resultS: [] }) }}
             ref={ref => this.searchText = ref}
             numberOfLines={1}
             autoCorrect={false}
@@ -258,7 +331,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         {/* Source Search results in flatList --------- */}
         <View style={[Styles.searchBarFlat, this.state.resultS === null ? { padding: vw(10), borderWidth: vw(2) } : { padding: 0, borderWidth: 0 }]}>
           <FlatList
-            data={this.state.resultS}
+            data={this.state.resultS === [] ? this.props.recentSearch : this.state.resultS}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={this.itemSeparator}
             renderItem={this.renderItems}
@@ -269,7 +342,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         {/* Destination Search results in flatList --------- */}
         <View style={[Styles.searchBarFlat, { top: Platform.OS === 'ios' ? vh(120) : vh(140) }, this.state.resultD === null ? { padding: vw(10), borderWidth: vw(2) } : { padding: 0, borderWidth: 0 }]}>
           <FlatList
-            data={this.state.resultD}
+            data={this.state.resultD === [] ? this.props.recentSearch : this.state.resultD}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={this.itemSeparator}
             renderItem={this.renderItems}
@@ -290,9 +363,9 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
               renderItem={this.renderTransportItems}
             /> : null}
             <View style={Styles.bottomDirectionView}>
-              <Text numberOfLines={1} style={Styles.findRouteText}>{this.type === 'S' ? this.state.queryS : this.state.queryD}</Text>
-              {this.state.queryS !== '' && this.state.queryD !== '' ? <TouchableOpacity activeOpacity={0.8} style={Styles.directionBtn} onPress={() => this.getDirections()} >
-                <Text style={Styles.directionTxt}>{this.state.showTransport && this.state.transport !== {} ? 'START' : 'DIRECTIONS'}</Text>
+              {/* <Text numberOfLines={1} style={Styles.findRouteText}>{this.type === 'S' ? this.state.queryS : this.state.queryD}</Text> */}
+              {this.state.queryS !== '' && this.state.queryD !== '' ? <TouchableOpacity activeOpacity={0.8} style={Styles.directionBtn} onPress={() => this.state.showTransport ? this.startNavigation() : (this.state.showNavigation ? this.stopNavigation() : this.getDirections())} >
+                <Text style={Styles.directionTxt}>{this.state.showTransport && this.state.transport !== {} ? 'NAVIGATE' : (this.state.showNavigation ? 'STOP' : 'DIRECTIONS')}</Text>
               </TouchableOpacity> : null}
             </View>
           </View>
@@ -333,13 +406,13 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           <Polyline
             coordinates={this.state.route}
             strokeColor={Color.mapBlue}
-            strokeWidth={vw(5)}
+            strokeWidth={this.state.showNavigation ? vw(10) : vw(5)}
           />
 
           {/* Custom marker for GPS Pointer indicating user's position */}
-          <Marker
+          {/* <Marker
 
-          />
+          /> */}
 
         </MapView>
       </View>

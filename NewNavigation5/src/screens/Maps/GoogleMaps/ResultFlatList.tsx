@@ -3,7 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Styles from './Styles';
 
 export interface AppProps {
-    data: any,
+    dataAddress: any,
+    dataPosition: any,
     getCoordinates: Function
 }
 
@@ -13,17 +14,14 @@ export default class ResultFlatList extends React.PureComponent<AppProps, any> {
     }
 
     public render() {
-        const address = this.props.data.address.freeformAddress
-        const { position } = this.props.data
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
                 style={Styles.mainViewFlat}
                 onPress={() => {
-                    debugger
-                    this.props.getCoordinates(position, address)
+                    this.props.getCoordinates(this.props.dataPosition, this.props.dataAddress)
                 }}>
-                <Text numberOfLines={1} style={Styles.searchText}>{address} </Text>
+                <Text numberOfLines={1} style={Styles.searchText}>{this.props.dataAddress} </Text>
             </TouchableOpacity>
         );
     }

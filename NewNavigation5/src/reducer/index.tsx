@@ -6,7 +6,7 @@ import { persistStore, persistReducer, PersistConfig } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage'
 import { hitApiSaga } from '../screens/APIHit/saga';
 
-const persistConfig : PersistConfig = {
+const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
     whitelist: ['Home', 'SignIn', 'MyMaps'],
