@@ -26,7 +26,7 @@ const AuthNavigator = () => (
 );
 
 const HomeNavigator = () => (
-  <HomeStack.Navigator headerMode='screen' initialRouteName="MyMap">
+  <HomeStack.Navigator headerMode='none' initialRouteName="MyMap" >
     <HomeStack.Screen name="HOME" component={Home} />
     <HomeStack.Screen name="IDNow" component={IDNow} />
     <HomeStack.Screen name="APIHit" component={APIHit} />

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Styles from './Styles';
 import { Images } from '../../../constants';
 
-export interface AppProps {
+interface AppProps {
     item: any,
     openChat: Function,
     uid: string,

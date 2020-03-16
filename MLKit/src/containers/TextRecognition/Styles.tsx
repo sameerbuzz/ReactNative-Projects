@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { vh, vw, Color } from '../../../constants';
+import { vh, vw, Color } from '../../constants';
 
 const Styles = StyleSheet.create({
     MainView: {
@@ -19,8 +19,8 @@ const Styles = StyleSheet.create({
     cardView: {
         padding: vw(10),
         margin: vw(20),
-        width: vw(150),
-        height: vw(80),
+        width: vw(200),
+        height: vw(150),
         borderRadius: vw(15),
         alignItems: 'center', 
         justifyContent: 'center',
@@ -31,6 +31,16 @@ const Styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: vw(17)
+    },
+    cardView2: {
+        padding: vw(10),
+        margin: vw(20),
+        width: vw(150),
+        height: vw(80),
+        borderRadius: vw(15),
+        alignItems: 'center', 
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
     resultTextView: {
         borderWidth: vw(2),

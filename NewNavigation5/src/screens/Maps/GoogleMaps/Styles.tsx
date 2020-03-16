@@ -16,22 +16,33 @@ const Styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    searchBar: {
+    searchBarView: {
         position: 'absolute',
-        top: vw(10),
+        top: Platform.OS === 'ios' ? vh(30) : vh(10),
         left: vw(10),
         right: vw(10),
+        backgroundColor: 'white',
         borderRadius: vw(5),
+        paddingVertical: Platform.OS === 'ios' ? vh(10) : 0,
+        paddingHorizontal: vw(10),
+        zIndex: 98,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    searchBar: {
         backgroundColor: 'white',
         paddingHorizontal: vw(10),
-        paddingVertical: Platform.OS === 'ios' ? vw(10) : 0,
-        zIndex: 99,
+        paddingVertical: Platform.OS === 'ios' ? vh(10) : 0,
+        borderRadius: vw(5),
+        alignItems: 'center',
+        justifyContent: 'space-between',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        width: vw(395),
     },
     searchBarFlat: {
         position: 'absolute',
-        top: Platform.OS === 'ios' ? vh(55) : vh(70),
+        top: vh(80),
         left: vw(10),
         right: vw(10),
         backgroundColor: 'white',
@@ -99,7 +110,7 @@ const Styles = StyleSheet.create({
         padding: vw(10),
         backgroundColor: 'white',
         alignItems: 'center',
-        borderRadius: vw(5),
+        borderRadius: vw(5),    
     },
     findRouteView: {
         position: 'absolute',
@@ -115,15 +126,16 @@ const Styles = StyleSheet.create({
     },
     findRouteText: {
         fontSize: vw(18),
-        padding: vw(10),
-        width: vw(250)
+        width: vw(250),
+        paddingRight: vw(10)
     },
     directionBtn: {
         backgroundColor: Color.mapBlue,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: vw(2),
-        height: vw(40)
+        height: vw(40),
+        marginTop: vw(10)
     },
     directionTxt: {
         color: 'white',
@@ -135,14 +147,19 @@ const Styles = StyleSheet.create({
     transportView: {
         padding: vw(10),
         paddingHorizontal: vw(13),
-        backgroundColor: Color.mapBlue,
         alignItems: 'center',
+        borderWidth: vw(1)
     },
     transportText: {
         fontSize: vw(18),
         width: '100%',
-        color: 'white'
     },
+    bottomDirectionView: { 
+        flexDirection: 'row' ,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginVertical: vh(10)
+    }
 })
 
 export default Styles

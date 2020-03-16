@@ -65,7 +65,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                     // Task completed successfully
                                     // ..
                                     resultText = firebaseVisionText.getText();
-                                    callback.invoke(resultText);
+                                    callback.invoke(resultText.toString());
                                 }
                             })
                             .addOnFailureListener(
@@ -121,7 +121,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                                         @Override
                                                         public void onSuccess(@NonNull String translatedText) {
                                                             // Translation successful.
-                                                            callback.invoke(translatedText);
+                                                            callback.invoke(translatedText.toString());
                                                         }
                                                     })
                                             .addOnFailureListener(

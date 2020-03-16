@@ -2,11 +2,11 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import createSagaMiddleware from 'redux-saga'
 import reducer from './reducer';
-import { persistStore, persistReducer } from 'redux-persist'
+import { persistStore, persistReducer, PersistConfig } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage'
 import { hitApiSaga } from '../screens/APIHit/saga';
 
-const persistConfig = {
+const persistConfig : PersistConfig = {
     key: 'root',
     storage: AsyncStorage,
     whitelist: ['Home', 'SignIn', 'MyMaps'],

@@ -37,7 +37,7 @@ class TextRecognition: NSObject {
         if let countryCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String {    print(countryCode)}
         let seconds = 0.1;
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-          callback([resultText])
+          callback([String(resultText)])
         }
       }
     })
@@ -79,7 +79,7 @@ class TextRecognition: NSObject {
         guard error == nil, let translatedText = translatedText else { return }
         // Translation succeeded.
         print("translated text ", translatedText)
-        callback([translatedText])
+        callback([String(translatedText)])
       }
     })
   }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Styles from './Styles';
 
 export interface AppProps {
@@ -16,11 +16,15 @@ export default class ResultFlatList extends React.PureComponent<AppProps, any> {
         const address = this.props.data.address.freeformAddress
         const { position } = this.props.data
         return (
-            <View style={Styles.mainViewFlat}>
-                <TouchableOpacity onPress={() => this.props.getCoordinates(position, address)}>
-                    <Text numberOfLines ={1} style={Styles.searchText}>{address} </Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+                activeOpacity={0.8}
+                style={Styles.mainViewFlat}
+                onPress={() => {
+                    debugger
+                    this.props.getCoordinates(position, address)
+                }}>
+                <Text numberOfLines={1} style={Styles.searchText}>{address} </Text>
+            </TouchableOpacity>
         );
     }
 }
