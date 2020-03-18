@@ -9,8 +9,8 @@ import { hitApiSaga } from '../screens/APIHit/saga';
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['Home', 'SignIn', 'MyMaps'],
-    blacklist: ['APIHit'],
+    whitelist: ['Home', 'SignIn'],
+    blacklist: ['APIHit', 'MyMaps'],
 }
 
 // create the saga middleware

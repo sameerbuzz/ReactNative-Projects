@@ -12,10 +12,11 @@ export const updateMarkers = (data: any) => {
 export const updateSearch = (coordinates: any, place: string) => {
     return (dispatch: any, getState: any) => {
         const { recentSearch } = getState().MyMaps;
-        let newArray: any[] = [{ address: coordinates, position: place }]
+        let newArray: any[] = [{ position: coordinates, address: place }]
         let temp: any[] = recentSearch
         temp.length < 4 ? null : temp.pop()
-        temp = newArray.concat(temp)        
+        temp = newArray.concat(temp)    
+        console.log('temp ',temp)    
         dispatch({ type: UPDATE_RECENT_SEARCH, payload: { data: temp } });
     }
 }

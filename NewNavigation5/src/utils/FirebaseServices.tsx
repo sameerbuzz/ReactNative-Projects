@@ -1,8 +1,8 @@
 import { } from '@react-native-firebase/database';
-// import { } from '@react-native-firebase/auth';
-// import { } from '@react-native-firebase/storage';
+import messaging from '@react-native-firebase/messaging';
 import firebase from '@react-native-firebase/app';
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage'
 
 let userRef = firebase.database().ref('AllUsers/')
 let chatRef = firebase.database().ref('Msgs/')
@@ -29,6 +29,56 @@ class FirebaseService {
         },
       );
     }
+  }
+
+  // checking permissions for FCM
+  async checkPermission() {
+    const enabled = await messaging().hasPermission();
+    if (enabled) {
+      this.getToken();
+    } else {
+      this.requestPermission();
+    }
+  }
+
+  // getting token for FCM
+  async getToken() {
+    let fcmToken = await AsyncStorage.getItem('fcmToken');
+
+    if (!fcmToken) {
+      fcmToken = await messaging().getToken();
+      if (fcmToken) {
+        // user has a device token            
+        await AsyncStorage.setItem('fcmToken', fcmToken);
+      }
+    }
+  }
+
+  // requesting permissions
+  async requestPermission() {
+    try {
+      await messaging().requestPermission();
+      // User has authorised
+      this.getToken();
+    } catch (error) {
+      // User has rejected permissions
+      console.log('permission rejected');
+    }
+  }
+
+  // foreground notification message
+  async readForegroundNotification() {
+    messaging().onMessage(async message => {
+      //process data message
+      console.log(JSON.stringify(message));
+    });
+  }
+
+  // background notification message
+  async readBackgroundNotification() {
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log('Message handled in the background!', remoteMessage);
+    });
   }
 
   // Add data in DB ----------------------

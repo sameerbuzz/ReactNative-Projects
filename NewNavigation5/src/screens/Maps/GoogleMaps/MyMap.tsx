@@ -75,8 +75,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   componentDidMount() {
-    console.warn('recent ',this.props.recentSearch);
-    
+    console.log('recent ', this.props.recentSearch);
+
     Geolocation.getCurrentPosition(info => {
       this.setState({
         currentPosition: {
@@ -102,6 +102,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
           .then(response => {
             this.type === 'S' ?
               this.setState({ resultS: response.data.results }) : this.setState({ resultD: response.data.results })
+            console.log(response.data.results);
+
           })
       } catch (error) {
         console.log(error)
@@ -122,6 +124,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   getMapRegion = (coordinates: any, place: string) => {
+    console.log('setting ', coordinates, place);
+    
     this.props.updateSearch(coordinates, place)
 
     this.type === 'S' ?
@@ -257,15 +261,16 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
   renderItems = (rowData: any) => {
     const { item, index } = rowData
-    console.warn('here');
+    console.log('item ', item);
+
     return (
       <ResultFlatList
-        dataAddress={this.state.resultD === [] ? item.address : item.address.freeformAddress}
-        dataPosition={item.position}
+        data={item}
+        check={this.type === 'D' ? this.state.resultD : this.state.resultS}
         getCoordinates={this.getMapRegion}
       />
     )
-  }
+  } 
 
   renderTransportItems = (rowData: any) => {
     const { item, index } = rowData
@@ -287,6 +292,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   }
 
   public render() {
+    console.warn(this.type);
+    
     return (
       <View style={Styles.container}>
 
@@ -331,7 +338,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         {/* Source Search results in flatList --------- */}
         <View style={[Styles.searchBarFlat, this.state.resultS === null ? { padding: vw(10), borderWidth: vw(2) } : { padding: 0, borderWidth: 0 }]}>
           <FlatList
-            data={this.state.resultS === [] ? this.props.recentSearch : this.state.resultS}
+            data={this.state.resultS}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={this.itemSeparator}
             renderItem={this.renderItems}
@@ -341,13 +348,13 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
 
         {/* Destination Search results in flatList --------- */}
         <View style={[Styles.searchBarFlat, { top: Platform.OS === 'ios' ? vh(120) : vh(140) }, this.state.resultD === null ? { padding: vw(10), borderWidth: vw(2) } : { padding: 0, borderWidth: 0 }]}>
-          <FlatList
-            data={this.state.resultD === [] ? this.props.recentSearch : this.state.resultD}
+          {this.type === 'D' ? <FlatList
+            data={this.state.resultD.length === 0 ? this.props.recentSearch : this.state.resultD}
             keyExtractor={(item, index) => index.toString()}
             ItemSeparatorComponent={this.itemSeparator}
             renderItem={this.renderItems}
             keyboardShouldPersistTaps='always'
-          />
+          /> : null}
         </View>
 
         {/* Finding Route option ---------- */}

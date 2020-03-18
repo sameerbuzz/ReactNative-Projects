@@ -11,6 +11,7 @@ import MyMap from '../screens/Maps/GoogleMaps';
 import MarkerModal from '../screens/Maps/GoogleMaps/MarkerModal';
 import OpenMap from '../screens/Maps/OenLayers/OpenMap';
 import test from '../screens/Maps/GoogleMaps/test';
+import Notification from '../screens/Notification/Notification';
 
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -26,13 +27,14 @@ const AuthNavigator = () => (
 );
 
 const HomeNavigator = () => (
-  <HomeStack.Navigator headerMode='none' initialRouteName="MyMap" >
+  <HomeStack.Navigator headerMode='none' initialRouteName="Notification" >
     <HomeStack.Screen name="HOME" component={Home} />
     <HomeStack.Screen name="IDNow" component={IDNow} />
     <HomeStack.Screen name="APIHit" component={APIHit} />
     <HomeStack.Screen name="MyMap" component={MyMap} />
     <HomeStack.Screen name="OpenMap" component={OpenMap} />
     <HomeStack.Screen name="test" component={test} />
+    <HomeStack.Screen name="Notification" component={Notification} />
   </HomeStack.Navigator>
 );
 

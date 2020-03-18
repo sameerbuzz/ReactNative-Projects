@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, CheckBox } from 'react-native';
 import Styles from './Styles';
 
 export interface AppProps {
-    dataAddress: any,
-    dataPosition: any,
+    data: any,
+    check: Array<any>,
     getCoordinates: Function
 }
 
@@ -14,14 +14,27 @@ export default class ResultFlatList extends React.PureComponent<AppProps, any> {
     }
 
     public render() {
+        let address: any
+        const { data } = this.props
+        const { position } = this.props.data
+        console.log('add ', this.props.data, this.props.check.length === 0);
+        this.props.check.length === 0 ?
+            address = data.address
+            :
+            address = data.address.freeformAddress
+        console.log(position);
+        
+
         return (
             <TouchableOpacity
                 activeOpacity={0.8}
                 style={Styles.mainViewFlat}
                 onPress={() => {
-                    this.props.getCoordinates(this.props.dataPosition, this.props.dataAddress)
+                    // console.warn('heyy ',position, address);
+                    
+                    this.props.getCoordinates( position, address)
                 }}>
-                <Text numberOfLines={1} style={Styles.searchText}>{this.props.dataAddress} </Text>
+                <Text numberOfLines={1} style={Styles.searchText}>{address} </Text>
             </TouchableOpacity>
         );
     }
