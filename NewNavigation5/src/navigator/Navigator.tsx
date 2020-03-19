@@ -57,6 +57,7 @@ export default class Navigator extends React.PureComponent<Props>  {
     return (
       <NavigationContainer>
         <RootStack.Navigator headerMode='none'>
+          
           {this.props.token === '' ?
             <RootStack.Screen name="AuthNavigator" component={AuthNavigator} /> :
             <>

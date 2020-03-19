@@ -297,8 +297,6 @@ PODS:
     - React
   - react-native-maps (0.26.1):
     - React
-  - react-native-notifications (3.1.2):
-    - React
   - react-native-safe-area-context (0.7.3):
     - React
   - React-RCTActionSheet (0.61.5):
@@ -384,7 +382,6 @@ DEPENDENCIES:
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
   - react-native-maps (from `../node_modules/react-native-maps`)
-  - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -468,8 +465,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
-  react-native-notifications:
-    :path: "../node_modules/react-native-notifications"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-RCTActionSheet:
@@ -556,7 +551,6 @@ SPEC CHECKSUMS:
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-google-maps: 2e2e697dab576abd5809d78cd74e775865b62bf7
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
-  react-native-notifications: f56a12d741eeb2fd4d7a418a4689111c50f7cd72
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
@@ -579,6 +573,6 @@ SPEC CHECKSUMS:
   RNScreens: c2c8bdde0146f16eb6bf092dd7485534851f2711
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 06638736e9d0d05914fa88b969e3d5723fae00bd
+PODFILE CHECKSUM: 1ba4842678f9c93bdcc269354aa979d0fae1233d
 
 COCOAPODS: 1.8.4

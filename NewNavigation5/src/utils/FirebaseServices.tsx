@@ -32,34 +32,36 @@ class FirebaseService {
   }
 
   // checking permissions for FCM
-  async checkPermission() {
+  async checkPermission(callback: Function) {
     const enabled = await messaging().hasPermission();
     if (enabled) {
-      this.getToken();
+      this.getToken((token: string) => callback(token));
     } else {
-      this.requestPermission();
+      this.requestPermission((token: string) => callback(token));
     }
   }
 
   // getting token for FCM
-  async getToken() {
+  async getToken(callback: Function) {
     let fcmToken = await AsyncStorage.getItem('fcmToken');
-
     if (!fcmToken) {
       fcmToken = await messaging().getToken();
       if (fcmToken) {
         // user has a device token            
         await AsyncStorage.setItem('fcmToken', fcmToken);
+        callback(fcmToken)
       }
+    }else{
+      callback(fcmToken)
     }
   }
 
   // requesting permissions
-  async requestPermission() {
+  async requestPermission(callback: Function) {
     try {
       await messaging().requestPermission();
       // User has authorised
-      this.getToken();
+      this.getToken((token: string) => callback(token));
     } catch (error) {
       // User has rejected permissions
       console.log('permission rejected');
@@ -68,6 +70,7 @@ class FirebaseService {
 
   // foreground notification message
   async readForegroundNotification() {
+
     messaging().onMessage(async message => {
       //process data message
       console.log(JSON.stringify(message));
@@ -76,6 +79,7 @@ class FirebaseService {
 
   // background notification message
   async readBackgroundNotification() {
+
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       console.log('Message handled in the background!', remoteMessage);
     });
