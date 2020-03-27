@@ -20,10 +20,10 @@ export default class IDNow extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text onPress={() => this.add()}> add </Text>
-                <Text onPress={() => this.addAgain()}> add again </Text>
-            </View>
+            // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            //     <Text onPress={() => this.add()}> add </Text>
+            //     <Text onPress={() => this.addAgain()}> add again </Text>
+            // </View>
         )
     }
 }
