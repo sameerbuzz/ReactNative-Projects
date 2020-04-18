@@ -42,6 +42,8 @@ target 'MLKit' do
   pod 'Firebase/MLNLLanguageID'
   pod 'Firebase/MLNLTranslate'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   post_install do |installer|
     # Other stuff here ...
     system('cd Pods/Headers/Public; ln -s Protobuf protobuf')

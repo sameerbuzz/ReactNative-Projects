@@ -126,7 +126,7 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
   getMapRegion = (coordinates: any, place: string) => {
     console.log('setting ', coordinates, place);
     
-    this.props.updateSearch(coordinates, place)
+    // this.props.updateSearch(coordinates, place)
 
     this.type === 'S' ?
       this.setState({ resultS: [], queryS: place, toggleDirection: true, showTransport: false }) :
@@ -234,7 +234,8 @@ export default class AppComponent extends React.PureComponent<AppProps, AppState
         latitudeDelta: 0.001,
         longitudeDelta: 0.001,
       }
-    }, () => this.mapView.animateToRegion(this.state.currentPosition, 1000))
+    }, () => {console.warn(this.state.currentPosition)
+     ,this.mapView.animateToRegion(this.state.currentPosition, 1000)})
 
     Geolocation.watchPosition((info) => {
       this.setState({

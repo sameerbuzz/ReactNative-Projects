@@ -19,6 +19,7 @@ export default class App extends React.PureComponent<AppProps, any> {
     }
 
     componentDidMount() { 
+        FirebaseServices.initializeFireBase()
         let _this = this
         FirebaseServices.checkPermission((token: string) => {
 

@@ -180,13 +180,6 @@ class FirebaseService {
     userRef.off();
   }
 
-  // fetching last message----------------------------------
-  inboxList = (uid: string, callback: Function) => {
-    inbox.ref('Inbox/' + uid).on('value', function (snapshot: any) {
-      callback(snapshot.val())
-    })
-  }
-
   // uploading profile pic to firebase storage--------------
   uploadPic = (uid: string, paths: any, callback: Function) => {
     if (!!paths) {

@@ -34,15 +34,6 @@
       <meta-data
      android:name="com.google.android.geo.API_KEY"
      android:value="AIzaSyB8d6rgZ5_c7c67HC_H10b4AtSNQ4W7MV0"/>
-<!--     <receiver-->
-<!--            android:name="com.google.android.gms.gcm.GcmReceiver"-->
-<!--            android:exported="true"-->
-<!--            android:permission="com.google.android.c2dm.permission.SEND" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
-<!--                <category android:name="com.newnavigation5" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationBootEventReceiver">
             <intent-filter>
