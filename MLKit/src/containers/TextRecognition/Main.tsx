@@ -129,8 +129,9 @@ const Main = () => {
       );
     });
     setTextResult(result);
-    textResult === ''
-      ? languageAlert('Unable to Fetch Text\nPlease provide Clear Picture')
+    result === ''
+      ? (languageAlert('Unable to Fetch Text\nPlease provide Clear Picture'),
+        setAnimate(false))
       : (setStatus(!status), setAnimate(false));
   };
 
@@ -186,6 +187,7 @@ const Main = () => {
               </View>
               <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
+                  activeOpacity={0.8}
                   onPress={() => setTextStatus(false)}
                   style={Styles.cardView2}>
                   <LinearGradient
@@ -197,6 +199,7 @@ const Main = () => {
                   </LinearGradient>
                 </TouchableOpacity>
                 <TouchableOpacity
+                  activeOpacity={0.8}
                   onPress={() => {
                     textResult === ''
                       ? languageAlert('Please Enter some Text')
@@ -215,7 +218,9 @@ const Main = () => {
             </View>
           ) : (
             <View>
-              <TouchableOpacity onPress={() => setTextStatus(true)}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => setTextStatus(true)}>
                 <LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 1}}
@@ -224,7 +229,9 @@ const Main = () => {
                   <Text style={Styles.cardText}>Write Text</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => imagePicker()}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => imagePicker()}>
                 <LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 1}}
@@ -233,7 +240,9 @@ const Main = () => {
                   <Text style={Styles.cardText}>Open Gallery</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => imagePickerCam()}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => imagePickerCam()}>
                 <LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 1}}
@@ -260,6 +269,7 @@ const Main = () => {
         />
         <View style={Styles.firstHalfView}>
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => {
               setStatus(!status),
                 setTextResult(''),
@@ -304,6 +314,7 @@ const Main = () => {
             }}
           />
           <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => {
               language === 11
                 ? languageAlert()

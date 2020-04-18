@@ -46,7 +46,8 @@ const Styles = StyleSheet.create({
     width: vw(300),
     height: vh(260),
     color: Color.newViolet,
-    alignSelf: 'flex-start',
+    alignItems: 'center',
+    alignSelf: 'flex-start'
   },
   cardView2: {
     padding: vw(10),
