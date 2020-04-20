@@ -5,7 +5,6 @@ const Styles = StyleSheet.create({
   MainView: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'white',
   },
   firstHalfView: {
@@ -36,6 +35,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
   },
   textView: {
+    marginTop: vh(50),
     borderWidth: vh(1),
     borderColor: Color.newViolet,
     padding: vw(20),
@@ -47,7 +47,7 @@ const Styles = StyleSheet.create({
     height: vh(260),
     color: Color.newViolet,
     alignItems: 'center',
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
   },
   cardView2: {
     padding: vw(10),

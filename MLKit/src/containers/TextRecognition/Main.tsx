@@ -12,8 +12,8 @@ import {
   SafeAreaView,
   TextInput,
   StatusBar,
+  BackHandler,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SplashScreen from 'react-native-splash-screen';
 
 // custom imports
@@ -93,9 +93,24 @@ const Main = () => {
   const [animate, setAnimate] = useState(false);
   const [language, setLanguage] = useState(11);
   const [translatedText, setTranslatedText] = useState('');
+  const [backHandlerClickCount, setbackHandlerClickCount] = useState(0);
 
   useEffect(() => {
     SplashScreen.hide();
+    BackHandler.addEventListener('hardwareBackPress', () =>
+      setbackHandlerClickCount(backHandlerClickCount + 1),
+    );
+    setTimeout(() => {
+      setbackHandlerClickCount(0);
+    }, 2000);
+
+    if (backHandlerClickCount < 2) {
+      NativeModules.TextRecognition.getToast(
+        'Press again to quit the application!',
+      );
+    } else {
+      BackHandler.exitApp();
+    }
   }, []);
 
   const imagePicker = async () => {
@@ -161,101 +176,95 @@ const Main = () => {
   };
   if (status) {
     return (
-      <KeyboardAwareScrollView
-        bounces={false}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={Styles.MainView}>
-        <View style={Styles.MainView}>
-          <StatusBar backgroundColor="white" barStyle="dark-content" />
-          <ActivityIndicator
-            size="large"
-            color={Color.newViolet}
-            animating={animate}
-            style={Styles.indicator}
-          />
-          {textStatus ? (
-            <View style={Styles.mainTextView}>
-              <View style={Styles.textView}>
-                <ScrollView bounces={false}>
-                  <TextInput
-                    multiline={true}
-                    style={Styles.textInputStyle}
-                    value={textResult}
-                    onChangeText={(text: string) => setTextResult(text)}
-                  />
-                </ScrollView>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => setTextStatus(false)}
-                  style={Styles.cardView2}>
-                  <LinearGradient
-                    start={{x: 0, y: 0}}
-                    end={{x: 1, y: 1}}
-                    colors={colors}
-                    style={Styles.cardView2}>
-                    <Text style={Styles.cardText}>Cancel</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  onPress={() => {
-                    textResult === ''
-                      ? languageAlert('Please Enter some Text')
-                      : (setTextStatus(false), setStatus(!status));
-                  }}
-                  style={Styles.cardView2}>
-                  <LinearGradient
-                    start={{x: 0, y: 0}}
-                    end={{x: 1, y: 1}}
-                    colors={colors}
-                    style={Styles.cardView2}>
-                    <Text style={Styles.cardText}>Enter</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
+      <View style={Styles.MainView}>
+        <StatusBar backgroundColor="white" barStyle="dark-content" />
+        <ActivityIndicator
+          size="large"
+          color={Color.newViolet}
+          animating={animate}
+          style={Styles.indicator}
+        />
+        {textStatus ? (
+          <View style={Styles.mainTextView}>
+            <View style={Styles.textView}>
+              <ScrollView bounces={false}>
+                <TextInput
+                  autoFocus={true}
+                  multiline={true}
+                  style={Styles.textInputStyle}
+                  value={textResult}
+                  onChangeText={(text: string) => setTextResult(text)}
+                />
+              </ScrollView>
             </View>
-          ) : (
-            <View>
+            <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => setTextStatus(true)}>
+                onPress={() => setTextStatus(false)}
+                style={Styles.cardView2}>
                 <LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 1}}
                   colors={colors}
-                  style={Styles.cardView}>
-                  <Text style={Styles.cardText}>Write Text</Text>
+                  style={Styles.cardView2}>
+                  <Text style={Styles.cardText}>Cancel</Text>
                 </LinearGradient>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => imagePicker()}>
+                onPress={() => {
+                  textResult === ''
+                    ? languageAlert('Please Enter some Text')
+                    : (setTextStatus(false), setStatus(!status));
+                }}
+                style={Styles.cardView2}>
                 <LinearGradient
                   start={{x: 0, y: 0}}
                   end={{x: 1, y: 1}}
                   colors={colors}
-                  style={Styles.cardView}>
-                  <Text style={Styles.cardText}>Open Gallery</Text>
+                  style={Styles.cardView2}>
+                  <Text style={Styles.cardText}>Enter</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => imagePickerCam()}>
-                <LinearGradient
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 1}}
-                  colors={colors}
-                  style={Styles.cardView}>
-                  <Text style={Styles.cardText}>Open Camera</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-              <Text style={Styles.sameer}>@ SAMEER BHARDWAJ</Text>
             </View>
-          )}
-        </View>
-      </KeyboardAwareScrollView>
+          </View>
+        ) : (
+          <View style={{alignItems: 'center', marginTop: vh(100)}}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setTextStatus(true)}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 1}}
+                colors={colors}
+                style={Styles.cardView}>
+                <Text style={Styles.cardText}>Write Text</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => imagePicker()}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 1}}
+                colors={colors}
+                style={Styles.cardView}>
+                <Text style={Styles.cardText}>Open Gallery</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => imagePickerCam()}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 1}}
+                colors={colors}
+                style={Styles.cardView}>
+                <Text style={Styles.cardText}>Open Camera</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            <Text style={Styles.sameer}>@ SAMEER BHARDWAJ</Text>
+          </View>
+        )}
+      </View>
     );
   } else {
     return (
