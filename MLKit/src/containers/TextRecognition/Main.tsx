@@ -97,20 +97,17 @@ const Main = () => {
 
   useEffect(() => {
     SplashScreen.hide();
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      setbackHandlerClickCount(backHandlerClickCount + 1),
-    );
-    setTimeout(() => {
-      setbackHandlerClickCount(0);
-    }, 2000);
-
-    if (backHandlerClickCount < 2) {
-      NativeModules.TextRecognition.getToast(
-        'Press again to quit the application!',
-      );
-    } else {
-      BackHandler.exitApp();
-    }
+    // BackHandler.addEventListener('hardwareBackPress', () => {
+    //   setbackHandlerClickCount(backHandlerClickCount + 1),
+    //     backHandlerClickCount < 2
+    //       ? NativeModules.TextRecognition.getToast()
+    //       : BackHandler.exitApp();
+    // });
+    // if (backHandlerClickCount > 0) {
+    //   setTimeout(() => {
+    //     setbackHandlerClickCount(0);
+    //   }, 2000);
+    // }
   }, []);
 
   const imagePicker = async () => {
