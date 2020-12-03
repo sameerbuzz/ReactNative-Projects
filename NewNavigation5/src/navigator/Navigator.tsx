@@ -12,6 +12,7 @@ import MarkerModal from '../screens/Maps/GoogleMaps/MarkerModal';
 import OpenMap from '../screens/Maps/OenLayers/OpenMap';
 import test from '../screens/Maps/GoogleMaps/test';
 import Notification from '../screens/Notification/Notification';
+import Draglist from '../screens/DragList/Draglist'
 
 const AuthStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -27,7 +28,7 @@ const AuthNavigator = () => (
 );
 
 const HomeNavigator = () => (
-  <HomeStack.Navigator headerMode="none" initialRouteName="MyMap">
+  <HomeStack.Navigator headerMode="none" initialRouteName="Draglist">
     <HomeStack.Screen name="HOME" component={Home} />
     <HomeStack.Screen name="IDNow" component={IDNow} />
     <HomeStack.Screen name="APIHit" component={APIHit} />
@@ -35,6 +36,7 @@ const HomeNavigator = () => (
     <HomeStack.Screen name="OpenMap" component={OpenMap} />
     <HomeStack.Screen name="test" component={test} />
     <HomeStack.Screen name="Notification" component={Notification} />
+    <HomeStack.Screen name="Draglist" component={Draglist} />
   </HomeStack.Navigator>
 );
 
@@ -61,10 +63,10 @@ export default class Navigator extends React.PureComponent<Props> {
     return (
       <NavigationContainer>
         <RootStack.Navigator headerMode="none">
-          {this.props.token === '' ? (
+          {/* {this.props.token === '' ? (
             <RootStack.Screen name="AuthNavigator" component={AuthNavigator} />
           ) : (
-            <>
+            <> */}
               <RootStack.Screen
                 name="HomeNavigator"
                 component={HomeNavigator}
@@ -76,8 +78,8 @@ export default class Navigator extends React.PureComponent<Props> {
                   ...TransitionPresets.ModalSlideFromBottomIOS,
                 }}
               />
-            </>
-          )}
+            {/* </>
+          )} */}
         </RootStack.Navigator>
       </NavigationContainer>
     );

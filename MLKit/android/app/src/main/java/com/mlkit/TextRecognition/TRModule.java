@@ -1,6 +1,7 @@
 package com.mlkit.TextRecognition;
 
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,7 +53,7 @@ public class TRModule extends ReactContextBaseJavaModule {
         try {
            // this.callback = callback;
             this.options = options;
-
+            Log.d(String.valueOf(this.reactContext), "getSourceImage: "+options.getString(IMAGE_SOURCE));
             FirebaseVisionImage image = FirebaseVisionImage.fromFilePath(this.reactContext, Uri.parse(options.getString(IMAGE_SOURCE)));
             FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
                     .getOnDeviceTextRecognizer();
@@ -74,7 +75,7 @@ public class TRModule extends ReactContextBaseJavaModule {
                                         public void onFailure(@NonNull Exception e) {
                                             // Task failed with an exception
                                             // ...
-                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(getReactApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                                             callback.invoke("");
                                         }
                                     });
@@ -82,7 +83,7 @@ public class TRModule extends ReactContextBaseJavaModule {
 
 
         } catch (Exception ex) {
-            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getReactApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             callback.invoke("");
         }
 

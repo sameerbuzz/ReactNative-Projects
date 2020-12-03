@@ -15,6 +15,11 @@ const Styles = StyleSheet.create({
   halfView: {
     flex: 0.55,
   },
+  headingView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   cardView: {
     padding: vw(10),
     margin: vw(20),
@@ -82,6 +87,18 @@ const Styles = StyleSheet.create({
     color: Color.newViolet,
     marginTop: vh(10),
     alignSelf: 'center',
+  },
+  closeView: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    padding: vh(20),
+  },
+  volView: {
+    height: vh(30),
+    width: vh(30),
+    tintColor: Color.newViolet,
+    margin: vh(10)
   },
 });
 export default Styles;
